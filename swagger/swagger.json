@@ -1,0 +1,204 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_healthCheck",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/contratos-generales": {
+      "get": {
+        "operationId": "ContratoGeneralController_findAll",
+        "summary": "Obtener todos los contratos generales",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lista de contratos generales",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContratoGeneralEntity"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contratos-generales"
+        ]
+      },
+      "post": {
+        "operationId": "ContratoGeneralController_create",
+        "summary": "Crear un nuevo contrato general",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearContratoGeneralDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Contrato general creado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContratoGeneralEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contratos-generales"
+        ]
+      }
+    },
+    "/contratos-generales/{id}": {
+      "get": {
+        "operationId": "ContratoGeneralController_findOne",
+        "summary": "Obtener un contrato general por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID del contrato general",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contrato general encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContratoGeneralEntity"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contrato general no encontrado"
+          }
+        },
+        "tags": [
+          "contratos-generales"
+        ]
+      },
+      "put": {
+        "operationId": "ContratoGeneralController_update",
+        "summary": "Actualizar un contrato general",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID del contrato general a actualizar",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarContratoGeneralDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contrato general actualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContratoGeneralEntity"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contrato general no encontrado"
+          }
+        },
+        "tags": [
+          "contratos-generales"
+        ]
+      },
+      "delete": {
+        "operationId": "ContratoGeneralController_remove",
+        "summary": "Eliminar un contrato general",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID del contrato general a eliminar",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contrato general eliminado"
+          },
+          "404": {
+            "description": "Contrato general no encontrado"
+          }
+        },
+        "tags": [
+          "contratos-generales"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Gestion Contractual CRUD",
+    "description": "API para la gestión contractual",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "gestion-contractual",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "ContratoGeneralEntity": {
+        "type": "object",
+        "properties": {}
+      },
+      "CrearContratoGeneralDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "ActualizarContratoGeneralDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}
