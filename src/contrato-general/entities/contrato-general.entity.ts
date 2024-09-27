@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import {DocumentoContrato} from "../../documento-contrato/entities/documento-contrato.entity";
 
 @Entity('contrato_general')
-export class ContratoGeneralEntity {
+export class ContratoGeneral {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -116,4 +117,7 @@ export class ContratoGeneralEntity {
 
   @Column({ name: 'fecha_modificacion' })
   fechaModificacion: Date;
+
+  @OneToMany(() => DocumentoContrato, documentoContrato => documentoContrato.contrato)
+  documentosContrato: DocumentoContrato[];
 }

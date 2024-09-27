@@ -4,7 +4,9 @@ import { AppService } from './app.service';
 import { ContratoGeneralModule } from './contrato-general/contrato-general.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ContratoGeneralEntity } from './contrato-general/entities/contrato-general.entity';
+import { ContratoGeneral } from './contrato-general/entities/contrato-general.entity';
+import { DocumentoContratoModule } from './documento-contrato/documento-contrato.module';
+import {DocumentoContrato} from "./documento-contrato/entities/documento-contrato.entity";
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { ContratoGeneralEntity } from './contrato-general/entities/contrato-gene
         username: configService.get('GESTION_CONTRACTUAL_CRUD_USERNAME'),
         password: configService.get('GESTION_CONTRACTUAL_CRUD_PASS'),
         database: configService.get('GESTION_CONTRACTUAL_CRUD_DB'),
-        entities: [ContratoGeneralEntity],
+        entities: [ContratoGeneral, DocumentoContrato],
         synchronize: configService.get('DEVELOPER_MODE'), //Solo para desarrollo, en producción se debe desactivar
         ssl: {
           rejectUnauthorized: false,
@@ -30,6 +32,7 @@ import { ContratoGeneralEntity } from './contrato-general/entities/contrato-gene
       inject: [ConfigService],
     }),
     ContratoGeneralModule,
+    DocumentoContratoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

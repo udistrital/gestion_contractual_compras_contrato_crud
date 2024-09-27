@@ -25,7 +25,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ContratoGeneralEntity"
+                    "$ref": "#/components/schemas/ContratoGeneral"
                   }
                 }
               }
@@ -56,7 +56,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContratoGeneralEntity"
+                  "$ref": "#/components/schemas/ContratoGeneral"
                 }
               }
             }
@@ -88,7 +88,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContratoGeneralEntity"
+                  "$ref": "#/components/schemas/ContratoGeneral"
                 }
               }
             }
@@ -131,7 +131,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContratoGeneralEntity"
+                  "$ref": "#/components/schemas/ContratoGeneral"
                 }
               }
             }
@@ -170,6 +170,122 @@
           "contratos-generales"
         ]
       }
+    },
+    "/documentos-contratos": {
+      "post": {
+        "operationId": "DocumentoContratoController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDocumentoContratoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "operationId": "DocumentoContratoController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/documentos-contratos/{id}": {
+      "get": {
+        "operationId": "DocumentoContratoController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "operationId": "DocumentoContratoController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDocumentoContratoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "DocumentoContratoController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/documentos-contratos/contrato/{contratoId}": {
+      "get": {
+        "operationId": "DocumentoContratoController_findByContratoId",
+        "parameters": [
+          {
+            "name": "contratoId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
     }
   },
   "info": {
@@ -187,7 +303,7 @@
   "servers": [],
   "components": {
     "schemas": {
-      "ContratoGeneralEntity": {
+      "ContratoGeneral": {
         "type": "object",
         "properties": {}
       },
@@ -196,6 +312,14 @@
         "properties": {}
       },
       "ActualizarContratoGeneralDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateDocumentoContratoDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateDocumentoContratoDto": {
         "type": "object",
         "properties": {}
       }

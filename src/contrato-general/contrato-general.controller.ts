@@ -10,7 +10,7 @@ import {
 import { ContratoGeneralService } from './contrato-general.service';
 import { CrearContratoGeneralDto } from './dto/crear-contrato-general.dto';
 import { ActualizarContratoGeneralDto } from './dto/actualizar-contrato-general.dto';
-import { ContratoGeneralEntity } from './entities/contrato-general.entity';
+import { ContratoGeneral } from './entities/contrato-general.entity';
 import {
   ApiTags,
   ApiOperation,
@@ -31,9 +31,9 @@ export class ContratoGeneralController {
   @ApiResponse({
     status: 200,
     description: 'Lista de contratos generales',
-    type: [ContratoGeneralEntity],
+    type: [ContratoGeneral],
   })
-  findAll(): Promise<ContratoGeneralEntity[]> {
+  findAll(): Promise<ContratoGeneral[]> {
     return this.contratoGeneralService.findAll();
   }
 
@@ -47,10 +47,10 @@ export class ContratoGeneralController {
   @ApiResponse({
     status: 200,
     description: 'Contrato general encontrado',
-    type: ContratoGeneralEntity,
+    type: ContratoGeneral,
   })
   @ApiResponse({ status: 404, description: 'Contrato general no encontrado' })
-  findOne(@Param('id') id: string): Promise<ContratoGeneralEntity> {
+  findOne(@Param('id') id: string): Promise<ContratoGeneral> {
     return this.contratoGeneralService.findOne(+id);
   }
 
@@ -60,11 +60,11 @@ export class ContratoGeneralController {
   @ApiResponse({
     status: 201,
     description: 'Contrato general creado',
-    type: ContratoGeneralEntity,
+    type: ContratoGeneral,
   })
   create(
     @Body() createContratogenneralDto: CrearContratoGeneralDto,
-  ): Promise<ContratoGeneralEntity> {
+  ): Promise<ContratoGeneral> {
     return this.contratoGeneralService.create(createContratogenneralDto);
   }
 
@@ -79,13 +79,13 @@ export class ContratoGeneralController {
   @ApiResponse({
     status: 200,
     description: 'Contrato general actualizado',
-    type: ContratoGeneralEntity,
+    type: ContratoGeneral,
   })
   @ApiResponse({ status: 404, description: 'Contrato general no encontrado' })
   update(
     @Param('id') id: string,
     @Body() actualizarContratoGeneralDto: ActualizarContratoGeneralDto,
-  ): Promise<ContratoGeneralEntity> {
+  ): Promise<ContratoGeneral> {
     return this.contratoGeneralService.update(
       +id,
       actualizarContratoGeneralDto,
@@ -104,4 +104,6 @@ export class ContratoGeneralController {
   remove(@Param('id') id: string): Promise<void> {
     return this.contratoGeneralService.remove(+id);
   }
+
+
 }

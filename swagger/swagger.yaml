@@ -20,7 +20,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ContratoGeneralEntity'
+                  $ref: '#/components/schemas/ContratoGeneral'
       tags: &ref_0
         - contratos-generales
     post:
@@ -39,7 +39,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContratoGeneralEntity'
+                $ref: '#/components/schemas/ContratoGeneral'
       tags: *ref_0
   /contratos-generales/{id}:
     get:
@@ -58,7 +58,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContratoGeneralEntity'
+                $ref: '#/components/schemas/ContratoGeneral'
         '404':
           description: Contrato general no encontrado
       tags: *ref_0
@@ -84,7 +84,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContratoGeneralEntity'
+                $ref: '#/components/schemas/ContratoGeneral'
         '404':
           description: Contrato general no encontrado
       tags: *ref_0
@@ -104,6 +104,77 @@ paths:
         '404':
           description: Contrato general no encontrado
       tags: *ref_0
+  /documentos-contratos:
+    post:
+      operationId: DocumentoContratoController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDocumentoContratoDto'
+      responses:
+        '201':
+          description: ''
+    get:
+      operationId: DocumentoContratoController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /documentos-contratos/{id}:
+    get:
+      operationId: DocumentoContratoController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+    patch:
+      operationId: DocumentoContratoController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDocumentoContratoDto'
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: DocumentoContratoController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /documentos-contratos/contrato/{contratoId}:
+    get:
+      operationId: DocumentoContratoController_findByContratoId
+      parameters:
+        - name: contratoId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
 info:
   title: Gestion Contractual CRUD
   description: API para la gestión contractual
@@ -115,12 +186,18 @@ tags:
 servers: []
 components:
   schemas:
-    ContratoGeneralEntity:
+    ContratoGeneral:
       type: object
       properties: {}
     CrearContratoGeneralDto:
       type: object
       properties: {}
     ActualizarContratoGeneralDto:
+      type: object
+      properties: {}
+    CreateDocumentoContratoDto:
+      type: object
+      properties: {}
+    UpdateDocumentoContratoDto:
       type: object
       properties: {}

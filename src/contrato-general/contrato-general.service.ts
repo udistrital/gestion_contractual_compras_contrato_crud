@@ -1,35 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { CrearContratoGeneralDto } from './dto/crear-contrato-general.dto';
 import { ActualizarContratoGeneralDto } from './dto/actualizar-contrato-general.dto';
-import { ContratoGeneralEntity } from './entities/contrato-general.entity';
+import { ContratoGeneral } from './entities/contrato-general.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ContratoGeneralService {
   constructor(
-    @InjectRepository(ContratoGeneralEntity)
-    private contratoGeneralRepository: Repository<ContratoGeneralEntity>,
+    @InjectRepository(ContratoGeneral)
+    private contratoGeneralRepository: Repository<ContratoGeneral>,
   ) {}
 
-  async findAll(): Promise<ContratoGeneralEntity[]> {
+  async findAll(): Promise<ContratoGeneral[]> {
     return this.contratoGeneralRepository.find();
   }
 
-  async findOne(id: number): Promise<ContratoGeneralEntity> {
+  async findOne(id: number): Promise<ContratoGeneral> {
     return this.contratoGeneralRepository.findOne({ where: { id } });
   }
 
   async create(
     contratogeneral: CrearContratoGeneralDto,
-  ): Promise<ContratoGeneralEntity> {
+  ): Promise<ContratoGeneral> {
     return this.contratoGeneralRepository.save(contratogeneral);
   }
 
   async update(
     id: number,
     contratogeneral: ActualizarContratoGeneralDto,
-  ): Promise<ContratoGeneralEntity> {
+  ): Promise<ContratoGeneral> {
     await this.contratoGeneralRepository.update(id, contratogeneral);
     return this.findOne(id);
   }
