@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
-import {DocumentoContrato} from "../../documento-contrato/entities/documento-contrato.entity";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { DocumentoContrato } from '../../documento-contrato/entities/documento-contrato.entity';
+import { EstadoContrato } from '../../estado-contrato/entities/estado-contrato.entity';
 
 @Entity('contrato_general')
 export class ContratoGeneral {
@@ -118,6 +119,15 @@ export class ContratoGeneral {
   @Column({ name: 'fecha_modificacion' })
   fechaModificacion: Date;
 
-  @OneToMany(() => DocumentoContrato, documentoContrato => documentoContrato.contrato)
+  @OneToMany(
+    () => DocumentoContrato,
+    (documentoContrato) => documentoContrato.contrato_general_id,
+  )
   documentosContrato: DocumentoContrato[];
+
+  @OneToMany(
+    () => EstadoContrato,
+    (estadoContrato) => estadoContrato.contrato_general_id,
+  )
+  estados: EstadoContrato[];
 }

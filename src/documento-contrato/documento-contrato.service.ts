@@ -42,7 +42,7 @@ export class DocumentoContratoService {
 
   async findByContratoId(contratoId: number): Promise<DocumentoContrato[]> {
     return await this.documentoContratoRepository.find({
-      where: { contrato: { id: contratoId } },
+      where: { contrato_general_id: { id: contratoId } },
     });
   }
 }

@@ -9,6 +9,8 @@ import { DocumentoContratoModule } from './documento-contrato/documento-contrato
 import { DocumentoContrato } from './documento-contrato/entities/documento-contrato.entity';
 import { ContratistaModule } from './contratista/contratista.module';
 import { Contratista } from './contratista/entities/contratista.entity';
+import { EstadoContratoModule } from './estado-contrato/estado-contrato.module';
+import { EstadoContrato } from './estado-contrato/entities/estado-contrato.entity';
 
 @Module({
   imports: [
@@ -25,7 +27,12 @@ import { Contratista } from './contratista/entities/contratista.entity';
         username: configService.get('GESTION_CONTRACTUAL_CRUD_USERNAME'),
         password: configService.get('GESTION_CONTRACTUAL_CRUD_PASS'),
         database: configService.get('GESTION_CONTRACTUAL_CRUD_DB'),
-        entities: [ContratoGeneral, DocumentoContrato, Contratista],
+        entities: [
+          ContratoGeneral,
+          DocumentoContrato,
+          Contratista,
+          EstadoContrato,
+        ],
         synchronize: configService.get('DEVELOPER_MODE'), //Solo para desarrollo, en producción se debe desactivar
         ssl: {
           rejectUnauthorized: false,
@@ -36,6 +43,7 @@ import { Contratista } from './contratista/entities/contratista.entity';
     ContratoGeneralModule,
     DocumentoContratoModule,
     ContratistaModule,
+    EstadoContratoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

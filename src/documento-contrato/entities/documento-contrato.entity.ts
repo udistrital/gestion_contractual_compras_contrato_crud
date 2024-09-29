@@ -13,5 +13,5 @@ export class DocumentoContrato {
   activo: boolean;
 
   @ManyToOne(() => ContratoGeneral, (contrato) => contrato.documentosContrato)
-  contrato: ContratoGeneral;
+  contrato_general_id: ContratoGeneral;
 }
