@@ -174,6 +174,7 @@
     "/documentos-contratos": {
       "post": {
         "operationId": "DocumentoContratoController_create",
+        "summary": "Crear un nuevo documento contrato",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -187,23 +188,51 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "El documento contrato ha sido creado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentoContrato"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta."
           }
-        }
+        },
+        "tags": [
+          "documentos-contratos"
+        ]
       },
       "get": {
         "operationId": "DocumentoContratoController_findAll",
+        "summary": "Obtener todos los documentos contratos",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Devuelve todos los documentos contratos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentoContrato"
+                  }
+                }
+              }
+            }
           }
-        }
+        },
+        "tags": [
+          "documentos-contratos"
+        ]
       }
     },
     "/documentos-contratos/{id}": {
       "get": {
         "operationId": "DocumentoContratoController_findOne",
+        "summary": "Obtener un documento contrato por id",
         "parameters": [
           {
             "name": "id",
@@ -216,12 +245,26 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Devuelve el documento contrato.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentoContrato"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Documento contrato no encontrado."
           }
-        }
+        },
+        "tags": [
+          "documentos-contratos"
+        ]
       },
       "patch": {
         "operationId": "DocumentoContratoController_update",
+        "summary": "Actualizar un documento contrato",
         "parameters": [
           {
             "name": "id",
@@ -244,12 +287,29 @@
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "El documento contrato ha sido actualizado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentoContrato"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta."
+          },
+          "404": {
+            "description": "Documento contrato no encontrado."
           }
-        }
+        },
+        "tags": [
+          "documentos-contratos"
+        ]
       },
       "delete": {
         "operationId": "DocumentoContratoController_remove",
+        "summary": "Eliminar un documento contrato",
         "parameters": [
           {
             "name": "id",
@@ -262,14 +322,21 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "El documento contrato ha sido eliminado exitosamente."
+          },
+          "404": {
+            "description": "Documento contrato no encontrado."
           }
-        }
+        },
+        "tags": [
+          "documentos-contratos"
+        ]
       }
     },
     "/documentos-contratos/contrato/{contratoId}": {
       "get": {
         "operationId": "DocumentoContratoController_findByContratoId",
+        "summary": "Obtener documentos contratos por id de contrato",
         "parameters": [
           {
             "name": "contratoId",
@@ -282,9 +349,221 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Devuelve los documentos contratos para el contrato especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentoContrato"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontraron documentos contratos para el contrato especificado."
           }
-        }
+        },
+        "tags": [
+          "documentos-contratos"
+        ]
+      }
+    },
+    "/contratistas": {
+      "post": {
+        "operationId": "ContratistaController_create",
+        "summary": "Crear un nuevo contratista",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContratistaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "El contratista ha sido creado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contratista"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta."
+          }
+        },
+        "tags": [
+          "contratistas"
+        ]
+      },
+      "get": {
+        "operationId": "ContratistaController_findAll",
+        "summary": "Obtener todos los contratistas",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Devuelve todos los contratistas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contratista"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contratistas"
+        ]
+      }
+    },
+    "/contratistas/{id}": {
+      "get": {
+        "operationId": "ContratistaController_findOne",
+        "summary": "Obtener un contratista por id",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Devuelve el contratista.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contratista"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contratista no encontrado."
+          }
+        },
+        "tags": [
+          "contratistas"
+        ]
+      },
+      "patch": {
+        "operationId": "ContratistaController_update",
+        "summary": "Actualizar un contratista",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateContratistaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "El contratista ha sido actualizado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contratista"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta."
+          },
+          "404": {
+            "description": "Contratista no encontrado."
+          }
+        },
+        "tags": [
+          "contratistas"
+        ]
+      },
+      "delete": {
+        "operationId": "ContratistaController_remove",
+        "summary": "Eliminar un contratista",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "El contratista ha sido eliminado exitosamente."
+          },
+          "404": {
+            "description": "Contratista no encontrado."
+          }
+        },
+        "tags": [
+          "contratistas"
+        ]
+      }
+    },
+    "/contratistas/by-contrato/{contratoId}": {
+      "get": {
+        "operationId": "ContratistaController_findByContrato",
+        "summary": "Obtener contratista por id de contrato",
+        "parameters": [
+          {
+            "name": "contratoId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Devuelve el contratista para el contrato especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contratista"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontró contratista para el contrato especificado."
+          }
+        },
+        "tags": [
+          "contratistas"
+        ]
       }
     }
   },
@@ -319,7 +598,23 @@
         "type": "object",
         "properties": {}
       },
+      "DocumentoContrato": {
+        "type": "object",
+        "properties": {}
+      },
       "UpdateDocumentoContratoDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateContratistaDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "Contratista": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateContratistaDto": {
         "type": "object",
         "properties": {}
       }

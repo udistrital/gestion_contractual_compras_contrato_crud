@@ -1,17 +1,17 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {ContratoGeneral} from "../../contrato-general/entities/contrato-general.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ContratoGeneral } from '../../contrato-general/entities/contrato-general.entity';
 
 @Entity()
 export class DocumentoContrato {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column({ type: 'integer', nullable: true })
-    tipoDocumentoId: number;
+  @Column({ type: 'integer', nullable: true })
+  tipoDocumentoId: number;
 
-    @Column()
-    activo: boolean;
+  @Column()
+  activo: boolean;
 
-    @ManyToOne(() => ContratoGeneral, contrato => contrato.documentosContrato)
-    contrato: ContratoGeneral;
+  @ManyToOne(() => ContratoGeneral, (contrato) => contrato.documentosContrato)
+  contrato: ContratoGeneral;
 }

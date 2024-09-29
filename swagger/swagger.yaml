@@ -107,6 +107,7 @@ paths:
   /documentos-contratos:
     post:
       operationId: DocumentoContratoController_create
+      summary: Crear un nuevo documento contrato
       parameters: []
       requestBody:
         required: true
@@ -116,16 +117,33 @@ paths:
               $ref: '#/components/schemas/CreateDocumentoContratoDto'
       responses:
         '201':
-          description: ''
+          description: El documento contrato ha sido creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentoContrato'
+        '400':
+          description: Solicitud incorrecta.
+      tags: &ref_1
+        - documentos-contratos
     get:
       operationId: DocumentoContratoController_findAll
+      summary: Obtener todos los documentos contratos
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Devuelve todos los documentos contratos.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentoContrato'
+      tags: *ref_1
   /documentos-contratos/{id}:
     get:
       operationId: DocumentoContratoController_findOne
+      summary: Obtener un documento contrato por id
       parameters:
         - name: id
           required: true
@@ -134,9 +152,17 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Devuelve el documento contrato.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentoContrato'
+        '404':
+          description: Documento contrato no encontrado.
+      tags: *ref_1
     patch:
       operationId: DocumentoContratoController_update
+      summary: Actualizar un documento contrato
       parameters:
         - name: id
           required: true
@@ -151,9 +177,19 @@ paths:
               $ref: '#/components/schemas/UpdateDocumentoContratoDto'
       responses:
         '200':
-          description: ''
+          description: El documento contrato ha sido actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentoContrato'
+        '400':
+          description: Solicitud incorrecta.
+        '404':
+          description: Documento contrato no encontrado.
+      tags: *ref_1
     delete:
       operationId: DocumentoContratoController_remove
+      summary: Eliminar un documento contrato
       parameters:
         - name: id
           required: true
@@ -162,10 +198,14 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: El documento contrato ha sido eliminado exitosamente.
+        '404':
+          description: Documento contrato no encontrado.
+      tags: *ref_1
   /documentos-contratos/contrato/{contratoId}:
     get:
       operationId: DocumentoContratoController_findByContratoId
+      summary: Obtener documentos contratos por id de contrato
       parameters:
         - name: contratoId
           required: true
@@ -174,7 +214,136 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Devuelve los documentos contratos para el contrato especificado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentoContrato'
+        '404':
+          description: >-
+            No se encontraron documentos contratos para el contrato
+            especificado.
+      tags: *ref_1
+  /contratistas:
+    post:
+      operationId: ContratistaController_create
+      summary: Crear un nuevo contratista
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContratistaDto'
+      responses:
+        '201':
+          description: El contratista ha sido creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contratista'
+        '400':
+          description: Solicitud incorrecta.
+      tags: &ref_2
+        - contratistas
+    get:
+      operationId: ContratistaController_findAll
+      summary: Obtener todos los contratistas
+      parameters: []
+      responses:
+        '200':
+          description: Devuelve todos los contratistas.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contratista'
+      tags: *ref_2
+  /contratistas/{id}:
+    get:
+      operationId: ContratistaController_findOne
+      summary: Obtener un contratista por id
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Devuelve el contratista.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contratista'
+        '404':
+          description: Contratista no encontrado.
+      tags: *ref_2
+    patch:
+      operationId: ContratistaController_update
+      summary: Actualizar un contratista
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContratistaDto'
+      responses:
+        '200':
+          description: El contratista ha sido actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contratista'
+        '400':
+          description: Solicitud incorrecta.
+        '404':
+          description: Contratista no encontrado.
+      tags: *ref_2
+    delete:
+      operationId: ContratistaController_remove
+      summary: Eliminar un contratista
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: El contratista ha sido eliminado exitosamente.
+        '404':
+          description: Contratista no encontrado.
+      tags: *ref_2
+  /contratistas/by-contrato/{contratoId}:
+    get:
+      operationId: ContratistaController_findByContrato
+      summary: Obtener contratista por id de contrato
+      parameters:
+        - name: contratoId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Devuelve el contratista para el contrato especificado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contratista'
+        '404':
+          description: No se encontró contratista para el contrato especificado.
+      tags: *ref_2
 info:
   title: Gestion Contractual CRUD
   description: API para la gestión contractual
@@ -198,6 +367,18 @@ components:
     CreateDocumentoContratoDto:
       type: object
       properties: {}
+    DocumentoContrato:
+      type: object
+      properties: {}
     UpdateDocumentoContratoDto:
+      type: object
+      properties: {}
+    CreateContratistaDto:
+      type: object
+      properties: {}
+    Contratista:
+      type: object
+      properties: {}
+    UpdateContratistaDto:
       type: object
       properties: {}

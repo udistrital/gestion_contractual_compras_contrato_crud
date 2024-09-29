@@ -1,22 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDocumentoContratoDto } from './dto/create-documento-contrato.dto';
 import { UpdateDocumentoContratoDto } from './dto/update-documento-contrato.dto';
-import {InjectRepository} from "@nestjs/typeorm";
-import {DocumentoContrato} from "./entities/documento-contrato.entity";
-import {Repository} from "typeorm";
-
-class CreateDocumentoDto {
-}
+import { InjectRepository } from '@nestjs/typeorm';
+import { DocumentoContrato } from './entities/documento-contrato.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class DocumentoContratoService {
   constructor(
-      @InjectRepository(DocumentoContrato)
-      private documentoContratoRepository: Repository<DocumentoContrato>,
+    @InjectRepository(DocumentoContrato)
+    private documentoContratoRepository: Repository<DocumentoContrato>,
   ) {}
 
-  async create(createDocumentoDto: CreateDocumentoDto): Promise<DocumentoContrato> {
-    const documento = this.documentoContratoRepository.create(createDocumentoDto);
+  async create(
+    createDocumentoDto: CreateDocumentoContratoDto,
+  ): Promise<DocumentoContrato> {
+    const documento =
+      this.documentoContratoRepository.create(createDocumentoDto);
     return await this.documentoContratoRepository.save(documento);
   }
 
@@ -28,7 +28,10 @@ export class DocumentoContratoService {
     return await this.documentoContratoRepository.findOne({ where: { id } });
   }
 
-  async update(id: string, updateDocumentoDto: UpdateDocumentoContratoDto): Promise<DocumentoContrato> {
+  async update(
+    id: string,
+    updateDocumentoDto: UpdateDocumentoContratoDto,
+  ): Promise<DocumentoContrato> {
     await this.documentoContratoRepository.update(id, updateDocumentoDto);
     return this.findOne(id);
   }
@@ -40,7 +43,6 @@ export class DocumentoContratoService {
   async findByContratoId(contratoId: number): Promise<DocumentoContrato[]> {
     return await this.documentoContratoRepository.find({
       where: { contrato: { id: contratoId } },
-      relations: ['contrato'],
     });
   }
 }
