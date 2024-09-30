@@ -175,7 +175,7 @@ export class ContratistaController {
     }
   }
 
-  @Get('by-contrato/:contratoId')
+  @Get('contrato/:contratoId')
   @ApiOperation({ summary: 'Obtener contratista por id de contrato' })
   @ApiParam({ name: 'contratoId', type: 'string' })
   @ApiResponse({
