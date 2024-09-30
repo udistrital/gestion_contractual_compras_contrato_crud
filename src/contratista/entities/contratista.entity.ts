@@ -4,12 +4,10 @@ import {
   Column,
   OneToOne,
   JoinColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 import { ContratoGeneral } from '../../contrato-general/entities/contrato-general.entity';
 
-@Entity()
+@Entity('contratista')
 export class Contratista {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -17,19 +15,19 @@ export class Contratista {
   @Column({ type: 'varchar', length: 20, nullable: false })
   numero_documento: string;
 
-  @Column({ type: 'int', nullable: false })
+  @Column()
   tipo_persona_id: number;
 
-  @Column({ type: 'boolean', nullable: false })
+  @Column({ type: 'boolean', default: true })
   activo: boolean;
 
-  @CreateDateColumn()
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
   fecha_creacion: Date;
 
-  @UpdateDateColumn()
+  @Column({ nullable: true })
   fecha_modificacion: Date;
 
   @OneToOne(() => ContratoGeneral)
   @JoinColumn({ name: 'contrato_general_id' })
-  contrato_general: ContratoGeneral;
+  contrato_general_id: ContratoGeneral;
 }

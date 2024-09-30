@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  HttpStatus,
 } from '@nestjs/common';
 import { ContratistaService } from './contratista.service';
 import { CreateContratistaDto } from './dto/create-contratista.dto';
@@ -18,6 +19,7 @@ import {
   ApiParam,
   ApiBody,
 } from '@nestjs/swagger';
+import { StandardResponse } from '../utils/standardResponse.interface';
 
 @ApiTags('contratistas')
 @Controller('contratistas')
@@ -33,10 +35,25 @@ export class ContratistaController {
     type: Contratista,
   })
   @ApiResponse({ status: 400, description: 'Solicitud incorrecta.' })
-  create(
+  async create(
     @Body() createContratistaDto: CreateContratistaDto,
-  ): Promise<Contratista> {
-    return this.contratistaService.create(createContratistaDto);
+  ): Promise<StandardResponse<Contratista>> {
+    try {
+      const saved = await this.contratistaService.create(createContratistaDto);
+      return {
+        Success: true,
+        Status: HttpStatus.CREATED,
+        Message: 'Contratista creado',
+        Data: saved,
+      };
+    } catch (error) {
+      return {
+        Success: false,
+        Status: HttpStatus.INTERNAL_SERVER_ERROR,
+        Message: 'Error al crear el contratista',
+        Data: error,
+      };
+    }
   }
 
   @Get()
@@ -46,12 +63,27 @@ export class ContratistaController {
     description: 'Devuelve todos los contratistas.',
     type: [Contratista],
   })
-  findAll(): Promise<Contratista[]> {
-    return this.contratistaService.findAll();
+  async findAll(): Promise<StandardResponse<Contratista[]>> {
+    try {
+      const contratistas = await this.contratistaService.findAll();
+      return {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Contratistas encontrados',
+        Data: contratistas,
+      };
+    } catch (error) {
+      return {
+        Success: false,
+        Status: HttpStatus.NOT_FOUND,
+        Message: 'Contratistas no encontrados',
+        Data: error,
+      };
+    }
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Obtener un contratista por id' })
+  @ApiOperation({ summary: 'Obtener un contratista por numero_identificacion' })
   @ApiParam({ name: 'id', type: 'string' })
   @ApiResponse({
     status: 200,
@@ -59,8 +91,25 @@ export class ContratistaController {
     type: Contratista,
   })
   @ApiResponse({ status: 404, description: 'Contratista no encontrado.' })
-  findOne(@Param('id') id: string): Promise<Contratista> {
-    return this.contratistaService.findOne(id);
+  async findOne(
+    @Param('id') id: string,
+  ): Promise<StandardResponse<Contratista>> {
+    try {
+      const found = await this.contratistaService.findOne(id);
+      return {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Contratista encontrado',
+        Data: found,
+      };
+    } catch (error) {
+      return {
+        Success: false,
+        Status: HttpStatus.NOT_FOUND,
+        Message: 'Contratista no encontrado',
+        Data: error,
+      };
+    }
   }
 
   @Patch(':id')
@@ -74,11 +123,29 @@ export class ContratistaController {
   })
   @ApiResponse({ status: 400, description: 'Solicitud incorrecta.' })
   @ApiResponse({ status: 404, description: 'Contratista no encontrado.' })
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateContratistaDto: UpdateContratistaDto,
-  ): Promise<Contratista> {
-    return this.contratistaService.update(id, updateContratistaDto);
+  ): Promise<StandardResponse<Contratista>> {
+    try {
+      const updated = await this.contratistaService.update(
+        id,
+        updateContratistaDto,
+      );
+      return {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Contratista actualizado',
+        Data: updated,
+      };
+    } catch (error) {
+      return {
+        Success: false,
+        Status: HttpStatus.NOT_FOUND,
+        Message: 'Contratista no encontrado',
+        Data: error,
+      };
+    }
   }
 
   @Delete(':id')
@@ -89,8 +156,23 @@ export class ContratistaController {
     description: 'El contratista ha sido eliminado exitosamente.',
   })
   @ApiResponse({ status: 404, description: 'Contratista no encontrado.' })
-  remove(@Param('id') id: string): Promise<void> {
-    return this.contratistaService.remove(id);
+  async remove(@Param('id') id: string): Promise<StandardResponse<void>> {
+    try {
+      await this.contratistaService.remove(id);
+      return {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Contratista eliminado',
+        Data: null,
+      };
+    } catch (error) {
+      return {
+        Success: false,
+        Status: HttpStatus.NOT_FOUND,
+        Message: 'Contratista no encontrado',
+        Data: error,
+      };
+    }
   }
 
   @Get('by-contrato/:contratoId')
@@ -105,9 +187,25 @@ export class ContratistaController {
     status: 404,
     description: 'No se encontró contratista para el contrato especificado.',
   })
-  findByContrato(
+  async findByContrato(
     @Param('contratoId') contratoId: string,
-  ): Promise<Contratista> {
-    return this.contratistaService.findByContratoGeneralId(+contratoId);
+  ): Promise<StandardResponse<Contratista>> {
+    try {
+      const result =
+        await this.contratistaService.findByContratoGeneralId(+contratoId);
+      return {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Contratista encontrado',
+        Data: result,
+      };
+    } catch (error) {
+      return {
+        Success: false,
+        Status: HttpStatus.NOT_FOUND,
+        Message: 'Contratista no encontrado',
+        Data: error,
+      };
+    }
   }
 }
