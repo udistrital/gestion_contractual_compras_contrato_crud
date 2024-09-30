@@ -7,40 +7,40 @@ export class ContratoGeneral {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'tipo_compromiso_id' })
+  @Column({ name: 'tipo_compromiso_id', nullable: true })
   tipoCompromisoId: number;
 
-  @Column({ name: 'tipo_contrato_id' })
+  @Column({ name: 'tipo_contrato_id', nullable: true })
   tipoContratoId: number;
 
-  @Column({ name: 'perfil_contratista_id' })
+  @Column({ name: 'perfil_contratista_id', nullable: true })
   perfilContratistaId: number;
 
   @Column({ name: 'fecha_suscripcion_estudios', type: 'date', nullable: true })
   fechaSuscripcionEstudios: Date;
 
-  @Column({ name: 'aplica_poliza' })
+  @Column({ name: 'aplica_poliza', nullable: true })
   aplicaPoliza: boolean;
 
   @Column({ name: 'ordenador_id', nullable: true })
   ordenadorId: number;
 
-  @Column({ name: 'modalidad_seleccion_id' })
+  @Column({ name: 'modalidad_seleccion_id', nullable: true })
   modalidadSeleccionId: number;
 
-  @Column({ name: 'tipologia_especifica_id' })
+  @Column({ name: 'tipologia_especifica_id', nullable: true })
   tipologiaEspecificaId: number;
 
-  @Column({ name: 'regimen_contratacion_id' })
+  @Column({ name: 'regimen_contratacion_id', nullable: true })
   regimenContratacionId: number;
 
-  @Column({ name: 'procedimiento_id' })
+  @Column({ name: 'procedimiento_id', nullable: true })
   procedimientoId: number;
 
-  @Column({ name: 'plazo_ejecucion' })
+  @Column({ name: 'plazo_ejecucion', nullable: true })
   plazoEjecucion: number;
 
-  @Column({ name: 'unidad_ejecutora_id' })
+  @Column({ name: 'unidad_ejecutora_id', nullable: true })
   unidadEjecutoraId: number;
 
   @Column({ name: 'numero_constancia', nullable: true })
