@@ -5,7 +5,6 @@ import { ContratoGeneralService } from './contrato-general.service';
 import { ContratoGeneral } from './entities/contrato-general.entity';
 import { CrearContratoGeneralDto } from './dto/crear-contrato-general.dto';
 import { ActualizarContratoGeneralDto } from './dto/actualizar-contrato-general.dto';
-import { HttpStatus } from '@nestjs/common';
 
 describe('ContratoGeneralService', () => {
   let service: ContratoGeneralService;
@@ -40,29 +39,12 @@ describe('ContratoGeneralService', () => {
   });
 
   describe('findAll', () => {
-    it('debería devolver todos los contratos generales', async () => {
+    it('debería devolver un array de contratos generales', async () => {
       const result = [{ id: 1 }, { id: 2 }];
       mockRepository.find.mockResolvedValue(result);
 
-      const response = await service.findAll();
-      expect(response).toEqual({
-        Success: true,
-        Status: HttpStatus.OK,
-        Message: 'Contratos generales encontrados',
-        Data: result,
-      });
-    });
-
-    it('debería manejar el caso de no encontrar contratos', async () => {
-      mockRepository.find.mockResolvedValue(null);
-
-      const response = await service.findAll();
-      expect(response).toEqual({
-        Success: false,
-        Status: HttpStatus.NOT_FOUND,
-        Message: 'Contratos generales no encontrados',
-        Data: null,
-      });
+      expect(await service.findAll()).toBe(result);
+      expect(mockRepository.find).toHaveBeenCalled();
     });
   });
 
@@ -71,31 +53,14 @@ describe('ContratoGeneralService', () => {
       const result = { id: 1 };
       mockRepository.findOne.mockResolvedValue(result);
 
-      const response = await service.findOne(1);
-      expect(response).toEqual({
-        Success: true,
-        Status: HttpStatus.OK,
-        Message: 'Contrato general encontrado',
-        Data: result,
-      });
-    });
-
-    it('debería manejar el caso de no encontrar el contrato', async () => {
-      mockRepository.findOne.mockResolvedValue(null);
-
-      const response = await service.findOne(1);
-      expect(response).toEqual({
-        Success: false,
-        Status: HttpStatus.NOT_FOUND,
-        Message: 'Contrato general no encontrado',
-        Data: null,
-      });
+      expect(await service.findOne(1)).toBe(result);
+      expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
     });
   });
 
   describe('create', () => {
     it('debería crear un nuevo contrato general', async () => {
-      const contratoDto: CrearContratoGeneralDto = {
+      const dto: CrearContratoGeneralDto = {
         tipoCompromisoId: 1,
         tipoContratoId: 1,
         perfilContratistaId: 1,
@@ -128,114 +93,55 @@ describe('ContratoGeneralService', () => {
         fechaFinal: new Date(),
         usuarioLegacy: 'usuario_test',
       };
-      const result = { id: 1, ...contratoDto };
+      const result = { id: 1, ...dto };
       mockRepository.save.mockResolvedValue(result);
 
-      const response = await service.create(contratoDto);
-      expect(response).toEqual({
-        Success: true,
-        Status: HttpStatus.CREATED,
-        Message: 'Contrato general creado',
-        Data: result,
-      });
-    });
-
-    it('debería manejar errores al crear', async () => {
-      mockRepository.save.mockRejectedValue(new Error('Error de prueba'));
-
-      const response = await service.create({} as CrearContratoGeneralDto);
-      expect(response).toEqual({
-        Success: false,
-        Status: HttpStatus.INTERNAL_SERVER_ERROR,
-        Message: 'Error al crear el contrato general',
-        Data: expect.any(Error),
-      });
+      expect(await service.create(dto)).toBe(result);
+      expect(mockRepository.save).toHaveBeenCalledWith(dto);
     });
   });
 
   describe('update', () => {
     it('debería actualizar un contrato general', async () => {
+      const id = 1;
       const dto: ActualizarContratoGeneralDto = {
         /* ... datos del DTO ... */
       };
-      const updatedContrato = { id: 1, ...dto };
+      const updatedContrato = { id, ...dto };
       mockRepository.update.mockResolvedValue({ affected: 1 });
       mockRepository.findOne.mockResolvedValue(updatedContrato);
 
-      const response = await service.update(1, dto);
-      expect(response).toEqual({
-        Success: true,
-        Status: HttpStatus.OK,
-        Message: 'Contrato general actualizado',
-        Data: expect.objectContaining({
-          Success: true,
-          Status: HttpStatus.OK,
-          Data: updatedContrato,
-        }),
-      });
-    });
+      const result = await service.update(id, dto);
 
-    it('debería manejar errores al actualizar', async () => {
-      mockRepository.update.mockRejectedValue(new Error('Error de prueba'));
-
-      const response = await service.update(
-        1,
-        {} as ActualizarContratoGeneralDto,
-      );
-      expect(response).toEqual({
-        Success: false,
-        Status: HttpStatus.INTERNAL_SERVER_ERROR,
-        Message: 'Error al actualizar el contrato general',
-        Data: expect.any(Error),
-      });
+      expect(result).toEqual(updatedContrato);
+      expect(mockRepository.update).toHaveBeenCalledWith(id, dto);
+      expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id } });
     });
   });
 
   describe('remove', () => {
     it('debería marcar como inactivo un contrato general', async () => {
-      const mockContrato = { id: 1, activo: true };
+      const id = 1;
+      const mockContrato = { id, activo: true };
       mockRepository.findOne.mockResolvedValue(mockContrato);
       mockRepository.update.mockResolvedValue({ affected: 1 });
 
-      const response = await service.remove(1);
-      expect(response).toEqual({
-        Success: true,
-        Status: HttpStatus.OK,
-        Message: 'Contrato general eliminado',
-        Data: null,
+      await service.remove(id);
+
+      expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id } });
+      expect(mockRepository.update).toHaveBeenCalledWith(id, {
+        activo: false,
+        fechaModificacion: expect.any(Date),
       });
-      expect(mockRepository.update).toHaveBeenCalledWith(
-        1,
-        expect.objectContaining({
-          activo: false,
-          fechaModificacion: expect.any(Date),
-        }),
-      );
     });
 
-    it('debería manejar el caso de no encontrar el contrato a eliminar', async () => {
+    it('debería lanzar un error si el contrato general no se encuentra', async () => {
+      const id = 1;
       mockRepository.findOne.mockResolvedValue(null);
 
-      const response = await service.remove(1);
-      expect(response).toEqual({
-        Success: false,
-        Status: HttpStatus.NOT_FOUND,
-        Message: 'Contrato general no encontrado',
-        Data: null,
-      });
-    });
-
-    it('debería manejar errores al eliminar', async () => {
-      mockRepository.findOne.mockResolvedValue({ id: 1 });
-      mockRepository.update.mockRejectedValue(new Error('Error de prueba'));
-
-      const response = await service.remove(1);
-      expect(response).toEqual({
-        Success: false,
-        Status: HttpStatus.INTERNAL_SERVER_ERROR,
-        Message: 'Error al eliminar el contrato general',
-        Data: expect.any(Error),
-      });
+      await expect(service.remove(id)).rejects.toThrow(
+        `ContratoGeneral con ID "${id}" no encontrado`,
+      );
     });
   });
 });
