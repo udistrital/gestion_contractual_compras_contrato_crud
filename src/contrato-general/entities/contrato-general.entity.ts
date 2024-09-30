@@ -16,13 +16,13 @@ export class ContratoGeneral {
   @Column({ name: 'perfil_contratista_id' })
   perfilContratistaId: number;
 
-  @Column({ name: 'fecha_suscripcion_estudios', type: 'date' })
+  @Column({ name: 'fecha_suscripcion_estudios', type: 'date', nullable: true })
   fechaSuscripcionEstudios: Date;
 
   @Column({ name: 'aplica_poliza' })
   aplicaPoliza: boolean;
 
-  @Column({ name: 'ordenador_id' })
+  @Column({ name: 'ordenador_id', nullable: true })
   ordenadorId: number;
 
   @Column({ name: 'modalidad_seleccion_id' })
@@ -43,28 +43,34 @@ export class ContratoGeneral {
   @Column({ name: 'unidad_ejecutora_id' })
   unidadEjecutoraId: number;
 
-  @Column({ name: 'numero_constancia' })
+  @Column({ name: 'numero_constancia', nullable: true })
   numeroConstancia: number;
 
-  @Column({ name: 'clase_contratista_id' })
+  @Column({ name: 'clase_contratista_id', nullable: true })
   claseContratistaId: number;
 
-  @Column({ name: 'tipo_moneda_id' })
+  @Column({ name: 'tipo_moneda_id', nullable: true })
   tipoMonedaId: number;
 
-  @Column({ name: 'valor_pesos', type: 'numeric', precision: 16, scale: 2 })
+  @Column({
+    name: 'valor_pesos',
+    type: 'numeric',
+    precision: 16,
+    scale: 2,
+    nullable: true,
+  })
   valorPesos: number;
 
-  @Column({ name: 'tipo_gasto_id' })
+  @Column({ name: 'tipo_gasto_id', nullable: true })
   tipoGastoId: number;
 
-  @Column({ name: 'origen_recursos_id' })
+  @Column({ name: 'origen_recursos_id', nullable: true })
   origenRecursosId: number;
 
-  @Column({ name: 'origen_presupuestos_id' })
+  @Column({ name: 'origen_presupuestos_id', nullable: true })
   origenPresupuestosId: number;
 
-  @Column({ name: 'tema_gasto_inversion_id' })
+  @Column({ name: 'tema_gasto_inversion_id', nullable: true })
   temaGastoInversionId: number;
 
   @Column({
@@ -72,6 +78,7 @@ export class ContratoGeneral {
     type: 'numeric',
     precision: 16,
     scale: 3,
+    nullable: true,
   })
   valorContratoMe: number;
 
@@ -80,43 +87,44 @@ export class ContratoGeneral {
     type: 'numeric',
     precision: 16,
     scale: 10,
+    nullable: true,
   })
   valorTasaCambio: number;
 
-  @Column({ name: 'medio_pogo_id' })
+  @Column({ name: 'medio_pogo_id', nullable: true })
   medioPogoId: number;
 
-  @Column({ name: 'clausula_registro_presupuestal' })
+  @Column({ name: 'clausula_registro_presupuestal', nullable: true })
   clausulaRegistroPresupuestal: boolean;
 
-  @Column({ name: 'modo_pago' })
+  @Column({ name: 'modo_pago', nullable: true })
   modoPago: string;
 
-  @Column({ length: 500 })
+  @Column({ length: 500, nullable: true })
   observaciones: string;
 
-  @Column({ length: 4 })
+  @Column({ length: 4, nullable: true })
   vigencia: string;
 
-  @Column({ name: 'consecutivo_elaboracion', length: 50 })
+  @Column({ name: 'consecutivo_elaboracion', length: 50, nullable: true })
   consecutivoElaboracion: string;
 
-  @Column({ name: 'fecha_inicial', type: 'date' })
+  @Column({ name: 'fecha_inicial', type: 'date', nullable: true })
   fechaInicial: Date;
 
-  @Column({ name: 'fecha_final', type: 'date' })
+  @Column({ name: 'fecha_final', type: 'date', nullable: true })
   fechaFinal: Date;
 
-  @Column({ name: 'usuario_legacy', length: 15 })
+  @Column({ name: 'usuario_legacy', length: 15, nullable: true })
   usuarioLegacy: string;
 
-  @Column()
+  @Column({ default: true })
   activo: boolean;
 
-  @Column({ name: 'fecha_creacion' })
+  @Column({ name: 'fecha_creacion', default: () => 'CURRENT_TIMESTAMP' })
   fechaCreacion: Date;
 
-  @Column({ name: 'fecha_modificacion' })
+  @Column({ name: 'fecha_modificacion', default: () => 'CURRENT_TIMESTAMP' })
   fechaModificacion: Date;
 
   @OneToMany(

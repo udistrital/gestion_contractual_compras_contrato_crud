@@ -6,105 +6,155 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CrearContratoGeneralDto {
+  @ApiProperty({
+    example: 1,
+    description:
+      'Id Parámetros CRUD: Tipo Compromiso. 1. Convenio. 2. Contrato 3. Orden',
+  })
   @IsNotEmpty()
   @IsNumber()
   tipoCompromisoId: number;
 
+  @ApiProperty({
+    example: 1,
+    description:
+      'Id Parámetros CRUD: Tipo Contrato. 1. Orden de Servicio, 2. Orden de Compra',
+  })
   @IsNotEmpty()
   @IsNumber()
   tipoContratoId: number;
 
+  @ApiProperty({
+    example: 1,
+    description:
+      'Id Parámetros CRUD: Perfil Contratista. 1. Asistencial, 2. Técnico, 3. Profesional, 4. Especializado, ...',
+  })
   @IsNotEmpty()
   @IsNumber()
   perfilContratistaId: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsDate()
   fechaSuscripcionEstudios: Date;
 
+  @ApiProperty({
+    example: true,
+    description: 'Aplica Poliza',
+  })
   @IsNotEmpty()
   @IsBoolean()
   aplicaPoliza: boolean;
 
-  @IsNotEmpty()
-  @IsNumber()
-  ordenadorId: number;
-
+  @ApiProperty({
+    example: 1,
+    description:
+      'Id Parámetros CRUD: Modalidad Selección. 1. Licitación Pública, 2. Selección Abreviada, ...',
+  })
   @IsNotEmpty()
   @IsNumber()
   modalidadSeleccionId: number;
 
+  @ApiProperty({
+    example: 30,
+    description:
+      'Id Parámetros CRUD: Tipología Específica. 30. Servicios de Mantenimiento y Reparación, ...',
+  })
   @IsNotEmpty()
   @IsNumber()
   tipologiaEspecificaId: number;
 
+  @ApiProperty({
+    example: 1,
+    description:
+      'Id Parámetros CRUD: Regimen Contratación. 1. Ley 80, 2. Régimen Privado, 3. Convenio Ley 489, ...',
+  })
   @IsNotEmpty()
   @IsNumber()
   regimenContratacionId: number;
 
+  @ApiProperty({
+    example: 1,
+    description:
+      'Id Parámetros CRUD: Procedimiento. 1. Subasta Inversa, 2. Mínima Cuantía, 3. Concurso de Méritos ...',
+  })
   @IsNotEmpty()
   @IsNumber()
   procedimientoId: number;
 
+  @ApiProperty({
+    example: 30,
+    description:
+      'Cantidad de días, meses o años para la ejecución del contrato',
+  })
   @IsNotEmpty()
   @IsNumber()
   plazoEjecucion: number;
 
+  @ApiProperty({
+    example: 1,
+    description:
+      'Id Parámetros CRUD: Unidad de Tiempo. 1. Días, 2. Meses, 3. Años',
+  })
   @IsNotEmpty()
   @IsNumber()
   unidadEjecutoraId: number;
 
-  @IsNotEmpty()
+  @IsOptional()
+  @IsNumber()
+  ordenadorId: number;
+
+  @IsOptional()
   @IsNumber()
   numeroConstancia: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   claseContratistaId: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   tipoMonedaId: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   valorPesos: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   tipoGastoId: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   origenRecursosId: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   origenPresupuestosId: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   temaGastoInversionId: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   valorContratoMe: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   valorTasaCambio: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   medioPogoId: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsBoolean()
   clausulaRegistroPresupuestal: boolean;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   modoPago: string;
 
@@ -112,27 +162,23 @@ export class CrearContratoGeneralDto {
   @IsString()
   observaciones: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   vigencia: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   consecutivoElaboracion: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsDate()
   fechaInicial: Date;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsDate()
   fechaFinal: Date;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   usuarioLegacy: string;
-
-  @IsNotEmpty()
-  @IsBoolean()
-  activo: boolean;
 }
