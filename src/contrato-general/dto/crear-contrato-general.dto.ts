@@ -1,7 +1,6 @@
 import {
   IsBoolean,
   IsDate,
-  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -14,7 +13,7 @@ export class CrearContratoGeneralDto {
     description:
       'Id Parámetros CRUD: Tipo Compromiso. 1. Convenio. 2. Contrato 3. Orden',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   tipoCompromisoId: number;
 
@@ -23,7 +22,7 @@ export class CrearContratoGeneralDto {
     description:
       'Id Parámetros CRUD: Tipo Contrato. 1. Orden de Servicio, 2. Orden de Compra',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   tipoContratoId: number;
 
@@ -32,7 +31,7 @@ export class CrearContratoGeneralDto {
     description:
       'Id Parámetros CRUD: Perfil Contratista. 1. Asistencial, 2. Técnico, 3. Profesional, 4. Especializado, ...',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   perfilContratistaId: number;
 
@@ -44,7 +43,7 @@ export class CrearContratoGeneralDto {
     example: true,
     description: 'Aplica Poliza',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsBoolean()
   aplicaPoliza: boolean;
 
@@ -53,7 +52,7 @@ export class CrearContratoGeneralDto {
     description:
       'Id Parámetros CRUD: Modalidad Selección. 1. Licitación Pública, 2. Selección Abreviada, ...',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   modalidadSeleccionId: number;
 
@@ -62,7 +61,7 @@ export class CrearContratoGeneralDto {
     description:
       'Id Parámetros CRUD: Tipología Específica. 30. Servicios de Mantenimiento y Reparación, ...',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   tipologiaEspecificaId: number;
 
@@ -71,7 +70,7 @@ export class CrearContratoGeneralDto {
     description:
       'Id Parámetros CRUD: Regimen Contratación. 1. Ley 80, 2. Régimen Privado, 3. Convenio Ley 489, ...',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   regimenContratacionId: number;
 
@@ -80,7 +79,7 @@ export class CrearContratoGeneralDto {
     description:
       'Id Parámetros CRUD: Procedimiento. 1. Subasta Inversa, 2. Mínima Cuantía, 3. Concurso de Méritos ...',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   procedimientoId: number;
 
@@ -89,7 +88,7 @@ export class CrearContratoGeneralDto {
     description:
       'Cantidad de días, meses o años para la ejecución del contrato',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   plazoEjecucion: number;
 
@@ -98,7 +97,7 @@ export class CrearContratoGeneralDto {
     description:
       'Id Parámetros CRUD: Unidad de Tiempo. 1. Días, 2. Meses, 3. Años',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   unidadEjecutoraId: number;
 

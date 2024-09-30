@@ -324,7 +324,7 @@ paths:
         '404':
           description: Contratista no encontrado.
       tags: *ref_2
-  /contratistas/by-contrato/{contratoId}:
+  /contratistas/contrato/{contratoId}:
     get:
       operationId: ContratistaController_findByContrato
       summary: Obtener contratista por id de contrato
