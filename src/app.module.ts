@@ -11,6 +11,8 @@ import { ContratistaModule } from './contratista/contratista.module';
 import { Contratista } from './contratista/entities/contratista.entity';
 import { EstadoContratoModule } from './estado-contrato/estado-contrato.module';
 import { EstadoContrato } from './estado-contrato/entities/estado-contrato.entity';
+import { LugarEjecucionModule } from './lugar-ejecucion/lugar-ejecucion.module';
+import { LugarEjecucion } from './lugar-ejecucion/entities/lugar-ejecucion.entity';
 
 @Module({
   imports: [
@@ -32,6 +34,7 @@ import { EstadoContrato } from './estado-contrato/entities/estado-contrato.entit
           DocumentoContrato,
           Contratista,
           EstadoContrato,
+          LugarEjecucion,
         ],
         synchronize: configService.get('DEVELOPER_MODE'), //Solo para desarrollo, en producción se debe desactivar
         ssl: {
@@ -44,6 +47,7 @@ import { EstadoContrato } from './estado-contrato/entities/estado-contrato.entit
     DocumentoContratoModule,
     ContratistaModule,
     EstadoContratoModule,
+    LugarEjecucionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
