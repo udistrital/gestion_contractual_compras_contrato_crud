@@ -431,7 +431,7 @@
     "/contratistas/{id}": {
       "get": {
         "operationId": "ContratistaController_findOne",
-        "summary": "Obtener un contratista por id",
+        "summary": "Obtener un contratista por numero_identificacion",
         "parameters": [
           {
             "name": "id",
@@ -798,6 +798,205 @@
           "estados-contrato"
         ]
       }
+    },
+    "/lugares-ejecucion": {
+      "post": {
+        "operationId": "LugarEjecucionController_create",
+        "summary": "Crear un nuevo lugar de ejecución",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLugarEjecucionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "El lugar de ejecución ha sido creado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LugarEjecucion"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta."
+          }
+        },
+        "tags": [
+          "lugares-ejecucion"
+        ]
+      },
+      "get": {
+        "operationId": "LugarEjecucionController_findAll",
+        "summary": "Obtener todos los lugares de ejecución",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Devuelve todos los lugares de ejecución.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LugarEjecucion"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "lugares-ejecucion"
+        ]
+      }
+    },
+    "/lugares-ejecucion/{id}": {
+      "get": {
+        "operationId": "LugarEjecucionController_findOne",
+        "summary": "Obtener un lugar de ejecución por id",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Devuelve el lugar de ejecución.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LugarEjecucion"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lugar de ejecución no encontrado."
+          }
+        },
+        "tags": [
+          "lugares-ejecucion"
+        ]
+      },
+      "patch": {
+        "operationId": "LugarEjecucionController_update",
+        "summary": "Actualizar un lugar de ejecución",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLugarEjecucionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "El lugar de ejecución ha sido actualizado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LugarEjecucion"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta."
+          },
+          "404": {
+            "description": "Lugar de ejecución no encontrado."
+          }
+        },
+        "tags": [
+          "lugares-ejecucion"
+        ]
+      },
+      "delete": {
+        "operationId": "LugarEjecucionController_remove",
+        "summary": "Eliminar un lugar de ejecución",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "El lugar de ejecución ha sido eliminado exitosamente."
+          },
+          "404": {
+            "description": "Lugar de ejecución no encontrado."
+          }
+        },
+        "tags": [
+          "lugares-ejecucion"
+        ]
+      }
+    },
+    "/lugares-ejecucion/contrato/{contratoId}": {
+      "get": {
+        "operationId": "LugarEjecucionController_findByContratoGeneralId",
+        "summary": "Obtiene el lugar de ejecución por id de contrato",
+        "parameters": [
+          {
+            "name": "contratoId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Devuelve los lugares de ejecución para el contrato especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LugarEjecucion"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontraron lugares de ejecución para el contrato especificado."
+          }
+        },
+        "tags": [
+          "lugares-ejecucion"
+        ]
+      }
     }
   },
   "info": {
@@ -821,7 +1020,70 @@
       },
       "CrearContratoGeneralDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "tipoCompromisoId": {
+            "type": "number",
+            "example": 1,
+            "description": "Id Parámetros CRUD: Tipo Compromiso. 1. Convenio. 2. Contrato 3. Orden"
+          },
+          "tipoContratoId": {
+            "type": "number",
+            "example": 1,
+            "description": "Id Parámetros CRUD: Tipo Contrato. 1. Orden de Servicio, 2. Orden de Compra"
+          },
+          "perfilContratistaId": {
+            "type": "number",
+            "example": 1,
+            "description": "Id Parámetros CRUD: Perfil Contratista. 1. Asistencial, 2. Técnico, 3. Profesional, 4. Especializado, ..."
+          },
+          "aplicaPoliza": {
+            "type": "boolean",
+            "example": true,
+            "description": "Aplica Poliza"
+          },
+          "modalidadSeleccionId": {
+            "type": "number",
+            "example": 1,
+            "description": "Id Parámetros CRUD: Modalidad Selección. 1. Licitación Pública, 2. Selección Abreviada, ..."
+          },
+          "tipologiaEspecificaId": {
+            "type": "number",
+            "example": 30,
+            "description": "Id Parámetros CRUD: Tipología Específica. 30. Servicios de Mantenimiento y Reparación, ..."
+          },
+          "regimenContratacionId": {
+            "type": "number",
+            "example": 1,
+            "description": "Id Parámetros CRUD: Regimen Contratación. 1. Ley 80, 2. Régimen Privado, 3. Convenio Ley 489, ..."
+          },
+          "procedimientoId": {
+            "type": "number",
+            "example": 1,
+            "description": "Id Parámetros CRUD: Procedimiento. 1. Subasta Inversa, 2. Mínima Cuantía, 3. Concurso de Méritos ..."
+          },
+          "plazoEjecucion": {
+            "type": "number",
+            "example": 30,
+            "description": "Cantidad de días, meses o años para la ejecución del contrato"
+          },
+          "unidadEjecutoraId": {
+            "type": "number",
+            "example": 1,
+            "description": "Id Parámetros CRUD: Unidad de Tiempo. 1. Días, 2. Meses, 3. Años"
+          }
+        },
+        "required": [
+          "tipoCompromisoId",
+          "tipoContratoId",
+          "perfilContratistaId",
+          "aplicaPoliza",
+          "modalidadSeleccionId",
+          "tipologiaEspecificaId",
+          "regimenContratacionId",
+          "procedimientoId",
+          "plazoEjecucion",
+          "unidadEjecutoraId"
+        ]
       },
       "ActualizarContratoGeneralDto": {
         "type": "object",
@@ -841,7 +1103,28 @@
       },
       "CreateContratistaDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "numero_documento": {
+            "type": "string",
+            "description": "Número de documento del contratista",
+            "example": "1234"
+          },
+          "tipo_persona_id": {
+            "type": "number",
+            "description": "ID del tipo de persona del contratista",
+            "example": 1
+          },
+          "contrato_general_id": {
+            "type": "number",
+            "description": "Contrato asociado al contratista",
+            "example": 1
+          }
+        },
+        "required": [
+          "numero_documento",
+          "tipo_persona_id",
+          "contrato_general_id"
+        ]
       },
       "Contratista": {
         "type": "object",
@@ -849,7 +1132,23 @@
       },
       "UpdateContratistaDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "numero_documento": {
+            "type": "string",
+            "description": "Número de documento del contratista",
+            "example": "1234"
+          },
+          "tipo_persona_id": {
+            "type": "number",
+            "description": "ID del tipo de persona del contratista",
+            "example": 1
+          },
+          "contrato_general_id": {
+            "type": "number",
+            "description": "Contrato asociado al contratista",
+            "example": 1
+          }
+        }
       },
       "CreateEstadoContratoDto": {
         "type": "object",
@@ -860,6 +1159,18 @@
         "properties": {}
       },
       "UpdateEstadoContratoDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateLugarEjecucionDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "LugarEjecucion": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateLugarEjecucionDto": {
         "type": "object",
         "properties": {}
       }

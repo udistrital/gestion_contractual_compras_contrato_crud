@@ -27,7 +27,7 @@ export class LugarEjecucionService {
 
     if (!contratoGeneral) {
       throw new NotFoundException(
-        `ContratoGeneral with ID ${contrato_general_id} not found`,
+        `ContratoGeneral con ID ${contrato_general_id} no encontrado`,
       );
     }
 
@@ -47,7 +47,7 @@ export class LugarEjecucionService {
       where: { id },
     });
     if (!lugarEjecucion) {
-      throw new NotFoundException(`LugarEjecucion with ID ${id} not found`);
+      throw new Error(`LugarEjecucion con ID ${id} no encontrado`);
     }
     return lugarEjecucion;
   }
@@ -64,7 +64,7 @@ export class LugarEjecucionService {
       });
       if (!contratoGeneral) {
         throw new NotFoundException(
-          `ContratoGeneral with ID ${updateLugarEjecucionDto.contrato_general_id} not found`,
+          `ContratoGeneral con ID ${updateLugarEjecucionDto.contrato_general_id} no encontrado`,
         );
       }
       lugarEjecucion.contrato_general_id = contratoGeneral;
@@ -79,7 +79,7 @@ export class LugarEjecucionService {
   async remove(id: number): Promise<void> {
     const result = await this.lugarEjecucionRepository.delete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`LugarEjecucion with ID ${id} not found`);
+      throw new Error(`LugarEjecucion con ID ${id} no encontrado`);
     }
   }
 
@@ -91,8 +91,8 @@ export class LugarEjecucionService {
     });
 
     if (!lugarEjecucion) {
-      throw new NotFoundException(
-        `LugarEjecucion not found for ContratoGeneral with ID ${contratoGeneralId}`,
+      throw new Error(
+        `No se encontró ningún Lugar de Ejecución para el contrado con id ${contratoGeneralId}`,
       );
     }
 

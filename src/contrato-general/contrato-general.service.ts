@@ -17,7 +17,13 @@ export class ContratoGeneralService {
   }
 
   async findOne(id: number): Promise<ContratoGeneral> {
-    return this.contratoGeneralRepository.findOne({ where: { id } });
+    const found = await this.contratoGeneralRepository.findOne({
+      where: { id },
+    });
+    if (!found) {
+      throw new Error(`ContratoGeneral con ID "${id}" no encontrado`);
+    }
+    return found;
   }
 
   async create(
@@ -35,6 +41,14 @@ export class ContratoGeneralService {
   }
 
   async remove(id: number): Promise<void> {
-    await this.contratoGeneralRepository.delete(id);
+    const found = await this.findOne(id);
+    if (!found) {
+      throw new Error(`ContratoGeneral con ID "${id}" no encontrado`);
+    }
+    const currentDate = new Date();
+    await this.contratoGeneralRepository.update(id, {
+      activo: false,
+      fechaModificacion: currentDate,
+    });
   }
 }

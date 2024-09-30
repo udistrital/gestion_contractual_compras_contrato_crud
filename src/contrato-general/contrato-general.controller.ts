@@ -6,7 +6,10 @@ import {
   Param,
   Delete,
   Put,
+  HttpStatus,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { ContratoGeneralService } from './contrato-general.service';
 import { CrearContratoGeneralDto } from './dto/crear-contrato-general.dto';
 import { ActualizarContratoGeneralDto } from './dto/actualizar-contrato-general.dto';
@@ -18,6 +21,7 @@ import {
   ApiParam,
   ApiBody,
 } from '@nestjs/swagger';
+import { StandardResponse } from '../utils/standardResponse.interface';
 
 @ApiTags('contratos-generales')
 @Controller('contratos-generales')
@@ -33,8 +37,25 @@ export class ContratoGeneralController {
     description: 'Lista de contratos generales',
     type: [ContratoGeneral],
   })
-  findAll(): Promise<ContratoGeneral[]> {
-    return this.contratoGeneralService.findAll();
+  async findAll(@Res() res: Response): Promise<void> {
+    try {
+      const contracts = await this.contratoGeneralService.findAll();
+      const response: StandardResponse<ContratoGeneral[]> = {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Contratos generales encontrados',
+        Data: contracts,
+      };
+      res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      const response: StandardResponse<any> = {
+        Success: false,
+        Status: HttpStatus.INTERNAL_SERVER_ERROR,
+        Message: 'Error al obtener los contratos generales',
+        Data: error,
+      };
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(response);
+    }
   }
 
   @Get(':id')
@@ -50,8 +71,25 @@ export class ContratoGeneralController {
     type: ContratoGeneral,
   })
   @ApiResponse({ status: 404, description: 'Contrato general no encontrado' })
-  findOne(@Param('id') id: string): Promise<ContratoGeneral> {
-    return this.contratoGeneralService.findOne(+id);
+  async findOne(@Res() res: Response, @Param('id') id: string): Promise<void> {
+    try {
+      const contract = await this.contratoGeneralService.findOne(+id);
+      const response: StandardResponse<ContratoGeneral> = {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Contrato general encontrado',
+        Data: contract,
+      };
+      res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      const response: StandardResponse<any> = {
+        Success: false,
+        Status: HttpStatus.NOT_FOUND,
+        Message: 'Contrato general no encontrado',
+        Data: error,
+      };
+      res.status(HttpStatus.NOT_FOUND).json(response);
+    }
   }
 
   @Post()
@@ -62,10 +100,30 @@ export class ContratoGeneralController {
     description: 'Contrato general creado',
     type: ContratoGeneral,
   })
-  create(
+  async create(
+    @Res() res: Response,
     @Body() createContratogenneralDto: CrearContratoGeneralDto,
-  ): Promise<ContratoGeneral> {
-    return this.contratoGeneralService.create(createContratogenneralDto);
+  ): Promise<void> {
+    try {
+      const saved = await this.contratoGeneralService.create(
+        createContratogenneralDto,
+      );
+      const response: StandardResponse<ContratoGeneral> = {
+        Success: true,
+        Status: HttpStatus.CREATED,
+        Message: 'Contrato general creado',
+        Data: saved,
+      };
+      res.status(HttpStatus.CREATED).json(response);
+    } catch (error) {
+      const response: StandardResponse<any> = {
+        Success: false,
+        Status: HttpStatus.INTERNAL_SERVER_ERROR,
+        Message: 'Error al crear el contrato general',
+        Data: error,
+      };
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(response);
+    }
   }
 
   @Put(':id')
@@ -82,14 +140,32 @@ export class ContratoGeneralController {
     type: ContratoGeneral,
   })
   @ApiResponse({ status: 404, description: 'Contrato general no encontrado' })
-  update(
+  async update(
+    @Res() res: Response,
     @Param('id') id: string,
     @Body() actualizarContratoGeneralDto: ActualizarContratoGeneralDto,
-  ): Promise<ContratoGeneral> {
-    return this.contratoGeneralService.update(
-      +id,
-      actualizarContratoGeneralDto,
-    );
+  ): Promise<void> {
+    try {
+      const contract = await this.contratoGeneralService.update(
+        +id,
+        actualizarContratoGeneralDto,
+      );
+      const response: StandardResponse<ContratoGeneral> = {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Contrato general actualizado',
+        Data: contract,
+      };
+      res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      const response: StandardResponse<any> = {
+        Success: false,
+        Status: HttpStatus.NOT_FOUND,
+        Message: 'Contrato general no encontrado',
+        Data: error,
+      };
+      res.status(HttpStatus.NOT_FOUND).json(response);
+    }
   }
 
   @Delete(':id')
@@ -101,9 +177,24 @@ export class ContratoGeneralController {
   })
   @ApiResponse({ status: 200, description: 'Contrato general eliminado' })
   @ApiResponse({ status: 404, description: 'Contrato general no encontrado' })
-  remove(@Param('id') id: string): Promise<void> {
-    return this.contratoGeneralService.remove(+id);
+  async remove(@Res() res: Response, @Param('id') id: string): Promise<void> {
+    try {
+      await this.contratoGeneralService.remove(+id);
+      const response: StandardResponse<any> = {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Contrato general eliminado',
+        Data: null,
+      };
+      res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      const response: StandardResponse<any> = {
+        Success: false,
+        Status: HttpStatus.NOT_FOUND,
+        Message: 'Contrato general no encontrado',
+        Data: error,
+      };
+      res.status(HttpStatus.NOT_FOUND).json(response);
+    }
   }
-
-
 }

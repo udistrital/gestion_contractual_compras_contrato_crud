@@ -28,7 +28,7 @@ export class EstadoContratoService {
 
     if (!contratoGeneral) {
       throw new NotFoundException(
-        `ContratoGeneral with ID ${contrato_general_id} not found`,
+        `ContratoGeneral con ID ${contrato_general_id} no encontrado`,
       );
     }
 
@@ -40,8 +40,7 @@ export class EstadoContratoService {
   }
 
   async findAll(): Promise<EstadoContrato[]> {
-    return await this.estadoContratoRepository.find({
-    });
+    return await this.estadoContratoRepository.find({});
   }
 
   async findOne(id: number): Promise<EstadoContrato> {
@@ -49,7 +48,7 @@ export class EstadoContratoService {
       where: { id },
     });
     if (!estadoContrato) {
-      throw new NotFoundException(`EstadoContrato with ID ${id} not found`);
+      throw new NotFoundException(`EstadoContrato con ID ${id} no encontrado`);
     }
     return estadoContrato;
   }
@@ -66,7 +65,7 @@ export class EstadoContratoService {
       });
       if (!contratoGeneral) {
         throw new NotFoundException(
-          `ContratoGeneral with ID ${updateEstadoContratoDto.contrato_general_id} not found`,
+          `ContratoGeneral con ID ${updateEstadoContratoDto.contrato_general_id} no encontado`,
         );
       }
       estadoContrato.contrato_general_id = contratoGeneral;
@@ -81,7 +80,7 @@ export class EstadoContratoService {
   async remove(id: number): Promise<void> {
     const result = await this.estadoContratoRepository.delete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`EstadoContrato with ID ${id} not found`);
+      throw new Error(`EstadoContrato con ID ${id} no encontrado`);
     }
   }
 
