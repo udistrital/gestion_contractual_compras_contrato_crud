@@ -606,6 +606,126 @@ paths:
             No se encontraron lugares de ejecución para el contrato
             especificado.
       tags: *ref_4
+  /cdp:
+    post:
+      operationId: CdpController_create
+      summary: Crear un nuevo CDP
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCdpDto'
+      responses:
+        '201':
+          description: El CDP ha sido creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cdp'
+        '400':
+          description: Solicitud incorrecta.
+      tags: &ref_5
+        - cdp
+    get:
+      operationId: CdpController_findAll
+      summary: Obtener todos los CDPs
+      parameters: []
+      responses:
+        '200':
+          description: Devuelve todos los CDPs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cdp'
+      tags: *ref_5
+  /cdp/{id}:
+    get:
+      operationId: CdpController_findOne
+      summary: Obtener un CDP por ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Devuelve el CDP encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cdp'
+        '404':
+          description: CDP no encontrado.
+      tags: *ref_5
+    patch:
+      operationId: CdpController_update
+      summary: Actualizar un CDP
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCdpDto'
+      responses:
+        '200':
+          description: El CDP ha sido actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cdp'
+        '400':
+          description: Solicitud incorrecta.
+        '404':
+          description: CDP no encontrado.
+      tags: *ref_5
+    delete:
+      operationId: CdpController_remove
+      summary: Eliminar un CDP
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: El CDP ha sido eliminado exitosamente.
+        '404':
+          description: CDP no encontrado.
+      tags: *ref_5
+  /cdp/contrato/{contratoId}:
+    get:
+      operationId: CdpController_findByContrato
+      summary: Obtener CDPs por ID de contrato
+      parameters:
+        - name: contratoId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Devuelve los CDPs para el contrato especificado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cdp'
+        '404':
+          description: No se encontraron CDPs para el contrato especificado.
+      tags: *ref_5
 info:
   title: Gestion Contractual CRUD
   description: API para la gestión contractual
@@ -755,3 +875,60 @@ components:
     UpdateLugarEjecucionDto:
       type: object
       properties: {}
+    CreateCdpDto:
+      type: object
+      properties:
+        numero_cdp_id:
+          type: number
+          description: Número identificador del CDP
+          example: 1001
+        fecha_registro:
+          format: date-time
+          type: string
+          description: Fecha de registro del CDP
+          example: '2023-01-15'
+        vigencia_cdp:
+          type: number
+          description: Año de vigencia del CDP
+          example: 2023
+        contrato_general_id:
+          type: number
+          description: ID del contrato general asociado
+          example: 1
+        activo:
+          type: boolean
+          description: Estado activo del CDP
+          example: true
+      required:
+        - numero_cdp_id
+        - fecha_registro
+        - vigencia_cdp
+        - contrato_general_id
+        - activo
+    Cdp:
+      type: object
+      properties: {}
+    UpdateCdpDto:
+      type: object
+      properties:
+        numero_cdp_id:
+          type: number
+          description: Número identificador del CDP
+          example: 1001
+        fecha_registro:
+          format: date-time
+          type: string
+          description: Fecha de registro del CDP
+          example: '2023-01-15'
+        vigencia_cdp:
+          type: number
+          description: Año de vigencia del CDP
+          example: 2023
+        contrato_general_id:
+          type: number
+          description: ID del contrato general asociado
+          example: 1
+        activo:
+          type: boolean
+          description: Estado activo del CDP
+          example: true
