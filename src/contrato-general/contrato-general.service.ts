@@ -27,16 +27,16 @@ export class ContratoGeneralService {
   }
 
   async create(
-    contratogeneral: CrearContratoGeneralDto,
+    contratoGeneral: CrearContratoGeneralDto,
   ): Promise<ContratoGeneral> {
-    return this.contratoGeneralRepository.save(contratogeneral);
+    return this.contratoGeneralRepository.save(contratoGeneral);
   }
 
   async update(
     id: number,
-    contratogeneral: ActualizarContratoGeneralDto,
+    contratoGeneral: ActualizarContratoGeneralDto,
   ): Promise<ContratoGeneral> {
-    await this.contratoGeneralRepository.update(id, contratogeneral);
+    await this.contratoGeneralRepository.update(id, contratoGeneral);
     return this.findOne(id);
   }
 
