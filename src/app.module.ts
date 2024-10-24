@@ -13,6 +13,7 @@ import { EstadoContratoModule } from './estado-contrato/estado-contrato.module';
 import { EstadoContrato } from './estado-contrato/entities/estado-contrato.entity';
 import { LugarEjecucionModule } from './lugar-ejecucion/lugar-ejecucion.module';
 import { LugarEjecucion } from './lugar-ejecucion/entities/lugar-ejecucion.entity';
+import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { LugarEjecucion } from './lugar-ejecucion/entities/lugar-ejecucion.entit
     ContratistaModule,
     EstadoContratoModule,
     LugarEjecucionModule,
+    ActaInicioModule,
   ],
   controllers: [AppController],
   providers: [AppService],
