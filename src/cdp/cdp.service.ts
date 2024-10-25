@@ -31,6 +31,7 @@ export class CdpService {
     const cdp = this.cdpRepository.create({
       ...cdpData,
       contrato_general_id: contratoGeneral,
+      activo: true,
     });
 
     return await this.cdpRepository.save(cdp);

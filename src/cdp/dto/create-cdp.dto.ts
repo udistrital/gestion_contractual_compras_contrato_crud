@@ -43,7 +43,6 @@ export class CreateCdpDto {
     description: 'Estado activo del CDP',
     example: true,
   })
-  @IsNotEmpty()
-  @IsBoolean()
+
   activo: boolean;
 }
