@@ -10,14 +10,6 @@ import {
   export class CrearActaInicioDto {
     @ApiProperty({
       example: 1,
-      description: 'Identificador único del acta',
-    })
-    @IsOptional()
-    @IsNumber()
-    id: number;
-  
-    @ApiProperty({
-      example: 1,
       description: 'Id del usuario que creó el acta',
     })
     @IsOptional()
