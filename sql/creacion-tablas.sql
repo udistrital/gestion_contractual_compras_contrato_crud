@@ -32,12 +32,12 @@ IF NOT EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename =
         actividades VARCHAR NOT NULL,                          -- Actividades del contrato
         condiciones VARCHAR NOT NULL,                          -- Condiciones del contrato
         justificacion VARCHAR NOT NULL,                        -- Justificación del contrato
-        observaciones VARCHAR[500] NOT NULL,                     -- Observaciones del contrato
+        observaciones VARCHAR(500) NOT NULL,                     -- Observaciones del contrato
         vigencia VARCHAR NOT NULL,                            -- Vigencia del contrato
-        concepto_elaboracion VARCHAR[50] NOT NULL,               -- Concepto de elaboración
+        concepto_elaboracion VARCHAR(50) NOT NULL,               -- Concepto de elaboración
         fecha_inicial DATE NOT NULL,                             -- Fecha inicial del contrato
         fecha_final DATE NOT NULL,                               -- Fecha final del contrato
-        usuario_legacy VARCHAR[15] NOT NULL,                     -- Usuario legacy
+        usuario_legacy VARCHAR(15) NOT NULL,                     -- Usuario legacy
         activo BOOLEAN NOT NULL,                                 -- Indica si el registro está activo
         fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,    -- Fecha de creación del registro
         fecha_modificacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP -- Fecha de última modificación
