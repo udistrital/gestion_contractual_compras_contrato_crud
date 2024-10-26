@@ -27,13 +27,13 @@ IF NOT EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename =
         valor_tasa_cambio NUMERIC(16,10) NOT NULL,               -- Valor de la tasa de cambio
         modelo_pago_id INTEGER NOT NULL,                         -- Modelo de pago
         clausula_registro_presupuestal BOOLEAN NOT NULL,         -- Indica si tiene cláusula de registro presupuestal
-        modo_pago VARCHAR[] NOT NULL,                            -- Modos de pago
-        objeto_contrato VARCHAR[] NOT NULL,                      -- Objeto del contrato
-        actividades VARCHAR[] NOT NULL,                          -- Actividades del contrato
-        condiciones VARCHAR[] NOT NULL,                          -- Condiciones del contrato
-        justificacion VARCHAR[] NOT NULL,                        -- Justificación del contrato
+        modo_pago VARCHAR NOT NULL,                            -- Modos de pago
+        objeto_contrato VARCHAR NOT NULL,                      -- Objeto del contrato
+        actividades VARCHAR NOT NULL,                          -- Actividades del contrato
+        condiciones VARCHAR NOT NULL,                          -- Condiciones del contrato
+        justificacion VARCHAR NOT NULL,                        -- Justificación del contrato
         observaciones VARCHAR[500] NOT NULL,                     -- Observaciones del contrato
-        vigencia VARCHAR[] NOT NULL,                            -- Vigencia del contrato
+        vigencia VARCHAR NOT NULL,                            -- Vigencia del contrato
         concepto_elaboracion VARCHAR[50] NOT NULL,               -- Concepto de elaboración
         fecha_inicial DATE NOT NULL,                             -- Fecha inicial del contrato
         fecha_final DATE NOT NULL,                               -- Fecha final del contrato
