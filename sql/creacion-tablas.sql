@@ -298,6 +298,37 @@ IF NOT EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename =
     COMMENT ON COLUMN especificaciones_tecnicas.fecha_modificacion IS 'Fecha de última modificación';
 END IF;
 
+
+IF NOT EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'estado_contrato') THEN
+    CREATE TABLE estado_contrato (
+        id SERIAL PRIMARY KEY,                                    -- Identificador único del estado del contrato
+        usuario_id INTEGER NOT NULL,                             -- Identificador del usuario que registra el estado
+        motivo VARCHAR(250) NOT NULL,                            -- Motivo del cambio de estado
+        fecha_ejecucion_estado TIMESTAMP NOT NULL,               -- Fecha de ejecución del estado
+        contrato_general_id INTEGER NOT NULL,                    -- Referencia al contrato general
+        estado_id INTEGER NOT NULL,                              -- Identificador del estado
+        activo BOOLEAN NOT NULL,                                 -- Indica si el registro está activo
+        fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,    -- Fecha de creación del registro
+        fecha_modificacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP -- Fecha de última modificación
+    );
+    
+    COMMENT ON TABLE estado_contrato IS 'Tabla que almacena el historial de estados de los contratos';
+    COMMENT ON COLUMN estado_contrato.id IS 'Identificador único del estado del contrato';
+    COMMENT ON COLUMN estado_contrato.usuario_id IS 'Identificador del usuario que registra el estado';
+    COMMENT ON COLUMN estado_contrato.motivo IS 'Motivo del cambio de estado';
+    COMMENT ON COLUMN estado_contrato.fecha_ejecucion_estado IS 'Fecha de ejecución del estado';
+    COMMENT ON COLUMN estado_contrato.contrato_general_id IS 'Referencia al contrato general';
+    COMMENT ON COLUMN estado_contrato.estado_id IS 'Identificador del estado';
+    COMMENT ON COLUMN estado_contrato.activo IS 'Indica si el registro está activo';
+    COMMENT ON COLUMN estado_contrato.fecha_creacion IS 'Fecha de creación del registro';
+    COMMENT ON COLUMN estado_contrato.fecha_modificacion IS 'Fecha de última modificación';
+END IF;
+
+END $$;
+
+DO $$
+BEGIN
+
 IF NOT EXISTS (
     SELECT 1 FROM information_schema.table_constraints 
     WHERE constraint_name = 'fk_convenio_contrato_general'
@@ -397,6 +428,20 @@ IF NOT EXISTS (
         UNIQUE (contrato_general_id);
 END IF;
 
+IF NOT EXISTS (
+    SELECT 1 FROM information_schema.table_constraints 
+    WHERE constraint_name = 'fk_estado_contrato_general'
+) THEN
+    ALTER TABLE estado_contrato
+        ADD CONSTRAINT fk_estado_contrato_general 
+        FOREIGN KEY (contrato_general_id) 
+        REFERENCES contrato_general(id);
+END IF;
+
+END $$;
+
+DO $$
+BEGIN
 -- Agregar índices con validación para optimizar las consultas
 IF NOT EXISTS (
     SELECT 1 FROM pg_indexes 
@@ -447,7 +492,6 @@ IF NOT EXISTS (
     CREATE INDEX idx_lugar_ejecucion_contrato_general ON lugar_ejecucion(contrato_general_id);
 END IF;
 
--- Índices para las nuevas tablas
 IF NOT EXISTS (
     SELECT 1 FROM pg_indexes 
     WHERE indexname = 'idx_acta_inicio_contrato_general'
@@ -472,10 +516,28 @@ END IF;
 
 IF NOT EXISTS (
     SELECT 1 FROM pg_indexes 
-    WHERE indexname = 'idx_especificaciones_fechas'
+    WHERE indexname = 'idx_estado_contrato_general'
 ) THEN
-    CREATE INDEX idx_especificaciones_fechas ON especificaciones_tecnicas(fecha_inicio, fecha_fin);
+    CREATE INDEX idx_estado_contrato_general ON estado_contrato(contrato_general_id);
 END IF;
+
+-- Índice adicional para búsquedas por estado
+IF NOT EXISTS (
+    SELECT 1 FROM pg_indexes 
+    WHERE indexname = 'idx_estado_contrato_estado'
+) THEN
+    CREATE INDEX idx_estado_contrato_estado ON estado_contrato(estado_id);
+END IF;
+
+-- Índice para búsquedas por fecha de ejecución
+IF NOT EXISTS (
+    SELECT 1 FROM pg_indexes 
+    WHERE indexname = 'idx_estado_contrato_fecha_ejecucion'
+) THEN
+    CREATE INDEX idx_estado_contrato_fecha_ejecucion ON estado_contrato(fecha_ejecucion_estado);
+END IF;
+
+END $$;
 
 -- Triggers para actualizar fecha_modificacion automáticamente
 CREATE OR REPLACE FUNCTION update_fecha_modificacion_column()
@@ -499,7 +561,7 @@ BEGIN
         AND tablename IN (
             'convenio', 'contratista', 'contrato_arrendamiento', 'cdp', 
             'registro_presupuestal', 'contrato_general', 'supervisor_contrato', 
-            'lugar_ejecucion', 'acta_inicio', 'especificaciones_tecnicas'
+            'lugar_ejecucion', 'acta_inicio', 'especificaciones_tecnicas', 'estado_contrato'
         )
     LOOP
         trigger_name := 'tr_' || tabla || '_update_fecha_modificacion';
@@ -518,5 +580,3 @@ BEGIN
         END IF;
     END LOOP;
 END$$;
-
-END $$;
