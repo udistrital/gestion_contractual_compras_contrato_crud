@@ -37,13 +37,13 @@ import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
           Contratista,
           EstadoContrato,
           LugarEjecucion,
-          ActaInicio, // Añadida esta entidad
+          ActaInicio,
         ],
         synchronize: configService.get<string>('DEVELOPER_MODE') === 'true',
         logging: true,
-        /*ssl: {
+        ssl: {
           rejectUnauthorized: false,
-        },*/
+        },
       }),
       inject: [ConfigService],
     }),

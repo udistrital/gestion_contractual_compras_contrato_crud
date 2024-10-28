@@ -24,7 +24,7 @@ export class ActaInicioController {
   @Post()
   @ApiOperation({ summary: 'Crear una nueva acta de inicio' })
   create(@Body() crearActaInicioDto: CrearActaInicioDto) {
-    console.log('DTO recibido en el controlador:', crearActaInicioDto); // Verifica el DTO recibido
+    console.log('DTO recibido en el controlador:', crearActaInicioDto); 
     return this.actaInicioService.create(crearActaInicioDto);
   }
 

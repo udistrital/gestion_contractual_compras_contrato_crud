@@ -11,22 +11,20 @@ export class ActaInicioService {
   constructor(
     @InjectRepository(ActaInicio)
     private readonly actaInicioRepository: Repository<ActaInicio>,
-    @InjectRepository(ContratoGeneral) // Asegúrate de inyectar aquí el repositorio de ContratoGeneral
+    @InjectRepository(ContratoGeneral) 
     private readonly contratoGeneralRepository: Repository<ContratoGeneral>,
   ) { }
 
-  // Obtener todas las actas de inicio
   async findAll(): Promise<ActaInicio[]> {
     return this.actaInicioRepository.find();
   }
 
-  // Obtener una acta de inicio por su ID
   async findOne(id: number): Promise<ActaInicio> {
-    console.log('ID recibido en findOne:', id); // Log del ID recibido
+    console.log('ID recibido en findOne:', id);
     const found = await this.actaInicioRepository.findOne({
       where: { id },
     });
-    console.log('Resultado de la búsqueda en findOne:', found); // Log del resultado de búsqueda
+    console.log('Resultado de la búsqueda en findOne:', found);
     if (!found) {
       throw new NotFoundException(`ActaInicio con ID "${id}" no encontrada`);
     }
@@ -62,7 +60,6 @@ export class ActaInicioService {
     return await this.actaInicioRepository.save(newActaInicio);
   }
 
-  // Actualizar una acta de inicio existente
   async update(id: number, actaInicioDto: ActualizarActaInicioDto): Promise<ActaInicio> {
     const { usuario_id, user_legacy, descripcion, fecha_inicio, fecha_fin, contrato_general_id, activo } = actaInicioDto;
 
@@ -71,35 +68,28 @@ export class ActaInicioService {
       throw new NotFoundException(`ActaInicio con ID "${id}" no encontrada`);
     }
 
-    // Asignar los valores desde el DTO a la entidad, con conversión de fechas
     actaInicio.usuarioId = usuario_id;
     actaInicio.usuarioLegacy = user_legacy;
     actaInicio.descripcion = descripcion;
-    actaInicio.fechaInicio = fecha_inicio ? new Date(fecha_inicio) : actaInicio.fechaInicio; // Conversión de string a Date
-    actaInicio.fechaFin = fecha_fin ? new Date(fecha_fin) : actaInicio.fechaFin; // Conversión de string a Date
+    actaInicio.fechaInicio = fecha_inicio ? new Date(fecha_inicio) : actaInicio.fechaInicio; 
+    actaInicio.fechaFin = fecha_fin ? new Date(fecha_fin) : actaInicio.fechaFin; 
     actaInicio.contratoGeneralId = contrato_general_id;
     actaInicio.activo = activo;
 
     return await this.actaInicioRepository.save(actaInicio);
   }
 
-  // Eliminar (marcar como inactiva) una acta de inicio
   async remove(id: number): Promise<ActaInicio> {
-    // Encuentra el registro por ID
+
     const actaInicio = await this.actaInicioRepository.findOne({ where: { id } });
 
-    // Si el registro no existe, lanza una excepción
     if (!actaInicio) {
       throw new NotFoundException(`ActaInicio con ID "${id}" no encontrada`);
     }
 
-    // Cambia el estado de "activo" a false
     actaInicio.activo = false;
-
-    // Opcional: Actualiza la fecha de modificación
     actaInicio.fechaModificacion = new Date();
 
-    // Guarda los cambios
     return await this.actaInicioRepository.save(actaInicio);
   }
 

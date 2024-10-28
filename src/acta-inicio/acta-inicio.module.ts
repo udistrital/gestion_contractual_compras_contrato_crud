@@ -9,7 +9,7 @@ import { ContratoGeneralModule } from '../contrato-general/contrato-general.modu
 @Module({
   imports: [
     TypeOrmModule.forFeature([ActaInicio]),
-    ContratoGeneralModule, // Asegúrate de importar el módulo
+    ContratoGeneralModule, 
   ],
   controllers: [ActaInicioController],
   providers: [ActaInicioService],

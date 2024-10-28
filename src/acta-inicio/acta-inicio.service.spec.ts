@@ -64,8 +64,8 @@ describe('ActaInicioService', () => {
         usuario_id: 1,
         user_legacy: 'legacy_user',
         descripcion: 'Acta inicial de prueba',
-        fecha_inicio: '2023-10-24', // Formato ISO
-        fecha_fin: '2023-11-24',     // Formato ISO
+        fecha_inicio: '2023-10-24', 
+        fecha_fin: '2023-11-24',    
         contrato_general_id: 1,
         activo: true,
       };      
