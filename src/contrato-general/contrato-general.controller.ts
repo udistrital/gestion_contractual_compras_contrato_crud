@@ -102,11 +102,11 @@ export class ContratoGeneralController {
   })
   async create(
     @Res() res: Response,
-    @Body() createContratogenneralDto: CrearContratoGeneralDto,
+    @Body() createContratoGenneralDto: CrearContratoGeneralDto,
   ): Promise<void> {
     try {
       const saved = await this.contratoGeneralService.create(
-        createContratogenneralDto,
+        createContratoGenneralDto,
       );
       const response: StandardResponse<ContratoGeneral> = {
         Success: true,

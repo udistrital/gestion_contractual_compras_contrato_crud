@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -19,9 +23,10 @@ export class EstadoContratoService {
   async create(
     createEstadoContratoDto: CreateEstadoContratoDto,
   ): Promise<EstadoContrato> {
-    const { contrato_general_id, ...estadoContratoData } =
+    const { contrato_general_id, estado_parametro_id, ...estadoContratoData } =
       createEstadoContratoDto;
 
+    // Validar que existe el contrato general
     const contratoGeneral = await this.contratoGeneralRepository.findOne({
       where: { id: contrato_general_id },
     });
@@ -32,11 +37,29 @@ export class EstadoContratoService {
       );
     }
 
-    const estadoContrato =
-      this.estadoContratoRepository.create(estadoContratoData);
-    estadoContrato.contrato_general_id = contratoGeneral;
+    // Buscar el estado actual activo
+    const estadoActual = await this.estadoContratoRepository.findOne({
+      where: {
+        contrato_general_id: { id: contrato_general_id },
+        activo: true,
+      },
+    });
 
-    return await this.estadoContratoRepository.save(estadoContrato);
+    // Crear el nuevo estado
+    const nuevoEstado = this.estadoContratoRepository.create({
+      ...estadoContratoData,
+      estado_parametro_id,
+      contrato_general_id: contratoGeneral,
+      activo: true,
+    });
+
+    // Si existe un estado actual, desactivarlo
+    if (estadoActual) {
+      estadoActual.activo = false;
+      await this.estadoContratoRepository.save(estadoActual);
+    }
+
+    return await this.estadoContratoRepository.save(nuevoEstado);
   }
 
   async findAll(): Promise<EstadoContrato[]> {
@@ -80,7 +103,7 @@ export class EstadoContratoService {
   async remove(id: number): Promise<void> {
     const result = await this.estadoContratoRepository.delete(id);
     if (result.affected === 0) {
-      throw new Error(`EstadoContrato con ID ${id} no encontrado`);
+      throw new NotFoundException(`EstadoContrato con ID ${id} no encontrado`);
     }
   }
 

@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { DocumentoContrato } from '../../documento-contrato/entities/documento-contrato.entity';
 import { EstadoContrato } from '../../estado-contrato/entities/estado-contrato.entity';
+import { Cdp } from '../../cdp/entities/cdp.entity';
 
 @Entity('contrato_general')
 export class ContratoGeneral {
@@ -138,4 +139,7 @@ export class ContratoGeneral {
     (estadoContrato) => estadoContrato.contrato_general_id,
   )
   estados: EstadoContrato[];
+
+  @OneToMany(() => Cdp, (cdp) => cdp.contrato_general_id)
+  cdps: Cdp[];
 }
