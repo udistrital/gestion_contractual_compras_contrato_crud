@@ -606,6 +606,76 @@ paths:
             No se encontraron lugares de ejecución para el contrato
             especificado.
       tags: *ref_4
+  /acta-inicio:
+    get:
+      operationId: ActaInicioController_findAll
+      summary: Obtener todas las actas de inicio
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: &ref_5
+        - acta-inicio
+    post:
+      operationId: ActaInicioController_create
+      summary: Crear una nueva acta de inicio
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrearActaInicioDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_5
+  /acta-inicio/{id}:
+    get:
+      operationId: ActaInicioController_findOne
+      summary: Obtener una acta de inicio por ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_5
+    put:
+      operationId: ActaInicioController_update
+      summary: Actualizar una acta de inicio
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActualizarActaInicioDto'
+      responses:
+        '200':
+          description: ''
+      tags: *ref_5
+    delete:
+      operationId: ActaInicioController_remove
+      summary: Eliminar una acta de inicio
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_5
 info:
   title: Gestion Contractual CRUD
   description: API para la gestión contractual
@@ -753,5 +823,61 @@ components:
       type: object
       properties: {}
     UpdateLugarEjecucionDto:
+      type: object
+      properties: {}
+    CrearActaInicioDto:
+      type: object
+      properties:
+        usuario_id:
+          type: number
+          example: 1
+          description: Id del usuario que creó el acta
+        user_legacy:
+          type: string
+          example: user_legacy
+          description: Usuario heredado del sistema anterior
+        descripcion:
+          type: string
+          example: Descripción del acta
+          description: Descripción breve del acta
+        fecha_inicio:
+          format: date-time
+          type: string
+          example: '2023-10-24'
+          description: Fecha de inicio del acta
+        fecha_fin:
+          format: date-time
+          type: string
+          example: '2023-11-24'
+          description: Fecha de finalización del acta
+        contrato_general_id:
+          type: number
+          example: 1
+          description: Id del contrato general relacionado
+        activo:
+          type: boolean
+          example: true
+          description: Indica si el acta está activa
+        fecha_creacion:
+          format: date-time
+          type: string
+          example: '2023-10-24T10:30:00Z'
+          description: Fecha de creación del acta
+        fecha_modificacion:
+          format: date-time
+          type: string
+          example: '2023-10-25T10:30:00Z'
+          description: Fecha de la última modificación del acta
+      required:
+        - usuario_id
+        - user_legacy
+        - descripcion
+        - fecha_inicio
+        - fecha_fin
+        - contrato_general_id
+        - activo
+        - fecha_creacion
+        - fecha_modificacion
+    ActualizarActaInicioDto:
       type: object
       properties: {}

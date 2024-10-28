@@ -14,6 +14,7 @@ import { EstadoContrato } from './estado-contrato/entities/estado-contrato.entit
 import { LugarEjecucionModule } from './lugar-ejecucion/lugar-ejecucion.module';
 import { LugarEjecucion } from './lugar-ejecucion/entities/lugar-ejecucion.entity';
 import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
+import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('GESTION_CONTRACTUAL_CRUD_HOST'),
-        port: configService.get('GESTION_CONTRACTUAL_CRUD_PORT'),
+        port: parseInt(configService.get('GESTION_CONTRACTUAL_CRUD_PORT'), 10),
         username: configService.get('GESTION_CONTRACTUAL_CRUD_USERNAME'),
         password: configService.get('GESTION_CONTRACTUAL_CRUD_PASS'),
         database: configService.get('GESTION_CONTRACTUAL_CRUD_DB'),
@@ -36,8 +37,10 @@ import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
           Contratista,
           EstadoContrato,
           LugarEjecucion,
+          ActaInicio, // Añadida esta entidad
         ],
         synchronize: configService.get('DEVELOPER_MODE'), //Solo para desarrollo, en producción se debe desactivar
+        logging: true,
         ssl: {
           rejectUnauthorized: false,
         },
