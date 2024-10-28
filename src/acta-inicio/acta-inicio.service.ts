@@ -65,12 +65,12 @@ export class ActaInicioService {
   // Actualizar una acta de inicio existente
   async update(id: number, actaInicioDto: ActualizarActaInicioDto): Promise<ActaInicio> {
     const { usuario_id, user_legacy, descripcion, fecha_inicio, fecha_fin, contrato_general_id, activo } = actaInicioDto;
-  
+
     const actaInicio = await this.actaInicioRepository.findOne({ where: { id } });
     if (!actaInicio) {
       throw new NotFoundException(`ActaInicio con ID "${id}" no encontrada`);
     }
-  
+
     // Asignar los valores desde el DTO a la entidad, con conversión de fechas
     actaInicio.usuarioId = usuario_id;
     actaInicio.usuarioLegacy = user_legacy;
@@ -79,23 +79,28 @@ export class ActaInicioService {
     actaInicio.fechaFin = fecha_fin ? new Date(fecha_fin) : actaInicio.fechaFin; // Conversión de string a Date
     actaInicio.contratoGeneralId = contrato_general_id;
     actaInicio.activo = activo;
-  
+
     return await this.actaInicioRepository.save(actaInicio);
-  }   
+  }
 
   // Eliminar (marcar como inactiva) una acta de inicio
-  async remove(id: number): Promise<void> {
-    console.log('ID recibido en remove:', id); // Log del ID recibido
+  async remove(id: number): Promise<ActaInicio> {
+    // Encuentra el registro por ID
+    const actaInicio = await this.actaInicioRepository.findOne({ where: { id } });
 
-    const acta = await this.findOne(id);
-    console.log('Resultado de la búsqueda en remove:', acta); // Log del resultado antes de marcar como inactivo
+    // Si el registro no existe, lanza una excepción
+    if (!actaInicio) {
+      throw new NotFoundException(`ActaInicio con ID "${id}" no encontrada`);
+    }
 
-    const currentDate = new Date();
-    await this.actaInicioRepository.update(id, {
-      activo: false,
-      fechaModificacion: currentDate,
-    });
-    console.log(`ActaInicio con ID ${id} marcada como inactiva`); // Confirmación de eliminación lógica
+    // Cambia el estado de "activo" a false
+    actaInicio.activo = false;
+
+    // Opcional: Actualiza la fecha de modificación
+    actaInicio.fechaModificacion = new Date();
+
+    // Guarda los cambios
+    return await this.actaInicioRepository.save(actaInicio);
   }
 
 }
