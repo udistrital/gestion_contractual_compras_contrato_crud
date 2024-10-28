@@ -39,11 +39,11 @@ import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
           LugarEjecucion,
           ActaInicio, // Añadida esta entidad
         ],
-        synchronize: configService.get('DEVELOPER_MODE'), //Solo para desarrollo, en producción se debe desactivar
+        synchronize: configService.get<string>('DEVELOPER_MODE') === 'true',
         logging: true,
-        ssl: {
+        /*ssl: {
           rejectUnauthorized: false,
-        },
+        },*/
       }),
       inject: [ConfigService],
     }),

@@ -4,7 +4,7 @@ import { ActaInicioService } from './acta-inicio.service';
 import { CrearActaInicioDto } from './dto/crear-acta-inicio.dto';
 import { ActualizarActaInicioDto } from './dto/actualizar-acta-inicio.dto';
 
-@ApiTags('acta-inicio') // Asegúrate de que coincide con el nombre en Swagger
+@ApiTags('acta-inicio')
 @Controller('acta-inicio')
 export class ActaInicioController {
   constructor(private readonly actaInicioService: ActaInicioService) {}
@@ -24,6 +24,7 @@ export class ActaInicioController {
   @Post()
   @ApiOperation({ summary: 'Crear una nueva acta de inicio' })
   create(@Body() crearActaInicioDto: CrearActaInicioDto) {
+    console.log('DTO recibido en el controlador:', crearActaInicioDto); // Verifica el DTO recibido
     return this.actaInicioService.create(crearActaInicioDto);
   }
 

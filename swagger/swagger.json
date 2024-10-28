@@ -1309,16 +1309,14 @@
             "description": "Descripción breve del acta"
           },
           "fecha_inicio": {
-            "format": "date-time",
             "type": "string",
             "example": "2023-10-24",
-            "description": "Fecha de inicio del acta"
+            "description": "Fecha de inicio del acta (formato ISO)"
           },
           "fecha_fin": {
-            "format": "date-time",
             "type": "string",
             "example": "2023-11-24",
-            "description": "Fecha de finalización del acta"
+            "description": "Fecha de finalización del acta (formato ISO)"
           },
           "contrato_general_id": {
             "type": "number",
@@ -1329,18 +1327,6 @@
             "type": "boolean",
             "example": true,
             "description": "Indica si el acta está activa"
-          },
-          "fecha_creacion": {
-            "format": "date-time",
-            "type": "string",
-            "example": "2023-10-24T10:30:00Z",
-            "description": "Fecha de creación del acta"
-          },
-          "fecha_modificacion": {
-            "format": "date-time",
-            "type": "string",
-            "example": "2023-10-25T10:30:00Z",
-            "description": "Fecha de la última modificación del acta"
           }
         },
         "required": [
@@ -1350,14 +1336,48 @@
           "fecha_inicio",
           "fecha_fin",
           "contrato_general_id",
-          "activo",
-          "fecha_creacion",
-          "fecha_modificacion"
+          "activo"
         ]
       },
       "ActualizarActaInicioDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "usuario_id": {
+            "type": "number",
+            "example": 1,
+            "description": "Id del usuario que creó el acta"
+          },
+          "user_legacy": {
+            "type": "string",
+            "example": "user_legacy",
+            "description": "Usuario heredado del sistema anterior"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Descripción del acta",
+            "description": "Descripción breve del acta"
+          },
+          "fecha_inicio": {
+            "type": "string",
+            "example": "2023-10-24",
+            "description": "Fecha de inicio del acta (formato ISO)"
+          },
+          "fecha_fin": {
+            "type": "string",
+            "example": "2023-11-24",
+            "description": "Fecha de finalización del acta (formato ISO)"
+          },
+          "contrato_general_id": {
+            "type": "number",
+            "example": 1,
+            "description": "Id del contrato general relacionado"
+          },
+          "activo": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indica si el acta está activa"
+          }
+        }
       }
     }
   }
