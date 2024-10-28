@@ -13,6 +13,10 @@ export class CreateEstadoContratoDto {
   usuario_id: number;
 
   @IsNotEmpty()
+  @IsNumber()
+  estado_parametro_id: number;
+
+  @IsNotEmpty()
   @IsString()
   motivo: string;
 
@@ -25,14 +29,6 @@ export class CreateEstadoContratoDto {
   contrato_general_id: number;
 
   @IsNotEmpty()
-  @IsBoolean()
-  activo: boolean;
-
-  @IsNotEmpty()
   @IsDate()
   fecha_creacion: Date;
-
-  @IsOptional()
-  @IsDate()
-  fecha_modificacion?: Date;
 }

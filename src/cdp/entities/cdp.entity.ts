@@ -4,7 +4,8 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   CreateDateColumn,
-  UpdateDateColumn, JoinColumn,
+  UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { ContratoGeneral } from '../../contrato-general/entities/contrato-general.entity';
 
@@ -13,7 +14,7 @@ export class Cdp {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column()
   numero_cdp_id: number;
 
   @Column({ type: 'date' })

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Cdp } from './entities/cdp.entity';
@@ -23,7 +23,7 @@ export class CdpService {
     });
 
     if (!contratoGeneral) {
-      throw new Error(
+      throw new NotFoundException(
         `ContratoGeneral con ID "${contrato_general_id}" no encontrado`,
       );
     }
@@ -38,7 +38,11 @@ export class CdpService {
   }
 
   async findAll(): Promise<Cdp[]> {
-    return await this.cdpRepository.find();
+    const cdps = await this.cdpRepository.find();
+    if (!cdps.length) {
+      throw new NotFoundException('No se encontraron CDPs');
+    }
+    return cdps;
   }
 
   async findOne(id: number): Promise<Cdp> {
@@ -46,7 +50,7 @@ export class CdpService {
       where: { id },
     });
     if (!cdp) {
-      throw new Error(`CDP con ID "${id}" no encontrado`);
+      throw new NotFoundException(`CDP con ID "${id}" no encontrado`);
     }
     return cdp;
   }
@@ -59,7 +63,7 @@ export class CdpService {
         where: { id: updateCdpDto.contrato_general_id },
       });
       if (!contratoGeneral) {
-        throw new Error(
+        throw new NotFoundException(
           `ContratoGeneral con ID "${updateCdpDto.contrato_general_id}" no encontrado`,
         );
       }
@@ -74,7 +78,7 @@ export class CdpService {
   async remove(id: number): Promise<void> {
     const result = await this.cdpRepository.delete(id);
     if (result.affected === 0) {
-      throw new Error(`CDP con ID "${id}" no encontrado`);
+      throw new NotFoundException(`CDP con ID "${id}" no encontrado`);
     }
   }
 
@@ -84,7 +88,7 @@ export class CdpService {
     });
 
     if (!cdps.length) {
-      throw new Error(
+      throw new NotFoundException(
         `No se encontraron CDPs para el contrato con id "${contratoGeneralId}"`,
       );
     }

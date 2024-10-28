@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   HttpStatus,
+  HttpException,
 } from '@nestjs/common';
 import { CdpService } from './cdp.service';
 import { CreateCdpDto } from './dto/create-cdp.dto';
@@ -47,12 +48,18 @@ export class CdpController {
         Data: saved,
       };
     } catch (error) {
-      return {
-        Success: false,
-        Status: HttpStatus.INTERNAL_SERVER_ERROR,
-        Message: 'Error al crear el CDP',
-        Data: error,
-      };
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(
+        {
+          Success: false,
+          Status: HttpStatus.INTERNAL_SERVER_ERROR,
+          Message: 'Error al crear el CDP',
+          Data: null,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -73,12 +80,18 @@ export class CdpController {
         Data: cdps,
       };
     } catch (error) {
-      return {
-        Success: false,
-        Status: HttpStatus.NOT_FOUND,
-        Message: 'CDPs no encontrados',
-        Data: error,
-      };
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(
+        {
+          Success: false,
+          Status: HttpStatus.NOT_FOUND,
+          Message: 'CDPs no encontrados',
+          Data: null,
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -101,12 +114,18 @@ export class CdpController {
         Data: found,
       };
     } catch (error) {
-      return {
-        Success: false,
-        Status: HttpStatus.NOT_FOUND,
-        Message: 'CDP no encontrado',
-        Data: error,
-      };
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(
+        {
+          Success: false,
+          Status: HttpStatus.NOT_FOUND,
+          Message: 'CDP no encontrado',
+          Data: null,
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -134,12 +153,18 @@ export class CdpController {
         Data: updated,
       };
     } catch (error) {
-      return {
-        Success: false,
-        Status: HttpStatus.NOT_FOUND,
-        Message: 'CDP no encontrado',
-        Data: error,
-      };
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(
+        {
+          Success: false,
+          Status: HttpStatus.NOT_FOUND,
+          Message: 'CDP no encontrado',
+          Data: null,
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -161,12 +186,18 @@ export class CdpController {
         Data: null,
       };
     } catch (error) {
-      return {
-        Success: false,
-        Status: HttpStatus.NOT_FOUND,
-        Message: 'CDP no encontrado',
-        Data: error,
-      };
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(
+        {
+          Success: false,
+          Status: HttpStatus.NOT_FOUND,
+          Message: 'CDP no encontrado',
+          Data: null,
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -194,12 +225,18 @@ export class CdpController {
         Data: result,
       };
     } catch (error) {
-      return {
-        Success: false,
-        Status: HttpStatus.NOT_FOUND,
-        Message: 'CDPs no encontrados',
-        Data: error,
-      };
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(
+        {
+          Success: false,
+          Status: HttpStatus.NOT_FOUND,
+          Message: 'CDPs no encontrados',
+          Data: null,
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 }
