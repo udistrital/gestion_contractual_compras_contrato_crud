@@ -13,6 +13,8 @@ import { EstadoContratoModule } from './estado-contrato/estado-contrato.module';
 import { EstadoContrato } from './estado-contrato/entities/estado-contrato.entity';
 import { LugarEjecucionModule } from './lugar-ejecucion/lugar-ejecucion.module';
 import { LugarEjecucion } from './lugar-ejecucion/entities/lugar-ejecucion.entity';
+import { CdpModule } from './cdp/cdp.module';
+import { Cdp } from './cdp/entities/cdp.entity';
 import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
 import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
 
@@ -37,6 +39,7 @@ import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
           Contratista,
           EstadoContrato,
           LugarEjecucion,
+          Cdp,
           ActaInicio,
         ],
         synchronize: configService.get<string>('DEVELOPER_MODE') === 'true',
@@ -52,6 +55,7 @@ import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
     ContratistaModule,
     EstadoContratoModule,
     LugarEjecucionModule,
+    CdpModule,
     ActaInicioModule,
   ],
   controllers: [AppController],
