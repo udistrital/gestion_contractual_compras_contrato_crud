@@ -1196,6 +1196,165 @@
           "cdp"
         ]
       }
+    },
+    "/especificaciones-tecnicas": {
+      "get": {
+        "operationId": "EspecificacionTecnicaController_findAll",
+        "summary": "Obtener todas las especificaciones técnicas",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lista de especificaciones técnicas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EspecificacionTecnica"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "especificaciones-tecnicas"
+        ]
+      },
+      "post": {
+        "operationId": "EspecificacionTecnicaController_create",
+        "summary": "Crear una nueva especificación técnica",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearEspecificacionTecnicaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Especificación técnica creada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EspecificacionTecnica"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "especificaciones-tecnicas"
+        ]
+      }
+    },
+    "/especificaciones-tecnicas/{id}": {
+      "get": {
+        "operationId": "EspecificacionTecnicaController_findOne",
+        "summary": "Obtener una especificación técnica por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID de la especificación técnica",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Especificación técnica encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EspecificacionTecnica"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Especificación técnica no encontrada"
+          }
+        },
+        "tags": [
+          "especificaciones-tecnicas"
+        ]
+      },
+      "put": {
+        "operationId": "EspecificacionTecnicaController_update",
+        "summary": "Actualizar una especificación técnica",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID de la especificación técnica a actualizar",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarEspecificacionTecnicaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Especificación técnica actualizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EspecificacionTecnica"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Especificación técnica no encontrada"
+          }
+        },
+        "tags": [
+          "especificaciones-tecnicas"
+        ]
+      },
+      "delete": {
+        "operationId": "EspecificacionTecnicaController_remove",
+        "summary": "Eliminar una especificación técnica",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID de la especificación técnica a eliminar",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Especificación técnica eliminada"
+          },
+          "404": {
+            "description": "Especificación técnica no encontrada"
+          }
+        },
+        "tags": [
+          "especificaciones-tecnicas"
+        ]
+      }
     }
   },
   "info": {
@@ -1445,6 +1604,83 @@
             "example": true
           }
         }
+      },
+      "EspecificacionTecnica": {
+        "type": "object",
+        "properties": {}
+      },
+      "CrearEspecificacionTecnicaDto": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "type": "string",
+            "example": "Item001",
+            "description": "Identificador del ítem en la especificación técnica"
+          },
+          "especificacion": {
+            "type": "string",
+            "example": "Descripción detallada de la especificación",
+            "description": "Especificación del ítem"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Esta es una descripción completa del ítem",
+            "description": "Descripción del ítem"
+          },
+          "cantidad": {
+            "type": "number",
+            "example": 100,
+            "description": "Cantidad del ítem"
+          },
+          "valorUnitario": {
+            "type": "number",
+            "example": 5000.5,
+            "description": "Valor unitario del ítem"
+          },
+          "valorTotal": {
+            "type": "number",
+            "example": 500050,
+            "description": "Valor total del ítem (cantidad * valorUnitario)"
+          },
+          "contratoGeneralId": {
+            "type": "number",
+            "example": 1,
+            "description": "ID del contrato general relacionado"
+          },
+          "activo": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indica si el registro está activo o no"
+          },
+          "fechaCreacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2023-01-01T00:00:00Z",
+            "description": "Fecha de creación del registro"
+          },
+          "fechaModificacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2023-01-01T00:00:00Z",
+            "description": "Fecha de última modificación del registro"
+          }
+        },
+        "required": [
+          "item",
+          "especificacion",
+          "descripcion",
+          "cantidad",
+          "valorUnitario",
+          "valorTotal",
+          "contratoGeneralId",
+          "activo",
+          "fechaCreacion",
+          "fechaModificacion"
+        ]
+      },
+      "ActualizarEspecificacionTecnicaDto": {
+        "type": "object",
+        "properties": {}
       }
     }
   }

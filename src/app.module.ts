@@ -15,6 +15,8 @@ import { LugarEjecucionModule } from './lugar-ejecucion/lugar-ejecucion.module';
 import { LugarEjecucion } from './lugar-ejecucion/entities/lugar-ejecucion.entity';
 import { CdpModule } from './cdp/cdp.module';
 import { Cdp } from './cdp/entities/cdp.entity';
+import { EspecificacionTecnicaModule } from './especificacion-tecnica/especificacion-tecnica.module';
+import { EspecificacionTecnica } from './especificacion-tecnica/entities/especificacion-tecnica.entity';
 
 @Module({
   imports: [
@@ -38,11 +40,12 @@ import { Cdp } from './cdp/entities/cdp.entity';
           EstadoContrato,
           LugarEjecucion,
           Cdp,
+          EspecificacionTecnica,
         ],
-        synchronize: configService.get('DEVELOPER_MODE'), //Solo para desarrollo, en producción se debe desactivar
-        ssl: {
+        synchronize: configService.get('DEVELOPER_MODE'), // Solo para desarrollo, en producción se debe desactivar
+        /*ssl: {
           rejectUnauthorized: false,
-        },
+        },*/
       }),
       inject: [ConfigService],
     }),
@@ -52,6 +55,7 @@ import { Cdp } from './cdp/entities/cdp.entity';
     EstadoContratoModule,
     LugarEjecucionModule,
     CdpModule,
+    EspecificacionTecnicaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
