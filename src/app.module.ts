@@ -15,6 +15,8 @@ import { LugarEjecucionModule } from './lugar-ejecucion/lugar-ejecucion.module';
 import { LugarEjecucion } from './lugar-ejecucion/entities/lugar-ejecucion.entity';
 import { CdpModule } from './cdp/cdp.module';
 import { Cdp } from './cdp/entities/cdp.entity';
+import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
+import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
 
 @Module({
   imports: [
@@ -27,7 +29,7 @@ import { Cdp } from './cdp/entities/cdp.entity';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('GESTION_CONTRACTUAL_CRUD_HOST'),
-        port: configService.get('GESTION_CONTRACTUAL_CRUD_PORT'),
+        port: parseInt(configService.get('GESTION_CONTRACTUAL_CRUD_PORT'), 10),
         username: configService.get('GESTION_CONTRACTUAL_CRUD_USERNAME'),
         password: configService.get('GESTION_CONTRACTUAL_CRUD_PASS'),
         database: configService.get('GESTION_CONTRACTUAL_CRUD_DB'),
@@ -38,8 +40,10 @@ import { Cdp } from './cdp/entities/cdp.entity';
           EstadoContrato,
           LugarEjecucion,
           Cdp,
+          ActaInicio,
         ],
-        synchronize: configService.get('DEVELOPER_MODE'), //Solo para desarrollo, en producción se debe desactivar
+        synchronize: configService.get<string>('DEVELOPER_MODE') === 'true',
+        logging: true,
         ssl: {
           rejectUnauthorized: false,
         },
@@ -52,6 +56,7 @@ import { Cdp } from './cdp/entities/cdp.entity';
     EstadoContratoModule,
     LugarEjecucionModule,
     CdpModule,
+    ActaInicioModule,
   ],
   controllers: [AppController],
   providers: [AppService],

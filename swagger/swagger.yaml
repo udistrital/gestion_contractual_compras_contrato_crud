@@ -726,6 +726,76 @@ paths:
         '404':
           description: No se encontraron CDPs para el contrato especificado.
       tags: *ref_5
+  /acta-inicio:
+    get:
+      operationId: ActaInicioController_findAll
+      summary: Obtener todas las actas de inicio
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: &ref_5
+        - acta-inicio
+    post:
+      operationId: ActaInicioController_create
+      summary: Crear una nueva acta de inicio
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrearActaInicioDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_5
+  /acta-inicio/{id}:
+    get:
+      operationId: ActaInicioController_findOne
+      summary: Obtener una acta de inicio por ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_5
+    put:
+      operationId: ActaInicioController_update
+      summary: Actualizar una acta de inicio
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActualizarActaInicioDto'
+      responses:
+        '200':
+          description: ''
+      tags: *ref_5
+    delete:
+      operationId: ActaInicioController_remove
+      summary: Eliminar una acta de inicio
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_5
 info:
   title: Gestion Contractual CRUD
   description: API para la gestión contractual
@@ -932,3 +1002,73 @@ components:
           type: boolean
           description: Estado activo del CDP
           example: true
+    CrearActaInicioDto:
+      type: object
+      properties:
+        usuario_id:
+          type: number
+          example: 1
+          description: Id del usuario que creó el acta
+        user_legacy:
+          type: string
+          example: user_legacy
+          description: Usuario heredado del sistema anterior
+        descripcion:
+          type: string
+          example: Descripción del acta
+          description: Descripción breve del acta
+        fecha_inicio:
+          type: string
+          example: '2023-10-24'
+          description: Fecha de inicio del acta (formato ISO)
+        fecha_fin:
+          type: string
+          example: '2023-11-24'
+          description: Fecha de finalización del acta (formato ISO)
+        contrato_general_id:
+          type: number
+          example: 1
+          description: Id del contrato general relacionado
+        activo:
+          type: boolean
+          example: true
+          description: Indica si el acta está activa
+      required:
+        - usuario_id
+        - user_legacy
+        - descripcion
+        - fecha_inicio
+        - fecha_fin
+        - contrato_general_id
+        - activo
+    ActualizarActaInicioDto:
+      type: object
+      properties:
+        usuario_id:
+          type: number
+          example: 1
+          description: Id del usuario que creó el acta
+        user_legacy:
+          type: string
+          example: user_legacy
+          description: Usuario heredado del sistema anterior
+        descripcion:
+          type: string
+          example: Descripción del acta
+          description: Descripción breve del acta
+        fecha_inicio:
+          type: string
+          example: '2023-10-24'
+          description: Fecha de inicio del acta (formato ISO)
+        fecha_fin:
+          type: string
+          example: '2023-11-24'
+          description: Fecha de finalización del acta (formato ISO)
+        contrato_general_id:
+          type: number
+          example: 1
+          description: Id del contrato general relacionado
+        activo:
+          type: boolean
+          example: true
+          description: Indica si el acta está activa
