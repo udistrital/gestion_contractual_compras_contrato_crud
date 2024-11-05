@@ -17,11 +17,11 @@ export class EspecificacionTecnica {
   @Column({ name: 'cantidad', type: 'numeric', precision: 10, scale: 2 })
   cantidad: number;
 
-  @Column({ name: 'valor_unitario', type: 'numeric', precision: 16, scale: 2 })
+  @Column('decimal', { name: 'valor_unitario', precision: 10, scale: 2 })
   valorUnitario: number;
-
-  @Column({ name: 'valor_total', type: 'numeric', precision: 16, scale: 2 })
-  valorTotal: number;
+  
+  @Column('decimal', { name: 'valor_total', precision: 15, scale: 2 })
+  valorTotal: number;  
 
   @Column({ name: 'contrato_general_id', nullable: true })
   contratoGeneralId: number;
