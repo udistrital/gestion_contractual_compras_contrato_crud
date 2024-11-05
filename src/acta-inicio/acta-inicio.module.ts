@@ -1,16 +1,12 @@
-// acta-inicio.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ActaInicioService } from './acta-inicio.service';
 import { ActaInicioController } from './acta-inicio.controller';
 import { ActaInicio } from './entities/acta-inicio-entity';
-import { ContratoGeneralModule } from '../contrato-general/contrato-general.module'; // Importa el módulo de contrato-general
+import { ContratoGeneralModule } from '../contrato-general/contrato-general.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([ActaInicio]),
-    ContratoGeneralModule, 
-  ],
+  imports: [TypeOrmModule.forFeature([ActaInicio]), ContratoGeneralModule],
   controllers: [ActaInicioController],
   providers: [ActaInicioService],
   exports: [ActaInicioService],

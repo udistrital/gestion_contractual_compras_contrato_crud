@@ -11,9 +11,9 @@ export class ActaInicioService {
   constructor(
     @InjectRepository(ActaInicio)
     private readonly actaInicioRepository: Repository<ActaInicio>,
-    @InjectRepository(ContratoGeneral) 
+    @InjectRepository(ContratoGeneral)
     private readonly contratoGeneralRepository: Repository<ContratoGeneral>,
-  ) { }
+  ) {}
 
   async findAll(): Promise<ActaInicio[]> {
     return this.actaInicioRepository.find();
@@ -32,15 +32,17 @@ export class ActaInicioService {
   }
 
   async create(actaInicioDto: CrearActaInicioDto): Promise<ActaInicio> {
-    console.log("Datos recibidos para crear ActaInicio:", actaInicioDto);
+    console.log('Datos recibidos para crear ActaInicio:', actaInicioDto);
 
     const contratoExiste = await this.contratoGeneralRepository.findOne({
       where: { id: actaInicioDto.contrato_general_id },
-      select: ["id"],
+      select: ['id'],
     });
 
     if (!contratoExiste) {
-      throw new NotFoundException(`ContratoGeneral con ID "${actaInicioDto.contrato_general_id}" no encontrado`);
+      throw new NotFoundException(
+        `ContratoGeneral con ID "${actaInicioDto.contrato_general_id}" no encontrado`,
+      );
     }
 
     const newActaInicio = this.actaInicioRepository.create({
@@ -55,15 +57,28 @@ export class ActaInicioService {
       fechaModificacion: new Date(),
     });
 
-    console.log("Entidad ActaInicio creada:", newActaInicio);
+    console.log('Entidad ActaInicio creada:', newActaInicio);
 
     return await this.actaInicioRepository.save(newActaInicio);
   }
 
-  async update(id: number, actaInicioDto: ActualizarActaInicioDto): Promise<ActaInicio> {
-    const { usuario_id, user_legacy, descripcion, fecha_inicio, fecha_fin, contrato_general_id, activo } = actaInicioDto;
+  async update(
+    id: number,
+    actaInicioDto: ActualizarActaInicioDto,
+  ): Promise<ActaInicio> {
+    const {
+      usuario_id,
+      user_legacy,
+      descripcion,
+      fecha_inicio,
+      fecha_fin,
+      contrato_general_id,
+      activo,
+    } = actaInicioDto;
 
-    const actaInicio = await this.actaInicioRepository.findOne({ where: { id } });
+    const actaInicio = await this.actaInicioRepository.findOne({
+      where: { id },
+    });
     if (!actaInicio) {
       throw new NotFoundException(`ActaInicio con ID "${id}" no encontrada`);
     }
@@ -71,8 +86,10 @@ export class ActaInicioService {
     actaInicio.usuarioId = usuario_id;
     actaInicio.usuarioLegacy = user_legacy;
     actaInicio.descripcion = descripcion;
-    actaInicio.fechaInicio = fecha_inicio ? new Date(fecha_inicio) : actaInicio.fechaInicio; 
-    actaInicio.fechaFin = fecha_fin ? new Date(fecha_fin) : actaInicio.fechaFin; 
+    actaInicio.fechaInicio = fecha_inicio
+      ? new Date(fecha_inicio)
+      : actaInicio.fechaInicio;
+    actaInicio.fechaFin = fecha_fin ? new Date(fecha_fin) : actaInicio.fechaFin;
     actaInicio.contratoGeneralId = contrato_general_id;
     actaInicio.activo = activo;
 
@@ -80,8 +97,9 @@ export class ActaInicioService {
   }
 
   async remove(id: number): Promise<ActaInicio> {
-
-    const actaInicio = await this.actaInicioRepository.findOne({ where: { id } });
+    const actaInicio = await this.actaInicioRepository.findOne({
+      where: { id },
+    });
 
     if (!actaInicio) {
       throw new NotFoundException(`ActaInicio con ID "${id}" no encontrada`);
@@ -92,5 +110,4 @@ export class ActaInicioService {
 
     return await this.actaInicioRepository.save(actaInicio);
   }
-
 }

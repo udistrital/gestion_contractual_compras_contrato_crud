@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, RelationId} from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  RelationId,
+} from 'typeorm';
 import { ContratoGeneral } from '../../contrato-general/entities/contrato-general.entity';
 
 @Entity('acta_inicio')
@@ -32,9 +39,17 @@ export class ActaInicio {
   @Column({ name: 'activo', type: 'boolean', default: true })
   activo: boolean;
 
-  @Column({ name: 'fecha_creacion', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    name: 'fecha_creacion',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   fechaCreacion: Date;
 
-  @Column({ name: 'fecha_modificacion', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    name: 'fecha_modificacion',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   fechaModificacion: Date;
 }

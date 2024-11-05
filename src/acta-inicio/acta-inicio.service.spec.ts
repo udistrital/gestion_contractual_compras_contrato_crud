@@ -64,18 +64,23 @@ describe('ActaInicioService', () => {
         usuario_id: 1,
         user_legacy: 'legacy_user',
         descripcion: 'Acta inicial de prueba',
-        fecha_inicio: '2023-10-24', 
-        fecha_fin: '2023-11-24',    
+        fecha_inicio: '2023-10-24',
+        fecha_fin: '2023-11-24',
         contrato_general_id: 1,
         activo: true,
-      };      
-      const result = { id: 1, ...dto, fecha_creacion: new Date(), fecha_modificacion: new Date() };
+      };
+      const result = {
+        id: 1,
+        ...dto,
+        fecha_creacion: new Date(),
+        fecha_modificacion: new Date(),
+      };
       mockRepository.save.mockResolvedValue(result);
-  
+
       expect(await service.create(dto)).toBe(result);
       expect(mockRepository.save).toHaveBeenCalledWith(dto);
     });
-  });  
+  });
 
   describe('update', () => {
     it('debería actualizar un acta de inicio', async () => {
@@ -87,7 +92,7 @@ describe('ActaInicioService', () => {
         fecha_inicio: '2023-10-24',
         fecha_fin: '2023-11-24',
         activo: false,
-      };      
+      };
       const updatedActa = { id, ...dto };
       mockRepository.update.mockResolvedValue({ affected: 1 });
       mockRepository.findOne.mockResolvedValue(updatedActa);
