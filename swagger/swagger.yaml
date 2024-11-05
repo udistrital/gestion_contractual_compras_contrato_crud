@@ -1032,18 +1032,10 @@ components:
     CrearEspecificacionTecnicaDto:
       type: object
       properties:
-        item:
+        descripcion:
           type: string
           example: '1'
           description: Identificador del ítem en la especificación técnica
-        especificacion:
-          type: string
-          example: Especificación A
-          description: Especificación del ítem
-        descripcion:
-          type: string
-          example: Especificación 1
-          description: Descripción del ítem
         cantidad:
           type: number
           example: 10
@@ -1075,8 +1067,6 @@ components:
           example: '2024-01-04T00:00:00Z'
           description: Fecha de última modificación del registro
       required:
-        - item
-        - especificacion
         - descripcion
         - cantidad
         - valorUnitario

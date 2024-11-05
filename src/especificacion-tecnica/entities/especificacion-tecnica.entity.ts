@@ -5,12 +5,6 @@ export class EspecificacionTecnica {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'item' })
-  item: string;
-
-  @Column({ name: 'especificacion' })
-  especificacion: string;
-
   @Column({ name: 'descripcion', type: 'text' })
   descripcion: string;
 

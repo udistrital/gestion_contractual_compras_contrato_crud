@@ -1608,20 +1608,10 @@
       "CrearEspecificacionTecnicaDto": {
         "type": "object",
         "properties": {
-          "item": {
+          "descripcion": {
             "type": "string",
             "example": "1",
             "description": "Identificador del ítem en la especificación técnica"
-          },
-          "especificacion": {
-            "type": "string",
-            "example": "Especificación A",
-            "description": "Especificación del ítem"
-          },
-          "descripcion": {
-            "type": "string",
-            "example": "Especificación 1",
-            "description": "Descripción del ítem"
           },
           "cantidad": {
             "type": "number",
@@ -1662,8 +1652,6 @@
           }
         },
         "required": [
-          "item",
-          "especificacion",
           "descripcion",
           "cantidad",
           "valorUnitario",

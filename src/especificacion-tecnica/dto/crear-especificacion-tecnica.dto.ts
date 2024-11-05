@@ -6,15 +6,6 @@ export class CrearEspecificacionTecnicaDto {
     example: '1',
     description: 'Identificador del ítem en la especificación técnica',
   })
-  @IsString()
-  item: string;
-
-  @ApiProperty({
-    example: 'Especificación A',
-    description: 'Especificación del ítem',
-  })
-  @IsString()
-  especificacion: string;
 
   @ApiProperty({
     example: 'Especificación 1',

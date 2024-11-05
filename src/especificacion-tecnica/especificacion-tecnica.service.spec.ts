@@ -6,7 +6,6 @@ import { EspecificacionTecnica } from './entities/especificacion-tecnica.entity'
 import { CrearEspecificacionTecnicaDto } from './dto/crear-especificacion-tecnica.dto';
 import { ActualizarEspecificacionTecnicaDto } from './dto/actualizar-especificacion-tecnica';
 
-
 describe('EspecificacionTecnicaService', () => {
   let service: EspecificacionTecnicaService;
   let repository: Repository<EspecificacionTecnica>;
@@ -70,8 +69,6 @@ describe('EspecificacionTecnicaService', () => {
   describe('create', () => {
     it('debería crear una nueva especificación técnica', async () => {
       const dto: CrearEspecificacionTecnicaDto = {
-        item: 'Item001',
-        especificacion: 'Especificación de prueba',
         descripcion: 'Descripción de prueba',
         cantidad: 10,
         valorUnitario: 5000,
@@ -87,13 +84,13 @@ describe('EspecificacionTecnicaService', () => {
       expect(await service.create(dto)).toBe(result);
       expect(mockRepository.save).toHaveBeenCalledWith(dto);
     });
-  });  
+  });
 
   describe('update', () => {
     it('debería actualizar una especificación técnica', async () => {
       const id = 1;
       const dto: ActualizarEspecificacionTecnicaDto = {
-        especificacion: 'Especificación actualizada',
+        descripcion: 'Descripción actualizada',
         cantidad: 20,
       };
       const updatedEspecificacion = { id, ...dto };
@@ -109,7 +106,7 @@ describe('EspecificacionTecnicaService', () => {
 
     it('debería lanzar un error si la especificación técnica no se encuentra al actualizar', async () => {
       const id = 1;
-      const dto: ActualizarEspecificacionTecnicaDto = { especificacion: 'Nueva especificación' };
+      const dto: ActualizarEspecificacionTecnicaDto = { descripcion: 'Nueva descripción' };
       mockRepository.update.mockResolvedValue({ affected: 0 });
 
       await expect(service.update(id, dto)).rejects.toThrow(
