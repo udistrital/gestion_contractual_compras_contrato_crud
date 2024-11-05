@@ -809,19 +809,16 @@ paths:
       tags: *ref_6
     delete:
       operationId: EspecificacionTecnicaController_remove
-      summary: Eliminar una especificación técnica
+      summary: Marcar una especificación técnica como inactiva
       parameters:
         - name: id
           required: true
           in: path
-          description: ID de la especificación técnica a eliminar
           schema:
             type: number
       responses:
         '200':
-          description: Especificación técnica eliminada
-        '404':
-          description: Especificación técnica no encontrada
+          description: ''
       tags: *ref_6
 info:
   title: Gestion Contractual CRUD
@@ -1037,31 +1034,31 @@ components:
       properties:
         item:
           type: string
-          example: Item001
+          example: '1'
           description: Identificador del ítem en la especificación técnica
         especificacion:
           type: string
-          example: Descripción detallada de la especificación
+          example: Especificación A
           description: Especificación del ítem
         descripcion:
           type: string
-          example: Esta es una descripción completa del ítem
+          example: Especificación 1
           description: Descripción del ítem
         cantidad:
           type: number
-          example: 100
+          example: 10
           description: Cantidad del ítem
         valorUnitario:
           type: number
-          example: 5000.5
+          example: 100
           description: Valor unitario del ítem
         valorTotal:
           type: number
-          example: 500050
+          example: 1000
           description: Valor total del ítem (cantidad * valorUnitario)
         contratoGeneralId:
           type: number
-          example: 1
+          example: 2
           description: ID del contrato general relacionado
         activo:
           type: boolean
@@ -1070,12 +1067,12 @@ components:
         fechaCreacion:
           format: date-time
           type: string
-          example: '2023-01-01T00:00:00Z'
+          example: '2024-01-04T00:00:00Z'
           description: Fecha de creación del registro
         fechaModificacion:
           format: date-time
           type: string
-          example: '2023-01-01T00:00:00Z'
+          example: '2024-01-04T00:00:00Z'
           description: Fecha de última modificación del registro
       required:
         - item

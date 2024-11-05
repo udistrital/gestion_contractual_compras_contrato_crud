@@ -41,14 +41,17 @@ export class EspecificacionTecnicaService {
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<EspecificacionTecnica> {
     const especificacion = await this.findOne(id);
+    
     if (!especificacion) {
       throw new NotFoundException(`EspecificacionTecnica con ID "${id}" no encontrada`);
     }
-    await this.especificacionTecnicaRepository.update(id, {
-      activo: false,
-      fechaModificacion: new Date(),
-    });
+
+    especificacion.activo = false;
+    especificacion.fechaModificacion = new Date();
+
+    return this.especificacionTecnicaRepository.save(especificacion);
   }
+  
 }
