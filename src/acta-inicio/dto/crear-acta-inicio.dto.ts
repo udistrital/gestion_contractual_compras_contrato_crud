@@ -15,11 +15,11 @@ export class CrearActaInicioDto {
   usuario_id: number;
 
   @ApiProperty({
-    example: 'user_legacy',
+    example: 'usuario_legado',
     description: 'Usuario heredado del sistema anterior',
   })
   @IsString()
-  user_legacy: string;
+  usuario_legado: string;
 
   @ApiProperty({
     example: 'Descripción del acta',

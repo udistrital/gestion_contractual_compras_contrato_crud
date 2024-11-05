@@ -11,7 +11,7 @@ export class ActaInicioService {
   constructor(
     @InjectRepository(ActaInicio)
     private readonly actaInicioRepository: Repository<ActaInicio>,
-    @InjectRepository(ContratoGeneral) 
+    @InjectRepository(ContratoGeneral)
     private readonly contratoGeneralRepository: Repository<ContratoGeneral>,
   ) { }
 
@@ -45,7 +45,7 @@ export class ActaInicioService {
 
     const newActaInicio = this.actaInicioRepository.create({
       usuarioId: actaInicioDto.usuario_id,
-      usuarioLegacy: actaInicioDto.user_legacy,
+      usuarioLegado: actaInicioDto.usuario_legado,
       descripcion: actaInicioDto.descripcion,
       fechaInicio: actaInicioDto.fecha_inicio,
       fechaFin: actaInicioDto.fecha_fin,
@@ -61,7 +61,7 @@ export class ActaInicioService {
   }
 
   async update(id: number, actaInicioDto: ActualizarActaInicioDto): Promise<ActaInicio> {
-    const { usuario_id, user_legacy, descripcion, fecha_inicio, fecha_fin, contrato_general_id, activo } = actaInicioDto;
+    const { usuario_id, usuario_legado, descripcion, fecha_inicio, fecha_fin, contrato_general_id, activo } = actaInicioDto;
 
     const actaInicio = await this.actaInicioRepository.findOne({ where: { id } });
     if (!actaInicio) {
@@ -69,12 +69,13 @@ export class ActaInicioService {
     }
 
     actaInicio.usuarioId = usuario_id;
-    actaInicio.usuarioLegacy = user_legacy;
+    actaInicio.usuarioLegado = usuario_legado;
     actaInicio.descripcion = descripcion;
-    actaInicio.fechaInicio = fecha_inicio ? new Date(fecha_inicio) : actaInicio.fechaInicio; 
-    actaInicio.fechaFin = fecha_fin ? new Date(fecha_fin) : actaInicio.fechaFin; 
+    actaInicio.fechaInicio = fecha_inicio ? new Date(fecha_inicio) : actaInicio.fechaInicio;
+    actaInicio.fechaFin = fecha_fin ? new Date(fecha_fin) : actaInicio.fechaFin;
     actaInicio.contratoGeneralId = contrato_general_id;
     actaInicio.activo = activo;
+
 
     return await this.actaInicioRepository.save(actaInicio);
   }

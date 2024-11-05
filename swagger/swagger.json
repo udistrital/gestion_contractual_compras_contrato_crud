@@ -1298,9 +1298,9 @@
             "example": 1,
             "description": "Id del usuario que creó el acta"
           },
-          "user_legacy": {
+          "usuario_legado": {
             "type": "string",
-            "example": "user_legacy",
+            "example": "usuario_legado",
             "description": "Usuario heredado del sistema anterior"
           },
           "descripcion": {
@@ -1331,7 +1331,7 @@
         },
         "required": [
           "usuario_id",
-          "user_legacy",
+          "usuario_legado",
           "descripcion",
           "fecha_inicio",
           "fecha_fin",
@@ -1347,9 +1347,9 @@
             "example": 1,
             "description": "Id del usuario que creó el acta"
           },
-          "user_legacy": {
+          "usuario_legado": {
             "type": "string",
-            "example": "user_legacy",
+            "example": "usuario_legado",
             "description": "Usuario heredado del sistema anterior"
           },
           "descripcion": {
