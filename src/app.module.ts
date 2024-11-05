@@ -17,6 +17,8 @@ import { CdpModule } from './cdp/cdp.module';
 import { Cdp } from './cdp/entities/cdp.entity';
 import { EspecificacionTecnicaModule } from './especificacion-tecnica/especificacion-tecnica.module';
 import { EspecificacionTecnica } from './especificacion-tecnica/entities/especificacion-tecnica.entity';
+import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
+import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
 
 @Module({
   imports: [
@@ -29,7 +31,7 @@ import { EspecificacionTecnica } from './especificacion-tecnica/entities/especif
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('GESTION_CONTRACTUAL_CRUD_HOST'),
-        port: configService.get('GESTION_CONTRACTUAL_CRUD_PORT'),
+        port: parseInt(configService.get('GESTION_CONTRACTUAL_CRUD_PORT'), 10),
         username: configService.get('GESTION_CONTRACTUAL_CRUD_USERNAME'),
         password: configService.get('GESTION_CONTRACTUAL_CRUD_PASS'),
         database: configService.get('GESTION_CONTRACTUAL_CRUD_DB'),
@@ -40,9 +42,11 @@ import { EspecificacionTecnica } from './especificacion-tecnica/entities/especif
           EstadoContrato,
           LugarEjecucion,
           Cdp,
+          ActaInicio,
           EspecificacionTecnica,
         ],
         synchronize: configService.get('DEVELOPER_MODE'), // Solo para desarrollo, en producción se debe desactivar
+        logging: true,
         ssl: {
           rejectUnauthorized: false,
         },
@@ -56,6 +60,7 @@ import { EspecificacionTecnica } from './especificacion-tecnica/entities/especif
     LugarEjecucionModule,
     CdpModule,
     EspecificacionTecnicaModule,
+    ActaInicioModule,
   ],
   controllers: [AppController],
   providers: [AppService],
