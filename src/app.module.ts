@@ -43,9 +43,9 @@ import { EspecificacionTecnica } from './especificacion-tecnica/entities/especif
           EspecificacionTecnica,
         ],
         synchronize: configService.get('DEVELOPER_MODE'), // Solo para desarrollo, en producción se debe desactivar
-        /*ssl: {
+        ssl: {
           rejectUnauthorized: false,
-        },*/
+        },
       }),
       inject: [ConfigService],
     }),
