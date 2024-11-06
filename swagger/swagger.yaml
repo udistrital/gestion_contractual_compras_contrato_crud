@@ -15,9 +15,7 @@ paths:
         - name: fields
           required: false
           in: query
-          description: >-
-            Campos a retornar (separados por comas). Ejemplo:
-            "vigencia,valorPesos,observaciones"
+          description: Campos a retornar (separados por comas)
           schema:
             type: string
         - name: sortBy
@@ -52,9 +50,7 @@ paths:
         - name: query
           required: false
           in: query
-          description: >-
-            Filtros dinámicos en formato JSON. Ejemplo: {"vigencia": "2024",
-            "activo": true}
+          description: Filtros dinámicos en formato JSON
           schema:
             type: string
       responses:
