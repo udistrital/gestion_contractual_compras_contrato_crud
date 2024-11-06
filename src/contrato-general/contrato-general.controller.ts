@@ -23,7 +23,7 @@ import {
   ApiBody,
 } from '@nestjs/swagger';
 import { StandardResponse } from '../utils/standardResponse.interface';
-import { QueryContratoGeneralDto } from './dto/query-contrato-general.dto';
+import { BaseQueryParamsDto } from '../shared/dto/query-params.base.dto';
 
 @ApiTags('contratos-generales')
 @Controller('contratos-generales')
@@ -40,7 +40,7 @@ export class ContratoGeneralController {
     type: [ContratoGeneral],
   })
   async findAll(
-    @Query() queryParams: QueryContratoGeneralDto,
+    @Query() queryParams: BaseQueryParamsDto,
     @Res() res: Response,
   ): Promise<void> {
     try {
