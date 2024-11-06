@@ -43,7 +43,6 @@ import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
           ActaInicio,
         ],
         synchronize: configService.get<string>('DEVELOPER_MODE') === 'true',
-        logging: true,
         ssl: {
           rejectUnauthorized: false,
         },

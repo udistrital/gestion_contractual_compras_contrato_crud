@@ -2,10 +2,9 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsInt, Min, IsString, IsIn } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class QueryContratoGeneralDto {
+export class BaseQueryParamsDto {
   @ApiPropertyOptional({
-    description:
-      'Campos a retornar (separados por comas). Ejemplo: "vigencia,valorPesos,observaciones"',
+    description: 'Campos a retornar (separados por comas)',
   })
   @IsOptional()
   @IsString()
@@ -47,8 +46,7 @@ export class QueryContratoGeneralDto {
   offset?: number;
 
   @ApiPropertyOptional({
-    description:
-      'Filtros dinámicos en formato JSON. Ejemplo: {"vigencia": "2024", "activo": true}',
+    description: 'Filtros dinámicos en formato JSON',
   })
   @IsOptional()
   @IsString()
