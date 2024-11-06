@@ -8,5 +8,6 @@ import { ContratoGeneral } from './entities/contrato-general.entity';
   imports: [TypeOrmModule.forFeature([ContratoGeneral])],
   controllers: [ContratoGeneralController],
   providers: [ContratoGeneralService],
+  exports: [TypeOrmModule], // Exporta TypeOrmModule para que esté disponible en otros módulos
 })
 export class ContratoGeneralModule {}
