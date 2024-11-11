@@ -16,68 +16,7 @@
       "get": {
         "operationId": "ContratoGeneralController_findAll",
         "summary": "Obtener todos los contratos generales",
-        "parameters": [
-          {
-            "name": "fields",
-            "required": false,
-            "in": "query",
-            "description": "Campos a retornar (separados por comas)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "sortBy",
-            "required": false,
-            "in": "query",
-            "description": "Campo por el cual ordenar",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "required": false,
-            "in": "query",
-            "description": "Dirección del ordenamiento",
-            "schema": {
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "name": "limit",
-            "required": false,
-            "in": "query",
-            "description": "Número de registros a retornar",
-            "schema": {
-              "minimum": 0,
-              "type": "number"
-            }
-          },
-          {
-            "name": "offset",
-            "required": false,
-            "in": "query",
-            "description": "Número de registros a saltar",
-            "schema": {
-              "minimum": 0,
-              "type": "number"
-            }
-          },
-          {
-            "name": "query",
-            "required": false,
-            "in": "query",
-            "description": "Filtros dinámicos en formato JSON",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Lista de contratos generales",
@@ -1258,6 +1197,161 @@
         ]
       }
     },
+    "/especificaciones-tecnicas": {
+      "get": {
+        "operationId": "EspecificacionTecnicaController_findAll",
+        "summary": "Obtener todas las especificaciones técnicas",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lista de especificaciones técnicas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EspecificacionTecnica"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "especificaciones-tecnicas"
+        ]
+      },
+      "post": {
+        "operationId": "EspecificacionTecnicaController_create",
+        "summary": "Crear una nueva especificación técnica",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearEspecificacionTecnicaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Especificación técnica creada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EspecificacionTecnica"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "especificaciones-tecnicas"
+        ]
+      }
+    },
+    "/especificaciones-tecnicas/{id}": {
+      "get": {
+        "operationId": "EspecificacionTecnicaController_findOne",
+        "summary": "Obtener una especificación técnica por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID de la especificación técnica",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Especificación técnica encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EspecificacionTecnica"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Especificación técnica no encontrada"
+          }
+        },
+        "tags": [
+          "especificaciones-tecnicas"
+        ]
+      },
+      "put": {
+        "operationId": "EspecificacionTecnicaController_update",
+        "summary": "Actualizar una especificación técnica",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID de la especificación técnica a actualizar",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarEspecificacionTecnicaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Especificación técnica actualizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EspecificacionTecnica"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Especificación técnica no encontrada"
+          }
+        },
+        "tags": [
+          "especificaciones-tecnicas"
+        ]
+      },
+      "delete": {
+        "operationId": "EspecificacionTecnicaController_remove",
+        "summary": "Marcar una especificación técnica como inactiva",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "especificaciones-tecnicas"
+        ]
+      }
+    },
     "/actas-inicio": {
       "get": {
         "operationId": "ActaInicioController_findAll",
@@ -1622,6 +1716,71 @@
             "example": true
           }
         }
+      },
+      "EspecificacionTecnica": {
+        "type": "object",
+        "properties": {}
+      },
+      "CrearEspecificacionTecnicaDto": {
+        "type": "object",
+        "properties": {
+          "descripcion": {
+            "type": "string",
+            "example": "1",
+            "description": "Identificador del ítem en la especificación técnica"
+          },
+          "cantidad": {
+            "type": "number",
+            "example": 10,
+            "description": "Cantidad del ítem"
+          },
+          "valorUnitario": {
+            "type": "number",
+            "example": 100,
+            "description": "Valor unitario del ítem"
+          },
+          "valorTotal": {
+            "type": "number",
+            "example": 1000,
+            "description": "Valor total del ítem (cantidad * valorUnitario)"
+          },
+          "contratoGeneralId": {
+            "type": "number",
+            "example": 2,
+            "description": "ID del contrato general relacionado"
+          },
+          "activo": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indica si el registro está activo o no"
+          },
+          "fechaCreacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-01-04T00:00:00Z",
+            "description": "Fecha de creación del registro"
+          },
+          "fechaModificacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-01-04T00:00:00Z",
+            "description": "Fecha de última modificación del registro"
+          }
+        },
+        "required": [
+          "descripcion",
+          "cantidad",
+          "valorUnitario",
+          "valorTotal",
+          "contratoGeneralId",
+          "activo",
+          "fechaCreacion",
+          "fechaModificacion"
+        ]
+      },
+      "ActualizarEspecificacionTecnicaDto": {
+        "type": "object",
+        "properties": {}
       },
       "CrearActaInicioDto": {
         "type": "object",

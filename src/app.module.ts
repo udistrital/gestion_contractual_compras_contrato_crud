@@ -15,6 +15,8 @@ import { LugarEjecucionModule } from './lugar-ejecucion/lugar-ejecucion.module';
 import { LugarEjecucion } from './lugar-ejecucion/entities/lugar-ejecucion.entity';
 import { CdpModule } from './cdp/cdp.module';
 import { Cdp } from './cdp/entities/cdp.entity';
+import { EspecificacionTecnicaModule } from './especificacion-tecnica/especificacion-tecnica.module';
+import { EspecificacionTecnica } from './especificacion-tecnica/entities/especificacion-tecnica.entity';
 import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
 import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
 
@@ -41,8 +43,9 @@ import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
           LugarEjecucion,
           Cdp,
           ActaInicio,
+          EspecificacionTecnica,
         ],
-        synchronize: configService.get<string>('DEVELOPER_MODE') === 'true',
+        synchronize: configService.get('DEVELOPER_MODE'), // Solo para desarrollo, en producción se debe desactivar
         ssl: {
           rejectUnauthorized: false,
         },
@@ -55,6 +58,7 @@ import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
     EstadoContratoModule,
     LugarEjecucionModule,
     CdpModule,
+    EspecificacionTecnicaModule,
     ActaInicioModule,
   ],
   controllers: [AppController],
