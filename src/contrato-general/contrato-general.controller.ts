@@ -8,6 +8,7 @@ import {
   Put,
   HttpStatus,
   Res,
+  Query,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ContratoGeneralService } from './contrato-general.service';
@@ -22,6 +23,7 @@ import {
   ApiBody,
 } from '@nestjs/swagger';
 import { StandardResponse } from '../utils/standardResponse.interface';
+import { BaseQueryParamsDto } from '../shared/dto/query-params.base.dto';
 
 @ApiTags('contratos-generales')
 @Controller('contratos-generales')
@@ -37,14 +39,19 @@ export class ContratoGeneralController {
     description: 'Lista de contratos generales',
     type: [ContratoGeneral],
   })
-  async findAll(@Res() res: Response): Promise<void> {
+  async findAll(
+    @Query() queryParams: BaseQueryParamsDto,
+    @Res() res: Response,
+  ): Promise<void> {
     try {
-      const contracts = await this.contratoGeneralService.findAll();
+      const [contracts, metadata] =
+        await this.contratoGeneralService.findAll(queryParams);
       const response: StandardResponse<ContratoGeneral[]> = {
         Success: true,
         Status: HttpStatus.OK,
         Message: 'Contratos generales encontrados',
         Data: contracts,
+        Metadata: metadata,
       };
       res.status(HttpStatus.OK).json(response);
     } catch (error) {
@@ -52,7 +59,7 @@ export class ContratoGeneralController {
         Success: false,
         Status: HttpStatus.INTERNAL_SERVER_ERROR,
         Message: 'Error al obtener los contratos generales',
-        Data: error,
+        Data: error.message,
       };
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(response);
     }

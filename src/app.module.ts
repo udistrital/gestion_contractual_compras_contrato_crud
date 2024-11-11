@@ -46,7 +46,6 @@ import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
           EspecificacionTecnica,
         ],
         synchronize: configService.get('DEVELOPER_MODE'), // Solo para desarrollo, en producción se debe desactivar
-        logging: true,
         ssl: {
           rejectUnauthorized: false,
         },

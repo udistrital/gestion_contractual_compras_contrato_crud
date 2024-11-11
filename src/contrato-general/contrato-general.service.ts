@@ -4,16 +4,23 @@ import { ActualizarContratoGeneralDto } from './dto/actualizar-contrato-general.
 import { ContratoGeneral } from './entities/contrato-general.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ResponseMetadata } from '../utils/response-metadata.interface';
+import { BaseCrudService } from '../shared/services/base-crud.service';
+import { BaseQueryParamsDto } from '../shared/dto/query-params.base.dto';
 
 @Injectable()
-export class ContratoGeneralService {
+export class ContratoGeneralService extends BaseCrudService<ContratoGeneral> {
   constructor(
     @InjectRepository(ContratoGeneral)
     private contratoGeneralRepository: Repository<ContratoGeneral>,
-  ) {}
+  ) {
+    super(contratoGeneralRepository, 'contrato');
+  }
 
-  async findAll(): Promise<ContratoGeneral[]> {
-    return this.contratoGeneralRepository.find();
+  async findAll(
+    queryParams: BaseQueryParamsDto,
+  ): Promise<[ContratoGeneral[], ResponseMetadata]> {
+    return this.findAllWithFilters(queryParams);
   }
 
   async findOne(id: number): Promise<ContratoGeneral> {
