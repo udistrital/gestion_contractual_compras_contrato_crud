@@ -17,3 +17,4 @@
 | condiciones      | condiciones   | |
 | unidad_ejecutora      | | |
 | fecha_registro      |   | |
+| tipologia_contrato      | | tipologia_especifica_id o tipo_contrato_id|
