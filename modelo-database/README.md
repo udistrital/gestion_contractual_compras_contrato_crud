@@ -15,3 +15,5 @@
 | descripcion_forma_pago      | modo_pago   | Igual, mismos datos. |
 | descripcion_forma_pago      | modo_pago   | Igual, mismos datos. |
 | condiciones      | condiciones   | |
+| unidad_ejecutora      | | |
+| fecha_registro      |   | |
