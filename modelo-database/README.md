@@ -31,3 +31,9 @@
 | valor_tasa_cambio | valor_tasa_cambio |                      |
 | observaciones | observaciones |                      |
 | supervisor | **supervisor_contrato**.supervisor_id |                      |
+| clase_contratista | **contratista**.clase_contratista |                      |
+| convenio | |                      |
+| numero_constancia |  |       No se usa, deprecado.               |
+
+
+
