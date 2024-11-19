@@ -51,3 +51,13 @@
 | valor_administracion | valor_administracion |       |
 | plazo_entrega | plazo_entrega |       |
 | valor_arrendamiento | valor_arrendamiento |       |
+
+
+# CDP (contrato disponibilidad)
+
+| **ARGO**        | **ARGO V2**     | **NOTAS**            |
+|-----------------|-----------------|----------------------|
+| numero_cdp | numero_cdp_id |  Igual, mismos datos.      |
+| estado | activo | Igual, mismos datos.       |
+| fecha_registro | fecha_registro |       |
+| vigencia_cdp | vigencia_cdp |       |
