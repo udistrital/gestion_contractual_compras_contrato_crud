@@ -66,7 +66,7 @@
 | vigencia_cdp   | vigencia_cdp   |                      |
 
 
-# registro presupuestal
+# Registro presupuestal
 
 | **ARGO**              | **ARGO V2**          | **NOTAS**            |
 |-----------------------|----------------------|----------------------|
@@ -85,4 +85,30 @@
 | descripcion    | descripcion    |           |
 | usuario        | usuario_legado |           |
 | fecha_registro | fecha_creacion |           |
+
+
+# Especificacion Tecnicas
+
+| **ARGO**            | **ARGO V2** | **NOTAS**                    |
+|---------------------|-------------|------------------------------|
+| puc                 |             | Revisar                      |
+| catalogo            |             | Revisar                      |
+| solicitud_necesidad |             | Revisar                      |
+| descripcion         | descripcion |                              |
+| cantidad            | cantidad    |                              |
+| unidad              |             | Revisar                      |
+| valor               |             | valor total? valor_unitario? |
+| iva                 |             | Revisar                      |
+
+
+# Lugar Ejecucion
+
+| **ARGO**    | **ARGO V2**    | **NOTAS**            |
+|-------------|----------------|----------------------|
+| direccion   | direccion      |                      |
+| sede        | sede_id        | Igual, mismos datos. |
+| dependencia | dependencia_id | Igual, mismos datos. |
+| ciudad      | ciudad_id      | Igual, mismos datos. |
+
+
 
