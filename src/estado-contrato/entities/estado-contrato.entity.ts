@@ -12,6 +12,9 @@ export class EstadoContrato {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ name: 'contrato_general_id' })
+  contratoGeneralId: number;
+
   @Column({ type: 'integer' })
   usuario_id: number;
 
