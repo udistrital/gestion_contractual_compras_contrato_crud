@@ -13,3 +13,5 @@
 | justificacion      | justificacion   | |
 | forma_pago      | medio_pago_id   | Igual, mismos datos. |
 | descripcion_forma_pago      | modo_pago   | Igual, mismos datos. |
+| descripcion_forma_pago      | modo_pago   | Igual, mismos datos. |
+| condiciones      | condiciones   | |
