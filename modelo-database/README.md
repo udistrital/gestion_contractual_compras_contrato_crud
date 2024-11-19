@@ -30,3 +30,4 @@
 | valor_contrato_me | valor_contrato_me |                      |
 | valor_tasa_cambio | valor_tasa_cambio |                      |
 | observaciones | observaciones |                      |
+| supervisor | **supervisor_contrato**.supervisor_id |                      |
