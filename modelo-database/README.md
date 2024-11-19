@@ -34,6 +34,6 @@
 | clase_contratista | **contratista**.clase_contratista |                      |
 | convenio | |                      |
 | numero_constancia |  |       No se usa, deprecado.               |
-
-
+| estado | activo |                      |
+| tipo_contrato | tipo_contrato_id |                      |
 
