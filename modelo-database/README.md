@@ -26,3 +26,7 @@
 | tema_gasto_inversion      | tema_gasto_inversion_id   | Igual, mismos datos. |
 | origen_presupuesto      | origen_presupuesto_id   | Igual, mismos datos. |
 | origen_recursos      | origen_recursos_id   | Igual, mismos datos. |
+| tipo_moneda      | tipo_moneda_id   | Igual, mismos datos. |
+| valor_contrato_me | valor_contrato_me |                      |
+| valor_tasa_cambio | valor_tasa_cambio |                      |
+| observaciones | observaciones |                      |
