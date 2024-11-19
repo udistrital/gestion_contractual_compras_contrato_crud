@@ -11,7 +11,48 @@ paths:
     get:
       operationId: ContratoGeneralController_findAll
       summary: Obtener todos los contratos generales
-      parameters: []
+      parameters:
+        - name: fields
+          required: false
+          in: query
+          description: Campos a retornar (separados por comas)
+          schema:
+            type: string
+        - name: sortBy
+          required: false
+          in: query
+          description: Campo por el cual ordenar
+          schema:
+            type: string
+        - name: orderBy
+          required: false
+          in: query
+          description: Dirección del ordenamiento
+          schema:
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: limit
+          required: false
+          in: query
+          description: Número de registros a retornar
+          schema:
+            minimum: 0
+            type: number
+        - name: offset
+          required: false
+          in: query
+          description: Número de registros a saltar
+          schema:
+            minimum: 0
+            type: number
+        - name: query
+          required: false
+          in: query
+          description: Filtros dinámicos en formato JSON
+          schema:
+            type: string
       responses:
         '200':
           description: Lista de contratos generales
