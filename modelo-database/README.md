@@ -1,3 +1,5 @@
+## Contrato General
+
 | **ARGO**        | **ARGO V2**     | **NOTAS**            |
 |-----------------|-----------------|----------------------|
 | objeto_contrato | objeto |         Igual, mismos datos.             |
@@ -36,4 +38,16 @@
 | numero_constancia |  |       No se usa, deprecado.               |
 | estado | activo |                      |
 | tipo_contrato | tipo_contrato_id |                      |
+| lugar_ejecucion | lugar_ejecucion_id |                      |
 
+## Contrato Arrendamiento
+
+| **ARGO**        | **ARGO V2**     | **NOTAS**            |
+|-----------------|-----------------|----------------------|
+| destinacion | destinacion |       |
+| plazo_pago_mensual | plazo_pago_mensual |       |
+| reajuste | reajuste |       |
+| plazo_administracion | plazo_administracion |       |
+| valor_administracion | valor_administracion |       |
+| plazo_entrega | plazo_entrega |       |
+| valor_arrendamiento | valor_arrendamiento |       |
