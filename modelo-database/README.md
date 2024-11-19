@@ -19,3 +19,4 @@
 | fecha_registro      |   | |
 | tipologia_contrato      | | tipologia_especifica_id o tipo_contrato_id|
 | tipo_compromiso | tipo_compromiso_id | Igual, mismos datos.|
+| modalidad_seleccion | modalidad seleccion_id | Igual, mismos datos.|
