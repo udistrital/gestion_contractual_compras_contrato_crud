@@ -10,15 +10,20 @@ import { EstadoContrato } from './entities/estado-contrato.entity';
 import { ContratoGeneral } from '../contrato-general/entities/contrato-general.entity';
 import { CreateEstadoContratoDto } from './dto/create-estado-contrato.dto';
 import { UpdateEstadoContratoDto } from './dto/update-estado-contrato.dto';
+import { BaseQueryParamsDto } from '../shared/dto/query-params.base.dto';
+import { ResponseMetadata } from '../utils/response-metadata.interface';
+import { BaseCrudService } from '../shared/services/base-crud.service';
 
 @Injectable()
-export class EstadoContratoService {
+export class EstadoContratoService extends BaseCrudService<EstadoContrato>{
   constructor(
     @InjectRepository(EstadoContrato)
     private estadoContratoRepository: Repository<EstadoContrato>,
     @InjectRepository(ContratoGeneral)
     private contratoGeneralRepository: Repository<ContratoGeneral>,
-  ) {}
+  ) {
+    super(estadoContratoRepository);
+  }
 
   async create(
     createEstadoContratoDto: CreateEstadoContratoDto,
@@ -62,8 +67,8 @@ export class EstadoContratoService {
     return await this.estadoContratoRepository.save(nuevoEstado);
   }
 
-  async findAll(): Promise<EstadoContrato[]> {
-    return await this.estadoContratoRepository.find({});
+  async findAll(queryParams: BaseQueryParamsDto,): Promise<[EstadoContrato[], ResponseMetadata]> {
+    return this.findAllWithFilters(queryParams);
   }
 
   async findOne(id: number): Promise<EstadoContrato> {

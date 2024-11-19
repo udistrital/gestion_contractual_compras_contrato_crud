@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Delete, Query, Res, HttpStatus,
 } from '@nestjs/common';
 import { EstadoContratoService } from './estado-contrato.service';
 import { CreateEstadoContratoDto } from './dto/create-estado-contrato.dto';
@@ -18,6 +18,9 @@ import {
   ApiBody,
 } from '@nestjs/swagger';
 import { EstadoContrato } from './entities/estado-contrato.entity';
+import { BaseQueryParamsDto } from '../shared/dto/query-params.base.dto';
+import { Response } from 'express';
+import { StandardResponse } from '../utils/standardResponse.interface';
 
 @ApiTags('estados-contrato')
 @Controller('estados-contrato')
@@ -43,9 +46,31 @@ export class EstadoContratoController {
     status: 200,
     description: 'Devuelve todos los estados de contrato.',
     type: [EstadoContrato],
-  })
-  findAll() {
-    return this.estadoContratoService.findAll();
+  }) async findAll(
+    @Query() queryParams: BaseQueryParamsDto,
+    @Res() res: Response,
+  ): Promise<void> {
+    try {
+      const [estados, metadata] =
+        await this.estadoContratoService.findAll(queryParams);
+
+      const response: StandardResponse<EstadoContrato[]> = {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Estados de contrato encontrados',
+        Data: estados,
+        Metadata: metadata,
+      };
+      res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      const response: StandardResponse<any> = {
+        Success: false,
+        Status: HttpStatus.INTERNAL_SERVER_ERROR,
+        Message: 'Error al obtener los estados de contrato',
+        Data: error.message,
+      };
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(response);
+    }
   }
 
   @Get(':id')

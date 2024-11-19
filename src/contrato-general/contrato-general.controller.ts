@@ -44,13 +44,13 @@ export class ContratoGeneralController {
     @Res() res: Response,
   ): Promise<void> {
     try {
-      const [contracts, metadata] =
+      const [contratos, metadata] =
         await this.contratoGeneralService.findAll(queryParams);
       const response: StandardResponse<ContratoGeneral[]> = {
         Success: true,
         Status: HttpStatus.OK,
         Message: 'Contratos generales encontrados',
-        Data: contracts,
+        Data: contratos,
         Metadata: metadata,
       };
       res.status(HttpStatus.OK).json(response);

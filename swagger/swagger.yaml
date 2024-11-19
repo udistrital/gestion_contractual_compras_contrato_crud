@@ -7,10 +7,11 @@ paths:
       responses:
         '200':
           description: ''
+      tags:
+        - App
   /contratos-generales:
     get:
       operationId: ContratoGeneralController_findAll
-      summary: Obtener todos los contratos generales
       parameters:
         - name: fields
           required: false
@@ -62,11 +63,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ContratoGeneral'
+      summary: Obtener todos los contratos generales
       tags: &ref_0
         - contratos-generales
     post:
       operationId: ContratoGeneralController_create
-      summary: Crear un nuevo contrato general
       parameters: []
       requestBody:
         required: true
@@ -81,11 +82,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ContratoGeneral'
+      summary: Crear un nuevo contrato general
       tags: *ref_0
   /contratos-generales/{id}:
     get:
       operationId: ContratoGeneralController_findOne
-      summary: Obtener un contrato general por ID
       parameters:
         - name: id
           required: true
@@ -102,10 +103,10 @@ paths:
                 $ref: '#/components/schemas/ContratoGeneral'
         '404':
           description: Contrato general no encontrado
+      summary: Obtener un contrato general por ID
       tags: *ref_0
     put:
       operationId: ContratoGeneralController_update
-      summary: Actualizar un contrato general
       parameters:
         - name: id
           required: true
@@ -128,10 +129,10 @@ paths:
                 $ref: '#/components/schemas/ContratoGeneral'
         '404':
           description: Contrato general no encontrado
+      summary: Actualizar un contrato general
       tags: *ref_0
     delete:
       operationId: ContratoGeneralController_remove
-      summary: Eliminar un contrato general
       parameters:
         - name: id
           required: true
@@ -144,11 +145,11 @@ paths:
           description: Contrato general eliminado
         '404':
           description: Contrato general no encontrado
+      summary: Eliminar un contrato general
       tags: *ref_0
   /documentos-contratos:
     post:
       operationId: DocumentoContratoController_create
-      summary: Crear un nuevo documento contrato
       parameters: []
       requestBody:
         required: true
@@ -165,11 +166,11 @@ paths:
                 $ref: '#/components/schemas/DocumentoContrato'
         '400':
           description: Solicitud incorrecta.
+      summary: Crear un nuevo documento contrato
       tags: &ref_1
         - documentos-contratos
     get:
       operationId: DocumentoContratoController_findAll
-      summary: Obtener todos los documentos contratos
       parameters: []
       responses:
         '200':
@@ -180,11 +181,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/DocumentoContrato'
+      summary: Obtener todos los documentos contratos
       tags: *ref_1
   /documentos-contratos/{id}:
     get:
       operationId: DocumentoContratoController_findOne
-      summary: Obtener un documento contrato por id
       parameters:
         - name: id
           required: true
@@ -200,10 +201,10 @@ paths:
                 $ref: '#/components/schemas/DocumentoContrato'
         '404':
           description: Documento contrato no encontrado.
+      summary: Obtener un documento contrato por id
       tags: *ref_1
     patch:
       operationId: DocumentoContratoController_update
-      summary: Actualizar un documento contrato
       parameters:
         - name: id
           required: true
@@ -227,10 +228,10 @@ paths:
           description: Solicitud incorrecta.
         '404':
           description: Documento contrato no encontrado.
+      summary: Actualizar un documento contrato
       tags: *ref_1
     delete:
       operationId: DocumentoContratoController_remove
-      summary: Eliminar un documento contrato
       parameters:
         - name: id
           required: true
@@ -242,11 +243,11 @@ paths:
           description: El documento contrato ha sido eliminado exitosamente.
         '404':
           description: Documento contrato no encontrado.
+      summary: Eliminar un documento contrato
       tags: *ref_1
   /documentos-contratos/contrato/{contratoId}:
     get:
       operationId: DocumentoContratoController_findByContratoId
-      summary: Obtener documentos contratos por id de contrato
       parameters:
         - name: contratoId
           required: true
@@ -266,11 +267,11 @@ paths:
           description: >-
             No se encontraron documentos contratos para el contrato
             especificado.
+      summary: Obtener documentos contratos por id de contrato
       tags: *ref_1
   /contratistas:
     post:
       operationId: ContratistaController_create
-      summary: Crear un nuevo contratista
       parameters: []
       requestBody:
         required: true
@@ -287,11 +288,11 @@ paths:
                 $ref: '#/components/schemas/Contratista'
         '400':
           description: Solicitud incorrecta.
+      summary: Crear un nuevo contratista
       tags: &ref_2
         - contratistas
     get:
       operationId: ContratistaController_findAll
-      summary: Obtener todos los contratistas
       parameters: []
       responses:
         '200':
@@ -302,11 +303,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Contratista'
+      summary: Obtener todos los contratistas
       tags: *ref_2
   /contratistas/{id}:
     get:
       operationId: ContratistaController_findOne
-      summary: Obtener un contratista por numero_identificacion
       parameters:
         - name: id
           required: true
@@ -322,10 +323,10 @@ paths:
                 $ref: '#/components/schemas/Contratista'
         '404':
           description: Contratista no encontrado.
+      summary: Obtener un contratista por numero_identificacion
       tags: *ref_2
     patch:
       operationId: ContratistaController_update
-      summary: Actualizar un contratista
       parameters:
         - name: id
           required: true
@@ -349,10 +350,10 @@ paths:
           description: Solicitud incorrecta.
         '404':
           description: Contratista no encontrado.
+      summary: Actualizar un contratista
       tags: *ref_2
     delete:
       operationId: ContratistaController_remove
-      summary: Eliminar un contratista
       parameters:
         - name: id
           required: true
@@ -364,11 +365,11 @@ paths:
           description: El contratista ha sido eliminado exitosamente.
         '404':
           description: Contratista no encontrado.
+      summary: Eliminar un contratista
       tags: *ref_2
   /contratistas/contrato/{contratoId}:
     get:
       operationId: ContratistaController_findByContrato
-      summary: Obtener contratista por id de contrato
       parameters:
         - name: contratoId
           required: true
@@ -384,11 +385,11 @@ paths:
                 $ref: '#/components/schemas/Contratista'
         '404':
           description: No se encontró contratista para el contrato especificado.
+      summary: Obtener contratista por id de contrato
       tags: *ref_2
   /estados-contrato:
     post:
       operationId: EstadoContratoController_create
-      summary: Crear un nuevo estado de contrato
       parameters: []
       requestBody:
         required: true
@@ -405,12 +406,53 @@ paths:
                 $ref: '#/components/schemas/EstadoContrato'
         '400':
           description: Solicitud incorrecta.
+      summary: Crear un nuevo estado de contrato
       tags: &ref_3
         - estados-contrato
     get:
       operationId: EstadoContratoController_findAll
-      summary: Obtener todos los estados de contrato
-      parameters: []
+      parameters:
+        - name: fields
+          required: false
+          in: query
+          description: Campos a retornar (separados por comas)
+          schema:
+            type: string
+        - name: sortBy
+          required: false
+          in: query
+          description: Campo por el cual ordenar
+          schema:
+            type: string
+        - name: orderBy
+          required: false
+          in: query
+          description: Dirección del ordenamiento
+          schema:
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: limit
+          required: false
+          in: query
+          description: Número de registros a retornar
+          schema:
+            minimum: 0
+            type: number
+        - name: offset
+          required: false
+          in: query
+          description: Número de registros a saltar
+          schema:
+            minimum: 0
+            type: number
+        - name: query
+          required: false
+          in: query
+          description: Filtros dinámicos en formato JSON
+          schema:
+            type: string
       responses:
         '200':
           description: Devuelve todos los estados de contrato.
@@ -420,11 +462,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/EstadoContrato'
+      summary: Obtener todos los estados de contrato
       tags: *ref_3
   /estados-contrato/{id}:
     get:
       operationId: EstadoContratoController_findOne
-      summary: Obtener un estado de contrato por id
       parameters:
         - name: id
           required: true
@@ -440,10 +482,10 @@ paths:
                 $ref: '#/components/schemas/EstadoContrato'
         '404':
           description: Estado de contrato no encontrado.
+      summary: Obtener un estado de contrato por id
       tags: *ref_3
     patch:
       operationId: EstadoContratoController_update
-      summary: Actualizar un estado de contrato
       parameters:
         - name: id
           required: true
@@ -467,10 +509,10 @@ paths:
           description: Solicitud incorrecta.
         '404':
           description: Estado de contrato no encontrado.
+      summary: Actualizar un estado de contrato
       tags: *ref_3
     delete:
       operationId: EstadoContratoController_remove
-      summary: Eliminar un estado de contrato
       parameters:
         - name: id
           required: true
@@ -482,11 +524,11 @@ paths:
           description: El estado de contrato ha sido eliminado exitosamente.
         '404':
           description: Estado de contrato no encontrado.
+      summary: Eliminar un estado de contrato
       tags: *ref_3
   /estados-contrato/contrato/{contratoId}:
     get:
       operationId: EstadoContratoController_findByContratoGeneral
-      summary: Obtener estados de contrato por id de contrato
       parameters:
         - name: contratoId
           required: true
@@ -504,11 +546,11 @@ paths:
                   $ref: '#/components/schemas/EstadoContrato'
         '404':
           description: No se encontraron estados de contrato para el contrato especificado.
+      summary: Obtener estados de contrato por id de contrato
       tags: *ref_3
   /estados-contrato/contrato/{contratoId}/actual:
     get:
       operationId: EstadoContratoController_findCurrentEstado
-      summary: Obtener el estado actual de un contrato
       parameters:
         - name: contratoId
           required: true
@@ -524,11 +566,11 @@ paths:
                 $ref: '#/components/schemas/EstadoContrato'
         '404':
           description: No se encontró estado actual para el contrato especificado.
+      summary: Obtener el estado actual de un contrato
       tags: *ref_3
   /lugares-ejecucion:
     post:
       operationId: LugarEjecucionController_create
-      summary: Crear un nuevo lugar de ejecución
       parameters: []
       requestBody:
         required: true
@@ -545,11 +587,11 @@ paths:
                 $ref: '#/components/schemas/LugarEjecucion'
         '400':
           description: Solicitud incorrecta.
+      summary: Crear un nuevo lugar de ejecución
       tags: &ref_4
         - lugares-ejecucion
     get:
       operationId: LugarEjecucionController_findAll
-      summary: Obtener todos los lugares de ejecución
       parameters: []
       responses:
         '200':
@@ -560,11 +602,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/LugarEjecucion'
+      summary: Obtener todos los lugares de ejecución
       tags: *ref_4
   /lugares-ejecucion/{id}:
     get:
       operationId: LugarEjecucionController_findOne
-      summary: Obtener un lugar de ejecución por id
       parameters:
         - name: id
           required: true
@@ -580,10 +622,10 @@ paths:
                 $ref: '#/components/schemas/LugarEjecucion'
         '404':
           description: Lugar de ejecución no encontrado.
+      summary: Obtener un lugar de ejecución por id
       tags: *ref_4
     patch:
       operationId: LugarEjecucionController_update
-      summary: Actualizar un lugar de ejecución
       parameters:
         - name: id
           required: true
@@ -607,10 +649,10 @@ paths:
           description: Solicitud incorrecta.
         '404':
           description: Lugar de ejecución no encontrado.
+      summary: Actualizar un lugar de ejecución
       tags: *ref_4
     delete:
       operationId: LugarEjecucionController_remove
-      summary: Eliminar un lugar de ejecución
       parameters:
         - name: id
           required: true
@@ -622,11 +664,11 @@ paths:
           description: El lugar de ejecución ha sido eliminado exitosamente.
         '404':
           description: Lugar de ejecución no encontrado.
+      summary: Eliminar un lugar de ejecución
       tags: *ref_4
   /lugares-ejecucion/contrato/{contratoId}:
     get:
       operationId: LugarEjecucionController_findByContratoGeneralId
-      summary: Obtiene el lugar de ejecución por id de contrato
       parameters:
         - name: contratoId
           required: true
@@ -646,11 +688,11 @@ paths:
           description: >-
             No se encontraron lugares de ejecución para el contrato
             especificado.
+      summary: Obtiene el lugar de ejecución por id de contrato
       tags: *ref_4
   /cdp:
     post:
       operationId: CdpController_create
-      summary: Crear un nuevo CDP
       parameters: []
       requestBody:
         required: true
@@ -667,11 +709,11 @@ paths:
                 $ref: '#/components/schemas/Cdp'
         '400':
           description: Solicitud incorrecta.
+      summary: Crear un nuevo CDP
       tags: &ref_5
         - cdp
     get:
       operationId: CdpController_findAll
-      summary: Obtener todos los CDPs
       parameters: []
       responses:
         '200':
@@ -682,11 +724,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Cdp'
+      summary: Obtener todos los CDPs
       tags: *ref_5
   /cdp/{id}:
     get:
       operationId: CdpController_findOne
-      summary: Obtener un CDP por ID
       parameters:
         - name: id
           required: true
@@ -702,10 +744,10 @@ paths:
                 $ref: '#/components/schemas/Cdp'
         '404':
           description: CDP no encontrado.
+      summary: Obtener un CDP por ID
       tags: *ref_5
     patch:
       operationId: CdpController_update
-      summary: Actualizar un CDP
       parameters:
         - name: id
           required: true
@@ -729,10 +771,10 @@ paths:
           description: Solicitud incorrecta.
         '404':
           description: CDP no encontrado.
+      summary: Actualizar un CDP
       tags: *ref_5
     delete:
       operationId: CdpController_remove
-      summary: Eliminar un CDP
       parameters:
         - name: id
           required: true
@@ -744,11 +786,11 @@ paths:
           description: El CDP ha sido eliminado exitosamente.
         '404':
           description: CDP no encontrado.
+      summary: Eliminar un CDP
       tags: *ref_5
   /cdp/contrato/{contratoId}:
     get:
       operationId: CdpController_findByContrato
-      summary: Obtener CDPs por ID de contrato
       parameters:
         - name: contratoId
           required: true
@@ -766,11 +808,11 @@ paths:
                   $ref: '#/components/schemas/Cdp'
         '404':
           description: No se encontraron CDPs para el contrato especificado.
+      summary: Obtener CDPs por ID de contrato
       tags: *ref_5
   /especificaciones-tecnicas:
     get:
       operationId: EspecificacionTecnicaController_findAll
-      summary: Obtener todas las especificaciones técnicas
       parameters: []
       responses:
         '200':
@@ -781,11 +823,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/EspecificacionTecnica'
+      summary: Obtener todas las especificaciones técnicas
       tags: &ref_6
         - especificaciones-tecnicas
     post:
       operationId: EspecificacionTecnicaController_create
-      summary: Crear una nueva especificación técnica
       parameters: []
       requestBody:
         required: true
@@ -800,11 +842,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EspecificacionTecnica'
+      summary: Crear una nueva especificación técnica
       tags: *ref_6
   /especificaciones-tecnicas/{id}:
     get:
       operationId: EspecificacionTecnicaController_findOne
-      summary: Obtener una especificación técnica por ID
       parameters:
         - name: id
           required: true
@@ -821,10 +863,10 @@ paths:
                 $ref: '#/components/schemas/EspecificacionTecnica'
         '404':
           description: Especificación técnica no encontrada
+      summary: Obtener una especificación técnica por ID
       tags: *ref_6
     put:
       operationId: EspecificacionTecnicaController_update
-      summary: Actualizar una especificación técnica
       parameters:
         - name: id
           required: true
@@ -847,10 +889,10 @@ paths:
                 $ref: '#/components/schemas/EspecificacionTecnica'
         '404':
           description: Especificación técnica no encontrada
+      summary: Actualizar una especificación técnica
       tags: *ref_6
     delete:
       operationId: EspecificacionTecnicaController_remove
-      summary: Marcar una especificación técnica como inactiva
       parameters:
         - name: id
           required: true
@@ -860,20 +902,20 @@ paths:
       responses:
         '200':
           description: ''
+      summary: Marcar una especificación técnica como inactiva
       tags: *ref_6
   /actas-inicio:
     get:
       operationId: ActaInicioController_findAll
-      summary: Obtener todas las actas de inicio
       parameters: []
       responses:
         '200':
           description: ''
+      summary: Obtener todas las actas de inicio
       tags: &ref_7
         - actas-inicio
     post:
       operationId: ActaInicioController_create
-      summary: Crear una nueva acta de inicio
       parameters: []
       requestBody:
         required: true
@@ -884,11 +926,11 @@ paths:
       responses:
         '201':
           description: ''
+      summary: Crear una nueva acta de inicio
       tags: *ref_7
   /actas-inicio/{id}:
     get:
       operationId: ActaInicioController_findOne
-      summary: Obtener una acta de inicio por ID
       parameters:
         - name: id
           required: true
@@ -898,10 +940,10 @@ paths:
       responses:
         '200':
           description: ''
+      summary: Obtener una acta de inicio por ID
       tags: *ref_7
     put:
       operationId: ActaInicioController_update
-      summary: Actualizar una acta de inicio
       parameters:
         - name: id
           required: true
@@ -917,10 +959,10 @@ paths:
       responses:
         '200':
           description: ''
+      summary: Actualizar una acta de inicio
       tags: *ref_7
     delete:
       operationId: ActaInicioController_remove
-      summary: Eliminar una acta de inicio
       parameters:
         - name: id
           required: true
@@ -930,6 +972,7 @@ paths:
       responses:
         '200':
           description: ''
+      summary: Eliminar una acta de inicio
       tags: *ref_7
 info:
   title: Gestion Contractual CRUD
