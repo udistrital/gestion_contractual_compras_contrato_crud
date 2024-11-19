@@ -39,8 +39,9 @@ IF NOT EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename =
         fecha_final DATE NOT NULL,                               -- Fecha final del contrato
         usuario_legacy VARCHAR(15) NOT NULL,                     -- Usuario legacy
         activo BOOLEAN NOT NULL,                                 -- Indica si el registro está activo
+        activo BOOLEAN NOT NULL,                                 -- Indica si el registro está activo
         fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,    -- Fecha de creación del registro
-        fecha_modificacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP -- Fecha de última modificación
+        numero_contrato VARCHAR NOT NULL,                         -- Fecha de última modificación
     );
     
     COMMENT ON TABLE contrato_general IS 'Tabla principal que almacena la información general de los contratos';
