@@ -21,6 +21,7 @@ import {
   ApiResponse,
   ApiParam,
   ApiBody,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { StandardResponse } from '../utils/standardResponse.interface';
 import { BaseQueryParamsDto } from '../shared/dto/query-params.base.dto';
@@ -38,6 +39,45 @@ export class ContratoGeneralController {
     status: 200,
     description: 'Lista de contratos generales',
     type: [ContratoGeneral],
+  })
+  @ApiQuery({
+    name: 'include',
+    required: false,
+    description:
+      'Relaciones a incluir (separadas por comas). Ejemplo: estados,solicitante,lugarEjecucion',
+  })
+  @ApiQuery({
+    name: 'query',
+    required: false,
+    description:
+      'Filtros en formato JSON. Puede incluir filtros para campos de relaciones usando notación punto. Ejemplo: {"estados.estado_parametro_id":1,"solicitante.dependencia_solicitante_id":101}',
+  })
+  @ApiQuery({
+    name: 'fields',
+    required: false,
+    description: 'Campos a incluir en la respuesta (separados por comas)',
+  })
+  @ApiQuery({
+    name: 'sortBy',
+    required: false,
+    description: 'Campo por el cual ordenar',
+  })
+  @ApiQuery({
+    name: 'orderBy',
+    required: false,
+    description: 'Dirección del ordenamiento (ASC o DESC)',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    description: 'Número máximo de registros a retornar',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'offset',
+    required: false,
+    description: 'Número de registros a saltar',
+    type: Number,
   })
   async findAll(
     @Query() queryParams: BaseQueryParamsDto,
@@ -72,15 +112,28 @@ export class ContratoGeneralController {
     type: 'number',
     description: 'ID del contrato general',
   })
+  @ApiQuery({
+    name: 'include',
+    required: false,
+    description:
+      'Relaciones a incluir (separadas por comas). Ejemplo: estados,solicitante,lugarEjecucion',
+  })
   @ApiResponse({
     status: 200,
     description: 'Contrato general encontrado',
     type: ContratoGeneral,
   })
   @ApiResponse({ status: 404, description: 'Contrato general no encontrado' })
-  async findOne(@Res() res: Response, @Param('id') id: string): Promise<void> {
+  async findOne(
+    @Res() res: Response,
+    @Param('id') id: string,
+    @Query() queryParams: BaseQueryParamsDto,
+  ): Promise<void> {
     try {
-      const contract = await this.contratoGeneralService.findOne(+id);
+      const contract = await this.contratoGeneralService.findOne(
+        +id,
+        queryParams,
+      );
       const response: StandardResponse<ContratoGeneral> = {
         Success: true,
         Status: HttpStatus.OK,

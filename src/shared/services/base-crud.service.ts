@@ -27,14 +27,23 @@ export abstract class BaseCrudService<T> {
       const offset = queryParams.offset || 0;
       const currentPage = limit === 0 ? 1 : Math.floor(offset / limit) + 1;
 
+      // Aplicar relaciones si se especifican
+      if (queryParams.include) {
+        this.applyRelations(queryBuilder, queryParams.include);
+      }
+
       // Aplicar selección de campos
       if (queryParams.fields) {
         this.applyFieldSelection(queryBuilder, queryParams.fields);
       }
 
-      // Aplicar filtros dinámicos
+      // Aplicar filtros dinámicos (ahora con soporte para relaciones)
       if (queryParams.query) {
-        await this.applyDynamicFilters(queryBuilder, queryParams.query);
+        await this.applyDynamicFilters(
+          queryBuilder,
+          queryParams.query,
+          queryParams.include,
+        );
       }
 
       // Aplicar ordenamiento
@@ -98,12 +107,38 @@ export abstract class BaseCrudService<T> {
   protected async applyDynamicFilters(
     queryBuilder: SelectQueryBuilder<T>,
     queryString: string,
+    includes?: string,
   ): Promise<void> {
     try {
       const filters = JSON.parse(queryString);
+      const relations = includes?.split(',').map((rel) => rel.trim()) || [];
 
       for (const [key, value] of Object.entries(filters)) {
-        if (value !== null && value !== undefined && this.isValidField(key)) {
+        if (value === null || value === undefined) continue;
+
+        // Verifica si el filtro es para un campo de una relación
+        const [relationName, fieldName] = key.split('.');
+
+        if (fieldName && relations.includes(relationName)) {
+          // Es un filtro para un campo de una relación
+          if (typeof value === 'string' && value.includes('%')) {
+            queryBuilder.andWhere(`${relationName}.${fieldName} LIKE :${key}`, {
+              [key]: value,
+            });
+          } else if (Array.isArray(value)) {
+            queryBuilder.andWhere(
+              `${relationName}.${fieldName} IN (:...${key})`,
+              {
+                [key]: value,
+              },
+            );
+          } else {
+            queryBuilder.andWhere(`${relationName}.${fieldName} = :${key}`, {
+              [key]: value,
+            });
+          }
+        } else if (this.isValidField(key)) {
+          // Es un filtro para un campo directo de la entidad
           if (typeof value === 'string' && value.includes('%')) {
             queryBuilder.andWhere(`${this.alias}.${key} LIKE :${key}`, {
               [key]: value,
@@ -124,6 +159,26 @@ export abstract class BaseCrudService<T> {
         `Error en el formato del query JSON: ${error.message}`,
       );
     }
+  }
+
+  protected applyRelations(
+    queryBuilder: SelectQueryBuilder<T>,
+    includes?: string,
+  ): void {
+    if (!includes) return;
+
+    const relations = includes.split(',').map((rel) => rel.trim());
+
+    relations.forEach((relation) => {
+      if (this.isValidRelation(relation)) {
+        queryBuilder.leftJoinAndSelect(`${this.alias}.${relation}`, relation);
+      }
+    });
+  }
+
+  protected isValidRelation(relation: string): boolean {
+    const metadata = this.repository.metadata;
+    return metadata.relations.some((rel) => rel.propertyName === relation);
   }
 
   protected applyOrdering(

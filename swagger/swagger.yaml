@@ -16,7 +16,7 @@ paths:
         - name: fields
           required: false
           in: query
-          description: Campos a retornar (separados por comas)
+          description: Campos a incluir en la respuesta (separados por comas)
           schema:
             type: string
         - name: sortBy
@@ -28,7 +28,7 @@ paths:
         - name: orderBy
           required: false
           in: query
-          description: Dirección del ordenamiento
+          description: Dirección del ordenamiento (ASC o DESC)
           schema:
             enum:
               - ASC
@@ -37,7 +37,7 @@ paths:
         - name: limit
           required: false
           in: query
-          description: Número de registros a retornar
+          description: Número máximo de registros a retornar
           schema:
             minimum: 0
             type: number
@@ -51,8 +51,20 @@ paths:
         - name: query
           required: false
           in: query
-          description: Filtros dinámicos en formato JSON
+          description: >-
+            Filtros en formato JSON. Puede incluir filtros para campos de
+            relaciones usando notación punto. Ejemplo:
+            {"estados.estado_parametro_id":1,"solicitante.dependencia_solicitante_id":101}
           schema:
+            type: string
+        - name: include
+          required: false
+          in: query
+          description: >-
+            Relaciones a incluir (separadas por comas). Ejemplo:
+            estados,solicitante,lugarEjecucion
+          schema:
+            example: estados,lugarEjecucion, contratista
             type: string
       responses:
         '200':
@@ -94,6 +106,56 @@ paths:
           description: ID del contrato general
           schema:
             type: number
+        - name: fields
+          required: false
+          in: query
+          description: Campos a retornar (separados por comas)
+          schema:
+            type: string
+        - name: sortBy
+          required: false
+          in: query
+          description: Campo por el cual ordenar
+          schema:
+            type: string
+        - name: orderBy
+          required: false
+          in: query
+          description: Dirección del ordenamiento
+          schema:
+            enum:
+              - ASC
+              - DESC
+            type: string
+        - name: limit
+          required: false
+          in: query
+          description: Número de registros a retornar
+          schema:
+            minimum: 0
+            type: number
+        - name: offset
+          required: false
+          in: query
+          description: Número de registros a saltar
+          schema:
+            minimum: 0
+            type: number
+        - name: query
+          required: false
+          in: query
+          description: Filtros dinámicos en formato JSON
+          schema:
+            type: string
+        - name: include
+          required: false
+          in: query
+          description: >-
+            Relaciones a incluir (separadas por comas). Ejemplo:
+            estados,solicitante,lugarEjecucion
+          schema:
+            example: estados,lugarEjecucion, contratista
+            type: string
       responses:
         '200':
           description: Contrato general encontrado
@@ -452,6 +514,13 @@ paths:
           in: query
           description: Filtros dinámicos en formato JSON
           schema:
+            type: string
+        - name: include
+          required: false
+          in: query
+          description: Relaciones a Incliur (separadas por comas)
+          schema:
+            example: estados,lugarEjecucion, contratista
             type: string
       responses:
         '200':

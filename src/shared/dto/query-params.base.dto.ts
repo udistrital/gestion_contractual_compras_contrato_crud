@@ -51,4 +51,14 @@ export class BaseQueryParamsDto {
   @IsOptional()
   @IsString()
   query?: string;
+
+  @ApiPropertyOptional({
+    required: false,
+    description: 'Relaciones a Incliur (separadas por comas)',
+    type: String,
+    example: 'estados,lugarEjecucion, contratista',
+  })
+  @IsOptional()
+  @IsString()
+  include?: string;
 }
