@@ -69,6 +69,7 @@ CREATE TABLE estado_contrato (
     fecha_ejecucion_estado TIMESTAMP NOT NULL,
     contrato_general_id INTEGER REFERENCES contrato_general(id),
     estado_parametro_id INTEGER,
+    estado_interno_parametro_id INTEGER,
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
     fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
