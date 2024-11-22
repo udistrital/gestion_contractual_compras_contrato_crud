@@ -11,6 +11,7 @@ CREATE TABLE contrato_general (
     aplica_poliza BOOLEAN,
     ordenador_id INTEGER,
     modalidad_seleccion_id INTEGER,
+    tipo_control INTEGER,
     tipologia_especifica_id INTEGER,
     regimen_contratacion_id INTEGER,
     procedimiento_id INTEGER,
