@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  ConflictException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -15,7 +11,7 @@ import { ResponseMetadata } from '../utils/response-metadata.interface';
 import { BaseCrudService } from '../shared/services/base-crud.service';
 
 @Injectable()
-export class EstadoContratoService extends BaseCrudService<EstadoContrato>{
+export class EstadoContratoService extends BaseCrudService<EstadoContrato> {
   constructor(
     @InjectRepository(EstadoContrato)
     private estadoContratoRepository: Repository<EstadoContrato>,
@@ -55,19 +51,21 @@ export class EstadoContratoService extends BaseCrudService<EstadoContrato>{
       ...estadoContratoData,
       estado_parametro_id,
       contrato_general_id: contratoGeneral,
-      activo: true,
+      actual: true,
     });
 
     // Si existe un estado actual, desactivarlo
     if (estadoActual) {
-      estadoActual.activo = false;
+      estadoActual.actual = false;
       await this.estadoContratoRepository.save(estadoActual);
     }
 
     return await this.estadoContratoRepository.save(nuevoEstado);
   }
 
-  async findAll(queryParams: BaseQueryParamsDto,): Promise<[EstadoContrato[], ResponseMetadata]> {
+  async findAll(
+    queryParams: BaseQueryParamsDto,
+  ): Promise<[EstadoContrato[], ResponseMetadata]> {
     return this.findAllWithFilters(queryParams);
   }
 

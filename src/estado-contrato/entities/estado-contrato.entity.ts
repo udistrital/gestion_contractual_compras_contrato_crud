@@ -30,6 +30,9 @@ export class EstadoContrato {
   @Column({ type: 'timestamp' })
   fecha_ejecucion_estado: Date;
 
+  @Column({ type: 'boolean', nullable: true })
+  actual: boolean;
+
   @Column({ type: 'boolean' })
   activo: boolean;
 
