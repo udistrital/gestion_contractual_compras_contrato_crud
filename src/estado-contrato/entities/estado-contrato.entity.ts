@@ -21,6 +21,9 @@ export class EstadoContrato {
   @Column({ type: 'integer', nullable: true })
   estado_parametro_id: number;
 
+  @Column({ type: 'integer', nullable: true })
+  estado_interno_parametro_id: number;
+
   @Column({ type: 'varchar', length: 250 })
   motivo: string;
 
