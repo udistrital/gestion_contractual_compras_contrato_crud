@@ -15,6 +15,9 @@ export class DocumentoContrato {
   @Column({ type: 'integer', nullable: true })
   tipoDocumentoId: number;
 
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  documento_enlace: string;
+
   @Column()
   activo: boolean;
 
