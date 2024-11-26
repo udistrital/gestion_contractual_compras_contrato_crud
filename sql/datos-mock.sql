@@ -352,7 +352,7 @@ TRUNCATE TABLE especificaciones_tecnicas CASCADE;
 INSERT INTO acta_inicio (
     id,
     usuario_id,
-    user_legado,
+    usuario_legado,
     descripcion,
     fecha_inicio,
     fecha_fin,
