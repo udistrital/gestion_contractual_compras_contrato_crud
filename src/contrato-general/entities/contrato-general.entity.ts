@@ -124,8 +124,8 @@ export class ContratoGeneral {
   @Column({ name: 'fecha_final', type: 'date', nullable: true })
   fechaFinal: Date;
 
-  @Column({ name: 'usuario_legacy', length: 15, nullable: true })
-  usuarioLegacy: string;
+  @Column({ name: 'usuario_legado', length: 15, nullable: true })
+  usuario_legado: string;
 
   @Column({ default: true })
   activo: boolean;

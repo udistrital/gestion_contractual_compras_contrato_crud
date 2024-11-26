@@ -91,7 +91,7 @@ describe('ContratoGeneralService', () => {
         consecutivoElaboracion: '2023-001',
         fechaInicial: new Date(),
         fechaFinal: new Date(),
-        usuarioLegacy: 'usuario_test',
+        usuarioLegado: 'usuario_test',
       };
       const result = { id: 1, ...dto };
       mockRepository.save.mockResolvedValue(result);
