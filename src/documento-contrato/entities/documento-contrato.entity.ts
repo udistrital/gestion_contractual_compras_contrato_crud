@@ -33,6 +33,13 @@ export class DocumentoContrato {
   @Column({ type: 'varchar', length: 50, nullable: true })
   documento_enlace: string;
 
+  @ApiProperty({
+    example: 1,
+    description: 'Documento ID - Gestor Documental',
+  })
+  @Column({ type: 'integer', nullable: true })
+  documento_id: number;
+
   @Column({ default: true })
   activo: boolean;
 

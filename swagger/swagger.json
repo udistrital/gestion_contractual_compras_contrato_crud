@@ -1821,10 +1821,16 @@
             "type": "string",
             "example": "123e4567-e89b-12d3-a456-426614174000",
             "description": "Enlace al documento"
+          },
+          "documento_id": {
+            "type": "number",
+            "example": 1,
+            "description": "Documento ID - Gestor Documental"
           }
         },
         "required": [
-          "id"
+          "id",
+          "documento_id"
         ]
       },
       "UpdateDocumentoContratoDto": {
