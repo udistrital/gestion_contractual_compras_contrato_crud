@@ -13,15 +13,18 @@ export class DocumentoContrato {
   id: string;
 
   @Column({ type: 'integer', nullable: true })
-  tipoDocumentoId: number;
+  tipo_documento_id: number;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
   documento_enlace: string;
 
-  @Column()
+  @Column({ default: true })
   activo: boolean;
+
+  @Column({ name: 'contrato_general_id' })
+  contrato_general_id: number;
 
   @ManyToOne(() => ContratoGeneral, (contrato) => contrato.documentos)
   @JoinColumn({ name: 'contrato_general_id' })
-  contrato_general_id: ContratoGeneral;
+  contratoGeneral: ContratoGeneral;
 }

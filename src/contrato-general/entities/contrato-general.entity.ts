@@ -138,7 +138,7 @@ export class ContratoGeneral {
 
   @OneToMany(
     () => DocumentoContrato,
-    (documentoContrato) => documentoContrato.contrato_general_id,
+    (documentoContrato) => documentoContrato.contratoGeneral,
   )
   documentos: DocumentoContrato[];
 

@@ -2,15 +2,20 @@ import { IsNumber, IsBoolean, IsString, IsOptional } from 'class-validator';
 
 export class CreateDocumentoContratoDto {
   @IsNumber()
-  documentoId: number;
+  documento_id: number;
 
   @IsBoolean()
-  activo: boolean;
+  @IsOptional()
+  activo?: boolean;
 
   @IsNumber()
-  contratoGeneralId: number;
+  contrato_general_id: number;
 
   @IsString()
   @IsOptional()
-  documentoEnlace: string;
+  documento_enlace: string;
+
+  @IsNumber()
+  @IsOptional()
+  tipo_documento_id: number;
 }
