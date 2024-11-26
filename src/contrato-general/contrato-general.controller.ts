@@ -116,7 +116,7 @@ export class ContratoGeneralController {
     name: 'include',
     required: false,
     description:
-      'Relaciones a incluir (separadas por comas). Ejemplo: estados,solicitante,lugarEjecucion',
+      'Relaciones a incluir (separadas por comas). Ejemplo: estados,contratista',
   })
   @ApiResponse({
     status: 200,
