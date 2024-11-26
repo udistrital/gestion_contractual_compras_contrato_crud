@@ -47,7 +47,7 @@ export class ActaInicioService {
 
     const newActaInicio = this.actaInicioRepository.create({
       usuarioId: actaInicioDto.usuario_id,
-      usuarioLegacy: actaInicioDto.user_legacy,
+      usuarioLegado: actaInicioDto.usuario_legado,
       descripcion: actaInicioDto.descripcion,
       fechaInicio: actaInicioDto.fecha_inicio,
       fechaFin: actaInicioDto.fecha_fin,
@@ -68,7 +68,7 @@ export class ActaInicioService {
   ): Promise<ActaInicio> {
     const {
       usuario_id,
-      user_legacy,
+      usuario_legado,
       descripcion,
       fecha_inicio,
       fecha_fin,
@@ -84,7 +84,7 @@ export class ActaInicioService {
     }
 
     actaInicio.usuarioId = usuario_id;
-    actaInicio.usuarioLegacy = user_legacy;
+    actaInicio.usuarioLegado = usuario_legado;
     actaInicio.descripcion = descripcion;
     actaInicio.fechaInicio = fecha_inicio
       ? new Date(fecha_inicio)

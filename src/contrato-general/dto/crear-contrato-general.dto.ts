@@ -179,5 +179,5 @@ export class CrearContratoGeneralDto {
 
   @IsOptional()
   @IsString()
-  usuarioLegacy: string;
+  usuarioLegado: string;
 }

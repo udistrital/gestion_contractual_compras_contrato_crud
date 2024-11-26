@@ -1363,9 +1363,9 @@ components:
           type: number
           example: 1
           description: Id del usuario que creó el acta
-        user_legacy:
+        usuario_legado:
           type: string
-          example: user_legacy
+          example: usuario_legado
           description: Usuario heredado del sistema anterior
         descripcion:
           type: string
@@ -1389,7 +1389,7 @@ components:
           description: Indica si el acta está activa
       required:
         - usuario_id
-        - user_legacy
+        - usuario_legado
         - descripcion
         - fecha_inicio
         - fecha_fin
@@ -1402,9 +1402,9 @@ components:
           type: number
           example: 1
           description: Id del usuario que creó el acta
-        user_legacy:
+        usuario_legado:
           type: string
-          example: user_legacy
+          example: usuario_legado
           description: Usuario heredado del sistema anterior
         descripcion:
           type: string

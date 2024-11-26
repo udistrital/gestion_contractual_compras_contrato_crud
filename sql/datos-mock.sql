@@ -35,7 +35,7 @@ INSERT INTO contrato_general (
     concepto_elaboracion,
     fecha_inicial,
     fecha_final,
-    usuario_legacy,
+    usuario_legado,
     activo
 ) VALUES 
 (1, 1, 1, '2024-01-15', true, 101, 1, 1, 1, 1, 180, 2024, 10001, 1, 
