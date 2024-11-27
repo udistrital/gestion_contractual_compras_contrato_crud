@@ -1482,7 +1482,7 @@
             "in": "query",
             "description": "Relaciones a Incliur (separadas por comas)",
             "schema": {
-              "example": "estados,lugarEjecucion, contratista",
+              "example": "estados,contratista",
               "type": "string"
             }
           }
