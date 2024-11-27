@@ -4,16 +4,23 @@ import { EspecificacionTecnica } from './entities/especificacion-tecnica.entity'
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ActualizarEspecificacionTecnicaDto } from './dto/actualizar-especificacion-tecnica';
+import { BaseQueryParamsDto } from 'src/shared/dto/query-params.base.dto';
+import { ResponseMetadata } from 'src/utils/response-metadata.interface';
+import { BaseCrudService } from '../shared/services/base-crud.service';
 
 @Injectable()
-export class EspecificacionTecnicaService {
+export class EspecificacionTecnicaService extends BaseCrudService<EspecificacionTecnica>{
   constructor(
     @InjectRepository(EspecificacionTecnica)
     private especificacionTecnicaRepository: Repository<EspecificacionTecnica>,
-  ) {}
+  ) {
+    super(especificacionTecnicaRepository);
+  }
 
-  async findAll(): Promise<EspecificacionTecnica[]> {
-    return this.especificacionTecnicaRepository.find();
+  async findAll(
+    queryParams: BaseQueryParamsDto
+  ): Promise<[EspecificacionTecnica[], ResponseMetadata]> {
+    return this.findAllWithFilters(queryParams);
   }
 
   async findOne(id: number): Promise<EspecificacionTecnica> {
