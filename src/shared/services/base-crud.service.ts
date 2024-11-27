@@ -3,6 +3,11 @@ import { BadRequestException } from '@nestjs/common';
 import { BaseQueryParamsDto } from '../dto/query-params.base.dto';
 import { ResponseMetadata } from '../interfaces/response-metadata.interface';
 
+interface FieldSelectionMap {
+  mainFields: Set<string>;
+  relationFields: Map<string, Set<string>>;
+}
+
 export abstract class BaseCrudService<T> {
   protected readonly defaultLimit = 10;
   protected readonly defaultFields = [
@@ -21,6 +26,16 @@ export abstract class BaseCrudService<T> {
   ): Promise<[T[], ResponseMetadata]> {
     try {
       const queryBuilder = this.repository.createQueryBuilder(this.alias);
+
+      // Primero aplicamos las relaciones
+      if (queryParams.include) {
+        this.applyRelations(queryBuilder, queryParams.include);
+      }
+
+      // Luego aplicamos la selección de campos si existe
+      if (queryParams.fields) {
+        this.applyFieldSelection(queryBuilder, queryParams.fields);
+      }
 
       // Configurar límite
       const limit = this.calculateLimit(queryParams.limit);
@@ -57,7 +72,17 @@ export abstract class BaseCrudService<T> {
         queryBuilder.skip(queryParams.offset);
       }
 
+      if (queryParams.include && !queryParams.fields) {
+        queryParams.include.split(',').forEach((relation) => {
+          const relationTrimmed = relation.trim();
+          if (this.isValidRelation(relationTrimmed)) {
+            queryBuilder.addSelect(`${relationTrimmed}.*`);
+          }
+        });
+      }
+
       const [results, total] = await queryBuilder.getManyAndCount();
+      results.forEach((entity) => this.transformSingleRelations(entity));
 
       const metadata = this.generateMetadata(total, limit, offset, currentPage);
 
@@ -72,36 +97,65 @@ export abstract class BaseCrudService<T> {
     }
   }
 
-  private calculateLimit(limit?: number): number {
-    if (limit === 0) return 0;
-    if (!limit || limit < 1) return this.defaultLimit;
-    return limit;
-  }
-
   protected applyFieldSelection(
     queryBuilder: SelectQueryBuilder<T>,
     fields: string,
   ): void {
-    const selectedFields = this.getSelectedFields(fields);
-    if (!selectedFields.includes('*')) {
-      queryBuilder.select([`${this.alias}.id`]);
-      selectedFields
-        .filter((field) => field !== 'id')
-        .forEach((field) => {
-          queryBuilder.addSelect(`${this.alias}.${field}`);
-        });
+    if (!fields) {
+      // Seleccionamos la entidad principal completa
+      queryBuilder.select(`${this.alias}`);
+      return;
     }
+
+    const { mainFields, relationFields } = this.parseFieldSelection(fields);
+
+    // Limpiamos las selecciones previas solo si hay campos específicos
+    if (!mainFields.has('*')) {
+      queryBuilder.select([]);
+      mainFields.forEach((field) => {
+        queryBuilder.addSelect(`${this.alias}.${field}`);
+      });
+    } else {
+      queryBuilder.select(`${this.alias}`);
+    }
+
+    // Manejamos las relaciones específicas de fields
+    relationFields.forEach((fields, relationName) => {
+      if (fields.size === 0) {
+        const metadata =
+          this.repository.metadata.findRelationWithPropertyPath(relationName);
+        if (metadata) {
+          metadata.inverseEntityMetadata.columns.forEach((column) => {
+            queryBuilder.addSelect(`${relationName}.${column.propertyName}`);
+          });
+        }
+      } else {
+        fields.forEach((field) => {
+          queryBuilder.addSelect(`${relationName}.${field}`);
+        });
+      }
+    });
   }
 
-  protected getSelectedFields(fields?: string): string[] {
-    if (!fields) return ['*'];
+  protected transformSingleRelations(entity: any): void {
+    if (!entity) return;
 
-    const fieldArray = fields.split(',').map((field) => field.trim());
-    const validFields = fieldArray.filter((field) => this.isValidField(field));
+    const relations = this.repository.metadata.relations;
 
-    if (validFields.length === 0) return ['*'];
+    relations.forEach((relation) => {
+      const relationValue = entity[relation.propertyName];
 
-    return [...new Set([...this.defaultFields, ...validFields])];
+      // Transformación - unwind en caso de relaciones de 1 sólo elemento.
+      if (Array.isArray(relationValue) && relationValue.length === 1) {
+        entity[relation.propertyName] = relationValue[0];
+      }
+    });
+  }
+
+  private calculateLimit(limit?: number): number {
+    if (limit === 0) return 0;
+    if (!limit || limit < 1) return this.defaultLimit;
+    return limit;
   }
 
   protected async applyDynamicFilters(
@@ -167,11 +221,35 @@ export abstract class BaseCrudService<T> {
   ): void {
     if (!includes) return;
 
-    const relations = includes.split(',').map((rel) => rel.trim());
+    // Usar un Set para asegurar que cada relación se procese una sola vez
+    const relations = new Set(includes.split(',').map((rel) => rel.trim()));
+
+    // Verificar si ya existen joins para evitar duplicados
+    const existingJoins = new Set(
+      queryBuilder.expressionMap.joinAttributes.map((join) => join.alias.name),
+    );
 
     relations.forEach((relation) => {
-      if (this.isValidRelation(relation)) {
-        queryBuilder.leftJoinAndSelect(`${this.alias}.${relation}`, relation);
+      if (this.isValidRelation(relation) && !existingJoins.has(relation)) {
+        // Primero hacemos el join
+        queryBuilder.leftJoin(`${this.alias}.${relation}`, relation);
+
+        // Seleccionamos todos los campos si no hay fields específicos
+        if (
+          !queryBuilder.expressionMap.selects.length ||
+          queryBuilder.expressionMap.selects.some(
+            (select) => select.selection === this.alias,
+          )
+        ) {
+          const metadata =
+            this.repository.metadata.findRelationWithPropertyPath(relation);
+          if (metadata) {
+            // Seleccionamos explícitamente todos los campos de la relación
+            metadata.inverseEntityMetadata.columns.forEach((column) => {
+              queryBuilder.addSelect(`${relation}.${column.propertyName}`);
+            });
+          }
+        }
       }
     });
   }
@@ -224,5 +302,44 @@ export abstract class BaseCrudService<T> {
       hasNextPage: limit === 0 ? false : currentPage < totalPages,
       hasPreviousPage: currentPage > 1,
     };
+  }
+
+  protected parseFieldSelection(fields: string): FieldSelectionMap {
+    const mainFields = new Set<string>();
+    const relationFields = new Map<string, Set<string>>();
+
+    if (!fields) {
+      return { mainFields: new Set(['*']), relationFields };
+    }
+
+    const fieldArray = fields.split(',').map((field) => field.trim());
+
+    fieldArray.forEach((field) => {
+      const [relation, relationField] = field.split('.');
+
+      if (!relationField) {
+        // Es un campo de la entidad principal o el nombre de una relación
+        if (this.isValidField(relation) || relation === '*') {
+          mainFields.add(relation);
+        } else if (this.isValidRelation(relation)) {
+          // Si solo se especifica la relación, no agregamos campos específicos
+          // lo que indicará que se deben seleccionar todos
+          relationFields.set(relation, new Set());
+        }
+      } else {
+        // Es un campo de una relación
+        if (this.isValidRelation(relation)) {
+          if (!relationFields.has(relation)) {
+            relationFields.set(relation, new Set());
+          }
+          relationFields.get(relation).add(relationField);
+        }
+      }
+    });
+
+    // Siempre incluir los campos por defecto en la entidad principal
+    this.defaultFields.forEach((field) => mainFields.add(field));
+
+    return { mainFields, relationFields };
   }
 }

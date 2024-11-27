@@ -64,7 +64,7 @@ paths:
             Relaciones a incluir (separadas por comas). Ejemplo:
             estados,solicitante,lugarEjecucion
           schema:
-            example: estados,lugarEjecucion, contratista
+            example: estados,contratista
             type: string
       responses:
         '200':
@@ -152,9 +152,9 @@ paths:
           in: query
           description: >-
             Relaciones a incluir (separadas por comas). Ejemplo:
-            estados,solicitante,lugarEjecucion
+            estados,contratista
           schema:
-            example: estados,lugarEjecucion, contratista
+            example: estados,contratista
             type: string
       responses:
         '200':
@@ -520,7 +520,7 @@ paths:
           in: query
           description: Relaciones a Incliur (separadas por comas)
           schema:
-            example: estados,lugarEjecucion, contratista
+            example: estados,contratista
             type: string
       responses:
         '200':
