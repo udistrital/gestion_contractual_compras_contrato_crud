@@ -3,6 +3,11 @@ import { BadRequestException } from '@nestjs/common';
 import { BaseQueryParamsDto } from '../dto/query-params.base.dto';
 import { ResponseMetadata } from '../interfaces/response-metadata.interface';
 
+interface FieldSelectionMap {
+  mainFields: Set<string>;
+  relationFields: Map<string, Set<string>>;
+}
+
 export abstract class BaseCrudService<T> {
   protected readonly defaultLimit = 10;
   protected readonly defaultFields = [
@@ -22,19 +27,38 @@ export abstract class BaseCrudService<T> {
     try {
       const queryBuilder = this.repository.createQueryBuilder(this.alias);
 
+      // Primero aplicamos las relaciones
+      if (queryParams.include) {
+        this.applyRelations(queryBuilder, queryParams.include);
+      }
+
+      // Luego aplicamos la selección de campos si existe
+      if (queryParams.fields) {
+        this.applyFieldSelection(queryBuilder, queryParams.fields);
+      }
+
       // Configurar límite
       const limit = this.calculateLimit(queryParams.limit);
       const offset = queryParams.offset || 0;
       const currentPage = limit === 0 ? 1 : Math.floor(offset / limit) + 1;
+
+      // Aplicar relaciones si se especifican
+      if (queryParams.include) {
+        this.applyRelations(queryBuilder, queryParams.include);
+      }
 
       // Aplicar selección de campos
       if (queryParams.fields) {
         this.applyFieldSelection(queryBuilder, queryParams.fields);
       }
 
-      // Aplicar filtros dinámicos
+      // Aplicar filtros dinámicos (ahora con soporte para relaciones)
       if (queryParams.query) {
-        await this.applyDynamicFilters(queryBuilder, queryParams.query);
+        await this.applyDynamicFilters(
+          queryBuilder,
+          queryParams.query,
+          queryParams.include,
+        );
       }
 
       // Aplicar ordenamiento
@@ -48,7 +72,17 @@ export abstract class BaseCrudService<T> {
         queryBuilder.skip(queryParams.offset);
       }
 
+      if (queryParams.include && !queryParams.fields) {
+        queryParams.include.split(',').forEach((relation) => {
+          const relationTrimmed = relation.trim();
+          if (this.isValidRelation(relationTrimmed)) {
+            queryBuilder.addSelect(`${relationTrimmed}.*`);
+          }
+        });
+      }
+
       const [results, total] = await queryBuilder.getManyAndCount();
+      results.forEach((entity) => this.transformSingleRelations(entity));
 
       const metadata = this.generateMetadata(total, limit, offset, currentPage);
 
@@ -63,47 +97,102 @@ export abstract class BaseCrudService<T> {
     }
   }
 
+  protected applyFieldSelection(
+    queryBuilder: SelectQueryBuilder<T>,
+    fields: string,
+  ): void {
+    if (!fields) {
+      // Seleccionamos la entidad principal completa
+      queryBuilder.select(`${this.alias}`);
+      return;
+    }
+
+    const { mainFields, relationFields } = this.parseFieldSelection(fields);
+
+    // Limpiamos las selecciones previas solo si hay campos específicos
+    if (!mainFields.has('*')) {
+      queryBuilder.select([]);
+      mainFields.forEach((field) => {
+        queryBuilder.addSelect(`${this.alias}.${field}`);
+      });
+    } else {
+      queryBuilder.select(`${this.alias}`);
+    }
+
+    // Manejamos las relaciones específicas de fields
+    relationFields.forEach((fields, relationName) => {
+      if (fields.size === 0) {
+        const metadata =
+          this.repository.metadata.findRelationWithPropertyPath(relationName);
+        if (metadata) {
+          metadata.inverseEntityMetadata.columns.forEach((column) => {
+            queryBuilder.addSelect(`${relationName}.${column.propertyName}`);
+          });
+        }
+      } else {
+        fields.forEach((field) => {
+          queryBuilder.addSelect(`${relationName}.${field}`);
+        });
+      }
+    });
+  }
+
+  protected transformSingleRelations(entity: any): void {
+    if (!entity) return;
+
+    const relations = this.repository.metadata.relations;
+
+    relations.forEach((relation) => {
+      const relationValue = entity[relation.propertyName];
+
+      // Transformación - unwind en caso de relaciones de 1 sólo elemento.
+      if (Array.isArray(relationValue) && relationValue.length === 1) {
+        entity[relation.propertyName] = relationValue[0];
+      }
+    });
+  }
+
   private calculateLimit(limit?: number): number {
     if (limit === 0) return 0;
     if (!limit || limit < 1) return this.defaultLimit;
     return limit;
   }
 
-  protected applyFieldSelection(
-    queryBuilder: SelectQueryBuilder<T>,
-    fields: string,
-  ): void {
-    const selectedFields = this.getSelectedFields(fields);
-    if (!selectedFields.includes('*')) {
-      queryBuilder.select([`${this.alias}.id`]);
-      selectedFields
-        .filter((field) => field !== 'id')
-        .forEach((field) => {
-          queryBuilder.addSelect(`${this.alias}.${field}`);
-        });
-    }
-  }
-
-  protected getSelectedFields(fields?: string): string[] {
-    if (!fields) return ['*'];
-
-    const fieldArray = fields.split(',').map((field) => field.trim());
-    const validFields = fieldArray.filter((field) => this.isValidField(field));
-
-    if (validFields.length === 0) return ['*'];
-
-    return [...new Set([...this.defaultFields, ...validFields])];
-  }
-
   protected async applyDynamicFilters(
     queryBuilder: SelectQueryBuilder<T>,
     queryString: string,
+    includes?: string,
   ): Promise<void> {
     try {
       const filters = JSON.parse(queryString);
+      const relations = includes?.split(',').map((rel) => rel.trim()) || [];
 
       for (const [key, value] of Object.entries(filters)) {
-        if (value !== null && value !== undefined && this.isValidField(key)) {
+        if (value === null || value === undefined) continue;
+
+        // Verifica si el filtro es para un campo de una relación
+        const [relationName, fieldName] = key.split('.');
+
+        if (fieldName && relations.includes(relationName)) {
+          // Es un filtro para un campo de una relación
+          if (typeof value === 'string' && value.includes('%')) {
+            queryBuilder.andWhere(`${relationName}.${fieldName} LIKE :${key}`, {
+              [key]: value,
+            });
+          } else if (Array.isArray(value)) {
+            queryBuilder.andWhere(
+              `${relationName}.${fieldName} IN (:...${key})`,
+              {
+                [key]: value,
+              },
+            );
+          } else {
+            queryBuilder.andWhere(`${relationName}.${fieldName} = :${key}`, {
+              [key]: value,
+            });
+          }
+        } else if (this.isValidField(key)) {
+          // Es un filtro para un campo directo de la entidad
           if (typeof value === 'string' && value.includes('%')) {
             queryBuilder.andWhere(`${this.alias}.${key} LIKE :${key}`, {
               [key]: value,
@@ -124,6 +213,50 @@ export abstract class BaseCrudService<T> {
         `Error en el formato del query JSON: ${error.message}`,
       );
     }
+  }
+
+  protected applyRelations(
+    queryBuilder: SelectQueryBuilder<T>,
+    includes?: string,
+  ): void {
+    if (!includes) return;
+
+    // Usar un Set para asegurar que cada relación se procese una sola vez
+    const relations = new Set(includes.split(',').map((rel) => rel.trim()));
+
+    // Verificar si ya existen joins para evitar duplicados
+    const existingJoins = new Set(
+      queryBuilder.expressionMap.joinAttributes.map((join) => join.alias.name),
+    );
+
+    relations.forEach((relation) => {
+      if (this.isValidRelation(relation) && !existingJoins.has(relation)) {
+        // Primero hacemos el join
+        queryBuilder.leftJoin(`${this.alias}.${relation}`, relation);
+
+        // Seleccionamos todos los campos si no hay fields específicos
+        if (
+          !queryBuilder.expressionMap.selects.length ||
+          queryBuilder.expressionMap.selects.some(
+            (select) => select.selection === this.alias,
+          )
+        ) {
+          const metadata =
+            this.repository.metadata.findRelationWithPropertyPath(relation);
+          if (metadata) {
+            // Seleccionamos explícitamente todos los campos de la relación
+            metadata.inverseEntityMetadata.columns.forEach((column) => {
+              queryBuilder.addSelect(`${relation}.${column.propertyName}`);
+            });
+          }
+        }
+      }
+    });
+  }
+
+  protected isValidRelation(relation: string): boolean {
+    const metadata = this.repository.metadata;
+    return metadata.relations.some((rel) => rel.propertyName === relation);
   }
 
   protected applyOrdering(
@@ -169,5 +302,44 @@ export abstract class BaseCrudService<T> {
       hasNextPage: limit === 0 ? false : currentPage < totalPages,
       hasPreviousPage: currentPage > 1,
     };
+  }
+
+  protected parseFieldSelection(fields: string): FieldSelectionMap {
+    const mainFields = new Set<string>();
+    const relationFields = new Map<string, Set<string>>();
+
+    if (!fields) {
+      return { mainFields: new Set(['*']), relationFields };
+    }
+
+    const fieldArray = fields.split(',').map((field) => field.trim());
+
+    fieldArray.forEach((field) => {
+      const [relation, relationField] = field.split('.');
+
+      if (!relationField) {
+        // Es un campo de la entidad principal o el nombre de una relación
+        if (this.isValidField(relation) || relation === '*') {
+          mainFields.add(relation);
+        } else if (this.isValidRelation(relation)) {
+          // Si solo se especifica la relación, no agregamos campos específicos
+          // lo que indicará que se deben seleccionar todos
+          relationFields.set(relation, new Set());
+        }
+      } else {
+        // Es un campo de una relación
+        if (this.isValidRelation(relation)) {
+          if (!relationFields.has(relation)) {
+            relationFields.set(relation, new Set());
+          }
+          relationFields.get(relation).add(relationField);
+        }
+      }
+    });
+
+    // Siempre incluir los campos por defecto en la entidad principal
+    this.defaultFields.forEach((field) => mainFields.add(field));
+
+    return { mainFields, relationFields };
   }
 }

@@ -62,7 +62,7 @@ describe('ActaInicioService', () => {
     it('debería crear un nuevo acta de inicio', async () => {
       const dto: CrearActaInicioDto = {
         usuario_id: 1,
-        user_legacy: 'legacy_user',
+        usuario_legado: 'usuario_legado',
         descripcion: 'Acta inicial de prueba',
         fecha_inicio: '2023-10-24',
         fecha_fin: '2023-11-24',
@@ -87,7 +87,7 @@ describe('ActaInicioService', () => {
       const id = 1;
       const dto: ActualizarActaInicioDto = {
         usuario_id: 1,
-        user_legacy: 'user_legacy prueba',
+        usuario_legado: 'user prueba',
         descripcion: 'Acta modificada',
         fecha_inicio: '2023-10-24',
         fecha_fin: '2023-11-24',

@@ -33,7 +33,7 @@ export class LugarEjecucionService {
 
     const lugarEjecucion =
       this.lugarEjecucionRepository.create(lugarEjecucionData);
-    lugarEjecucion.contrato_general_id = contratoGeneral;
+    lugarEjecucion.contrato_general = contratoGeneral;
 
     return await this.lugarEjecucionRepository.save(lugarEjecucion);
   }
@@ -67,7 +67,7 @@ export class LugarEjecucionService {
           `ContratoGeneral con ID ${updateLugarEjecucionDto.contrato_general_id} no encontrado`,
         );
       }
-      lugarEjecucion.contrato_general_id = contratoGeneral;
+      lugarEjecucion.contrato_general = contratoGeneral;
       delete updateLugarEjecucionDto.contrato_general_id;
     }
 
@@ -87,12 +87,12 @@ export class LugarEjecucionService {
     contratoGeneralId: number,
   ): Promise<LugarEjecucion> {
     const lugarEjecucion = await this.lugarEjecucionRepository.findOne({
-      where: { contrato_general_id: { id: contratoGeneralId } },
+      where: { contrato_general: { id: contratoGeneralId } },
     });
 
     if (!lugarEjecucion) {
       throw new Error(
-        `No se encontró ningún Lugar de Ejecución para el contrado con id ${contratoGeneralId}`,
+        `No se encontró ningún Lugar de Ejecución para el contrato con id ${contratoGeneralId}`,
       );
     }
 

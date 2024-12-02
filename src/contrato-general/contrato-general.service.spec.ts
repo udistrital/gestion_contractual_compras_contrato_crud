@@ -1,20 +1,33 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { ContratoGeneralService } from './contrato-general.service';
 import { ContratoGeneral } from './entities/contrato-general.entity';
 import { CrearContratoGeneralDto } from './dto/crear-contrato-general.dto';
 import { ActualizarContratoGeneralDto } from './dto/actualizar-contrato-general.dto';
+import { NotFoundException } from '@nestjs/common';
+import { BaseQueryParamsDto } from '../shared/dto/query-params.base.dto';
 
 describe('ContratoGeneralService', () => {
   let service: ContratoGeneralService;
   let repository: Repository<ContratoGeneral>;
+  let queryBuilder: SelectQueryBuilder<ContratoGeneral>;
+
+  const mockQueryBuilder = {
+    where: jest.fn().mockReturnThis(),
+    getOne: jest.fn(),
+    getMany: jest.fn(),
+    getManyAndCount: jest.fn(),
+    orderBy: jest.fn().mockReturnThis(),
+    skip: jest.fn().mockReturnThis(),
+    take: jest.fn().mockReturnThis(),
+  };
 
   const mockRepository = {
-    find: jest.fn(),
-    findOne: jest.fn(),
+    create: jest.fn(),
     save: jest.fn(),
     update: jest.fn(),
+    createQueryBuilder: jest.fn().mockReturnValue(mockQueryBuilder),
   };
 
   beforeEach(async () => {
@@ -32,6 +45,8 @@ describe('ContratoGeneralService', () => {
     repository = module.get<Repository<ContratoGeneral>>(
       getRepositoryToken(ContratoGeneral),
     );
+    queryBuilder =
+      repository.createQueryBuilder() as SelectQueryBuilder<ContratoGeneral>;
   });
 
   it('debería estar definido', () => {
@@ -39,22 +54,56 @@ describe('ContratoGeneralService', () => {
   });
 
   describe('findAll', () => {
-    it('debería devolver un array de contratos generales', async () => {
-      const result = [{ id: 1 }, { id: 2 }];
-      mockRepository.find.mockResolvedValue(result);
+    it('debería devolver un array de contratos generales con metadata', async () => {
+      const queryParams: BaseQueryParamsDto = {};
+      const mockContratos = [{ id: 1 }, { id: 2 }];
+      const mockCount = 2;
 
-      expect(await service.findAll()).toBe(result);
-      expect(mockRepository.find).toHaveBeenCalled();
+      mockQueryBuilder.getManyAndCount.mockResolvedValue([
+        mockContratos,
+        mockCount,
+      ]);
+
+      const [result, metadata] = await service.findAll(queryParams);
+
+      expect(result).toEqual(mockContratos);
+      expect(metadata).toEqual({
+        totalItems: mockCount,
+        itemCount: mockContratos.length,
+        currentPage: 1,
+        hasNextPage: false,
+        hasPreviousPage: false,
+        limit: 10,
+        offset: 0,
+        total: mockCount,
+        totalPages: 1,
+      });
+      expect(repository.createQueryBuilder).toHaveBeenCalledWith('contrato');
     });
   });
 
   describe('findOne', () => {
     it('debería devolver un contrato general por id', async () => {
-      const result = { id: 1 };
-      mockRepository.findOne.mockResolvedValue(result);
+      const id = 1;
+      const mockContrato = { id: 1 };
+      mockQueryBuilder.getOne.mockResolvedValue(mockContrato);
 
-      expect(await service.findOne(1)).toBe(result);
-      expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
+      const result = await service.findOne(id);
+
+      expect(result).toEqual(mockContrato);
+      expect(queryBuilder.where).toHaveBeenCalledWith('contrato.id = :id', {
+        id,
+      });
+    });
+
+    it('debería lanzar NotFoundException cuando el contrato no existe', async () => {
+      const id = 999;
+      mockQueryBuilder.getOne.mockResolvedValue(null);
+
+      await expect(service.findOne(id)).rejects.toThrow(NotFoundException);
+      expect(queryBuilder.where).toHaveBeenCalledWith('contrato.id = :id', {
+        id,
+      });
     });
   });
 
@@ -91,13 +140,21 @@ describe('ContratoGeneralService', () => {
         consecutivoElaboracion: '2023-001',
         fechaInicial: new Date(),
         fechaFinal: new Date(),
-        usuarioLegacy: 'usuario_test',
+        usuarioLegado: 'usuario_test',
       };
-      const result = { id: 1, ...dto };
-      mockRepository.save.mockResolvedValue(result);
 
-      expect(await service.create(dto)).toBe(result);
-      expect(mockRepository.save).toHaveBeenCalledWith(dto);
+      const mockCreatedContrato = { id: 1, ...dto, activo: true };
+      mockRepository.create.mockReturnValue(mockCreatedContrato);
+      mockRepository.save.mockResolvedValue(mockCreatedContrato);
+
+      const result = await service.create(dto);
+
+      expect(result).toEqual(mockCreatedContrato);
+      expect(mockRepository.create).toHaveBeenCalledWith({
+        ...dto,
+        activo: true,
+      });
+      expect(mockRepository.save).toHaveBeenCalledWith(mockCreatedContrato);
     });
   });
 
@@ -105,17 +162,36 @@ describe('ContratoGeneralService', () => {
     it('debería actualizar un contrato general', async () => {
       const id = 1;
       const dto: ActualizarContratoGeneralDto = {
-        /* ... datos del DTO ... */
+        observaciones: 'Observaciones actualizadas',
       };
-      const updatedContrato = { id, ...dto };
-      mockRepository.update.mockResolvedValue({ affected: 1 });
-      mockRepository.findOne.mockResolvedValue(updatedContrato);
+
+      const mockExistingContrato = { id, ...dto };
+      mockQueryBuilder.getOne
+        .mockResolvedValueOnce(mockExistingContrato)
+        .mockResolvedValueOnce({
+          ...mockExistingContrato,
+          fechaModificacion: expect.any(Date),
+        });
 
       const result = await service.update(id, dto);
 
-      expect(result).toEqual(updatedContrato);
-      expect(mockRepository.update).toHaveBeenCalledWith(id, dto);
-      expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id } });
+      expect(result).toEqual({
+        ...mockExistingContrato,
+        fechaModificacion: expect.any(Date),
+      });
+      expect(mockRepository.update).toHaveBeenCalledWith(id, {
+        ...dto,
+        fechaModificacion: expect.any(Date),
+      });
+    });
+
+    it('debería lanzar error cuando el contrato a actualizar no existe', async () => {
+      const id = 999;
+      mockQueryBuilder.getOne.mockResolvedValue(null);
+
+      await expect(service.update(id, {})).rejects.toThrow(
+        'Error al actualizar el contrato general: ContratoGeneral con ID "999" no encontrado',
+      );
     });
   });
 
@@ -123,24 +199,22 @@ describe('ContratoGeneralService', () => {
     it('debería marcar como inactivo un contrato general', async () => {
       const id = 1;
       const mockContrato = { id, activo: true };
-      mockRepository.findOne.mockResolvedValue(mockContrato);
-      mockRepository.update.mockResolvedValue({ affected: 1 });
+      mockQueryBuilder.getOne.mockResolvedValue(mockContrato);
 
       await service.remove(id);
 
-      expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id } });
       expect(mockRepository.update).toHaveBeenCalledWith(id, {
         activo: false,
         fechaModificacion: expect.any(Date),
       });
     });
 
-    it('debería lanzar un error si el contrato general no se encuentra', async () => {
-      const id = 1;
-      mockRepository.findOne.mockResolvedValue(null);
+    it('debería lanzar error cuando el contrato a eliminar no existe', async () => {
+      const id = 999;
+      mockQueryBuilder.getOne.mockResolvedValue(null);
 
       await expect(service.remove(id)).rejects.toThrow(
-        `ContratoGeneral con ID "${id}" no encontrado`,
+        'Error al eliminar el contrato general: ContratoGeneral con ID "999" no encontrado',
       );
     });
   });

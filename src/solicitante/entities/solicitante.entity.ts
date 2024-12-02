@@ -7,28 +7,16 @@ import {
 } from 'typeorm';
 import { ContratoGeneral } from '../../contrato-general/entities/contrato-general.entity';
 
-@Entity('lugar_ejecucion')
-export class LugarEjecucion {
+@Entity('solicitante')
+export class SolicitanteEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'pais_id', type: 'integer' })
-  paisId: number;
+  @Column({ name: 'dependencia_solicitante_id', type: 'integer' })
+  dependenciaSolicitanteId: number;
 
-  @Column({ name: 'ciudad_id', type: 'integer' })
-  ciudadId: number;
-
-  @Column({ name: 'municipio_id', type: 'integer' })
-  municipioId: number;
-
-  @Column({ name: 'dependencia_id', type: 'integer' })
-  dependenciaId: number;
-
-  @Column({ name: 'sede_id', type: 'integer' })
-  sedeId: number;
-
-  @Column({ type: 'varchar', length: 120 })
-  direccion: string;
+  @Column({ name: 'sede_solicitante_id', type: 'integer' })
+  sedeSolicitanteId: number;
 
   @Column({ type: 'boolean', default: true })
   activo: boolean;

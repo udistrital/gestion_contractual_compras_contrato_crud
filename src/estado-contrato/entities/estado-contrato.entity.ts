@@ -12,11 +12,17 @@ export class EstadoContrato {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ name: 'contrato_general_id' })
+  contratoGeneralId: number;
+
   @Column({ type: 'integer' })
   usuario_id: number;
 
   @Column({ type: 'integer', nullable: true })
   estado_parametro_id: number;
+
+  @Column({ type: 'integer', nullable: true })
+  estado_interno_parametro_id: number;
 
   @Column({ type: 'varchar', length: 250 })
   motivo: string;
@@ -24,7 +30,10 @@ export class EstadoContrato {
   @Column({ type: 'timestamp' })
   fecha_ejecucion_estado: Date;
 
-  @Column({ type: 'boolean' })
+  @Column({ type: 'boolean', nullable: true })
+  actual: boolean;
+
+  @Column({ type: 'boolean', default: true })
   activo: boolean;
 
   @Column({ type: 'timestamp', nullable: true })

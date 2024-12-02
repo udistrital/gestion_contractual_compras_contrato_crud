@@ -1,7 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { DocumentoContrato } from '../../documento-contrato/entities/documento-contrato.entity';
 import { EstadoContrato } from '../../estado-contrato/entities/estado-contrato.entity';
 import { Cdp } from '../../cdp/entities/cdp.entity';
+import { LugarEjecucion } from '../../lugar-ejecucion/entities/lugar-ejecucion.entity';
+import { Contratista } from '../../contratista/entities/contratista.entity';
 
 @Entity('contrato_general')
 export class ContratoGeneral {
@@ -92,8 +100,8 @@ export class ContratoGeneral {
   })
   valorTasaCambio: number;
 
-  @Column({ name: 'medio_pogo_id', nullable: true })
-  medioPogoId: number;
+  @Column({ name: 'medio_pago_id', nullable: true })
+  medioPagoId: number;
 
   @Column({ name: 'clausula_registro_presupuestal', nullable: true })
   clausulaRegistroPresupuestal: boolean;
@@ -116,8 +124,8 @@ export class ContratoGeneral {
   @Column({ name: 'fecha_final', type: 'date', nullable: true })
   fechaFinal: Date;
 
-  @Column({ name: 'usuario_legacy', length: 15, nullable: true })
-  usuarioLegacy: string;
+  @Column({ name: 'usuario_legado', length: 15, nullable: true })
+  usuario_legado: string;
 
   @Column({ default: true })
   activo: boolean;
@@ -130,9 +138,9 @@ export class ContratoGeneral {
 
   @OneToMany(
     () => DocumentoContrato,
-    (documentoContrato) => documentoContrato.contrato_general_id,
+    (documentoContrato) => documentoContrato.contratoGeneral,
   )
-  documentosContrato: DocumentoContrato[];
+  documentos: DocumentoContrato[];
 
   @OneToMany(
     () => EstadoContrato,
@@ -142,4 +150,28 @@ export class ContratoGeneral {
 
   @OneToMany(() => Cdp, (cdp) => cdp.contrato_general_id)
   cdps: Cdp[];
+
+  /*
+  @OneToOne(() => Solicitante, solicitante => solicitante.contratoGeneral)
+  solicitante: Solicitante;
+
+  @OneToMany(() => SupervisorContrato, supervisor => supervisor.contratoGeneral)
+  supervisores: SupervisorContrato[];
+
+
+  @OneToOne(() => ContratoArrendamiento, arrendamiento => arrendamiento.contratoGeneral)
+  contratoArrendamiento: ContratoArrendamiento;
+
+  @OneToOne(() => Convenio, (convenio) => convenio.contratoGeneral)
+  convenio: Convenio;
+   */
+
+  @OneToOne(
+    () => LugarEjecucion,
+    (lugarEjecucion) => lugarEjecucion.contrato_general_id,
+  )
+  lugarEjecucion: LugarEjecucion;
+
+  @OneToOne(() => Contratista, (contratista) => contratista.contrato_general_id)
+  contratista: Contratista;
 }

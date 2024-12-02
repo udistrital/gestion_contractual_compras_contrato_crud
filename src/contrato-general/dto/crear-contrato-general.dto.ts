@@ -147,7 +147,7 @@ export class CrearContratoGeneralDto {
 
   @IsOptional()
   @IsNumber()
-  medioPogoId: number;
+  medioPagoId: number;
 
   @IsOptional()
   @IsBoolean()
@@ -179,5 +179,5 @@ export class CrearContratoGeneralDto {
 
   @IsOptional()
   @IsString()
-  usuarioLegacy: string;
+  usuarioLegado: string;
 }

@@ -19,6 +19,8 @@ import { EspecificacionTecnicaModule } from './especificacion-tecnica/especifica
 import { EspecificacionTecnica } from './especificacion-tecnica/entities/especificacion-tecnica.entity';
 import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
 import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
+import { SolicitanteModule } from './solicitante/solicitante.module';
+import { SolicitanteEntity } from './solicitante/entities/solicitante.entity';
 
 @Module({
   imports: [
@@ -44,6 +46,7 @@ import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
           Cdp,
           ActaInicio,
           EspecificacionTecnica,
+          SolicitanteEntity,
         ],
         synchronize: configService.get('DEVELOPER_MODE'), // Solo para desarrollo, en producción se debe desactivar
         ssl: {
@@ -60,6 +63,7 @@ import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
     CdpModule,
     EspecificacionTecnicaModule,
     ActaInicioModule,
+    SolicitanteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

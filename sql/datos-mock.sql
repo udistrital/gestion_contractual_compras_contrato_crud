@@ -35,7 +35,7 @@ INSERT INTO contrato_general (
     concepto_elaboracion,
     fecha_inicial,
     fecha_final,
-    usuario_legacy,
+    usuario_legado,
     activo
 ) VALUES 
 (1, 1, 1, '2024-01-15', true, 101, 1, 1, 1, 1, 180, 2024, 10001, 1, 
@@ -352,7 +352,7 @@ TRUNCATE TABLE especificaciones_tecnicas CASCADE;
 INSERT INTO acta_inicio (
     id,
     usuario_id,
-    user_legado,
+    usuario_legado,
     descripcion,
     fecha_inicio,
     fecha_fin,
@@ -388,7 +388,7 @@ INSERT INTO especificaciones_tecnicas (
 (9, 'SPEC-MANT-001', 'Normas técnicas de construcción NSR-10', 5, true),
 (10, 'SPEC-MANT-002', 'Certificaciones de calidad ISO 9001', 5, true),
 (11, 'SPEC-ERP-001', 'Sistema ERP basado en SAP S/4HANA', 6, true),
-(12, 'SPEC-ERP-002', 'Integración con sistemas legacy', 6, true),
+(12, 'SPEC-ERP-002', 'Integración con sistemas', 6, true),
 (13, 'SPEC-CAP-001', 'Certificación internacional en cloud computing', 7, true),
 (14, 'SPEC-CAP-002', 'Formación en metodologías DevOps', 7, true),
 (15, 'SPEC-TRANS-001', 'Framework ITIL v4 para servicios IT', 8, true),

@@ -8,6 +8,7 @@ import {
   Put,
   HttpStatus,
   Res,
+  Query,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { EspecificacionTecnicaService } from './especificacion-tecnica.service';
@@ -22,6 +23,7 @@ import {
 } from '@nestjs/swagger';
 import { StandardResponse } from '../utils/standardResponse.interface';
 import { ActualizarEspecificacionTecnicaDto } from './dto/actualizar-especificacion-tecnica';
+import { BaseQueryParamsDto } from 'src/shared/dto/query-params.base.dto';
 
 @ApiTags('especificaciones-tecnicas')
 @Controller('especificaciones-tecnicas')
@@ -36,15 +38,20 @@ export class EspecificacionTecnicaController {
     status: 200,
     description: 'Lista de especificaciones técnicas',
     type: [EspecificacionTecnica],
-  })
-  async findAll(@Res() res: Response): Promise<void> {
+  }) async findAll(
+    @Query() queryParams: BaseQueryParamsDto, 
+    @Res() res: Response
+  ) : Promise<void> {
     try {
-      const especificaciones = await this.especificacionTecnicaService.findAll();
+      const [especificaciones, metadata] = 
+        await this.especificacionTecnicaService.findAll(queryParams);
+        
       const response: StandardResponse<EspecificacionTecnica[]> = {
         Success: true,
         Status: HttpStatus.OK,
         Message: 'Especificaciones técnicas encontradas',
         Data: especificaciones,
+        Metadata: metadata
       };
       res.status(HttpStatus.OK).json(response);
     } catch (error) {

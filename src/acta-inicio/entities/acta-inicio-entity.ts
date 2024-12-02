@@ -16,8 +16,8 @@ export class ActaInicio {
   @Column({ name: 'usuario_id', nullable: true })
   usuarioId: number;
 
-  @Column({ name: 'usuario_legacy', length: 20, nullable: true })
-  usuarioLegacy: string;
+  @Column({ name: 'usuario_legado', length: 20, nullable: true })
+  usuarioLegado: string;
 
   @Column({ name: 'descripcion', type: 'varchar', length: 255, nullable: true })
   descripcion: string;
