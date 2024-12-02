@@ -5,7 +5,10 @@ import {
   Body,
   Patch,
   Param,
-  Delete, Query, Res, HttpStatus,
+  Delete,
+  Query,
+  Res,
+  HttpStatus,
 } from '@nestjs/common';
 import { EstadoContratoService } from './estado-contrato.service';
 import { CreateEstadoContratoDto } from './dto/create-estado-contrato.dto';
@@ -46,7 +49,8 @@ export class EstadoContratoController {
     status: 200,
     description: 'Devuelve todos los estados de contrato.',
     type: [EstadoContrato],
-  }) async findAll(
+  })
+  async findAll(
     @Query() queryParams: BaseQueryParamsDto,
     @Res() res: Response,
   ): Promise<void> {

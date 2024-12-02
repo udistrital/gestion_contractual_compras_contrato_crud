@@ -100,8 +100,8 @@ export class ContratoGeneral {
   })
   valorTasaCambio: number;
 
-  @Column({ name: 'medio_pogo_id', nullable: true })
-  medioPogoId: number;
+  @Column({ name: 'medio_pago_id', nullable: true })
+  medioPagoId: number;
 
   @Column({ name: 'clausula_registro_presupuestal', nullable: true })
   clausulaRegistroPresupuestal: boolean;

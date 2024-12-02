@@ -33,7 +33,7 @@ export class EstadoContrato {
   @Column({ type: 'boolean', nullable: true })
   actual: boolean;
 
-  @Column({ type: 'boolean' })
+  @Column({ type: 'boolean', default: true })
   activo: boolean;
 
   @Column({ type: 'timestamp', nullable: true })

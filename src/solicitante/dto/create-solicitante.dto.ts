@@ -1,36 +1,19 @@
 import {
   IsNotEmpty,
   IsNumber,
-  IsString,
   IsBoolean,
   IsDate,
   IsOptional,
 } from 'class-validator';
 
-export class CreateLugarEjecucionDto {
+export class CreateSolicitanteDto {
   @IsNotEmpty()
   @IsNumber()
-  paisId: number;
+  dependenciaSolicitanteId: number;
 
   @IsNotEmpty()
   @IsNumber()
-  ciudadId: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  municipioId: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  dependenciaId: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  sedeId: number;
-
-  @IsNotEmpty()
-  @IsString()
-  direccion: string;
+  sedeSolicitanteId: number;
 
   @IsOptional()
   @IsBoolean()

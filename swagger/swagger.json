@@ -1753,6 +1753,205 @@
           "actas-inicio"
         ]
       }
+    },
+    "/solicitantes": {
+      "post": {
+        "operationId": "SolicitanteController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSolicitanteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "El Solicitante ha sido creado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitanteEntity"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta."
+          }
+        },
+        "summary": "Crear un nuevo lugar de ejecución",
+        "tags": [
+          "solicitantes"
+        ]
+      },
+      "get": {
+        "operationId": "SolicitanteController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Devuelve todos los solicitantes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SolicitanteEntity"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Obtener todos los lugares de ejecución",
+        "tags": [
+          "solicitantes"
+        ]
+      }
+    },
+    "/solicitantes/{id}": {
+      "get": {
+        "operationId": "SolicitanteController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Devuelve el solicitante especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitanteEntity"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lugar de ejecución no encontrado."
+          }
+        },
+        "summary": "Obtener un lugar de ejecución por id",
+        "tags": [
+          "solicitantes"
+        ]
+      },
+      "patch": {
+        "operationId": "SolicitanteController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSolicitanteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "El solicitante ha sido actualizado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitanteEntity"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta."
+          },
+          "404": {
+            "description": "Solictante no encontrado."
+          }
+        },
+        "summary": "Actualizar un lugar de ejecución",
+        "tags": [
+          "solicitantes"
+        ]
+      },
+      "delete": {
+        "operationId": "SolicitanteController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "El lugar de ejecución ha sido eliminado exitosamente."
+          },
+          "404": {
+            "description": "Lugar de ejecución no encontrado."
+          }
+        },
+        "summary": "Eliminar un lugar de ejecución",
+        "tags": [
+          "solicitantes"
+        ]
+      }
+    },
+    "/solicitantes/contrato/{contratoId}": {
+      "get": {
+        "operationId": "SolicitanteController_findByContratoGeneralId",
+        "parameters": [
+          {
+            "name": "contratoId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Devuelve los lugares de ejecución para el contrato especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SolicitanteEntity"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontraron lugares de ejecución para el contrato especificado."
+          }
+        },
+        "summary": "Obtiene el lugar de ejecución por id de contrato",
+        "tags": [
+          "solicitantes"
+        ]
+      }
     }
   },
   "info": {
@@ -2228,6 +2427,18 @@
             "description": "Indica si el acta está activa"
           }
         }
+      },
+      "CreateSolicitanteDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "SolicitanteEntity": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateSolicitanteDto": {
+        "type": "object",
+        "properties": {}
       }
     }
   }

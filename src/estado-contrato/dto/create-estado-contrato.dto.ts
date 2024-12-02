@@ -2,9 +2,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsString,
-  IsBoolean,
   IsDate,
-  IsOptional,
 } from 'class-validator';
 
 export class CreateEstadoContratoDto {
