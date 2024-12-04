@@ -6,7 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  Res,
+  HttpStatus,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { DocumentoContratoService } from './documento-contrato.service';
 import { CreateDocumentoContratoDto } from './dto/create-documento-contrato.dto';
 import { UpdateDocumentoContratoDto } from './dto/update-documento-contrato.dto';
@@ -17,7 +21,9 @@ import {
   ApiParam,
   ApiBody,
 } from '@nestjs/swagger';
+import { StandardResponse } from '../utils/standardResponse.interface';
 import { DocumentoContrato } from './entities/documento-contrato.entity';
+import { BaseQueryParamsDto } from 'src/shared/dto/query-params.base.dto';
 
 @ApiTags('documentos-contratos')
 @Controller('documentos-contratos')
@@ -47,9 +53,31 @@ export class DocumentoContratoController {
     status: 200,
     description: 'Devuelve todos los documentos contratos.',
     type: [DocumentoContrato],
-  })
-  async findAll(): Promise<DocumentoContrato[]> {
-    return this.documentoContratoService.findAll();
+  }) async findAll( 
+    @Query() queryParams: BaseQueryParamsDto, 
+    @Res() res: Response
+  ): Promise<void> {
+    try {
+      const [documentos, metadata] = 
+        await this.documentoContratoService.findAll(queryParams);
+        
+      const response: StandardResponse<DocumentoContrato[]> = {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Documentos de contrato encontrados',
+        Data: documentos,
+        Metadata: metadata
+      };
+      res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      const response: StandardResponse<any> = {
+        Success: false,
+        Status: HttpStatus.INTERNAL_SERVER_ERROR,
+        Message: 'Error al obtener los documentos de contrato',
+        Data: error,
+      };
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(response);
+    }
   }
 
   @Get(':id')

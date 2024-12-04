@@ -5,15 +5,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DocumentoContrato } from './entities/documento-contrato.entity';
 import { Repository } from 'typeorm';
 import { ContratoGeneral } from '../contrato-general/entities/contrato-general.entity';
+import { BaseCrudService } from 'src/shared/services/base-crud.service';
+import { ResponseMetadata } from 'src/utils/response-metadata.interface';
+import { BaseQueryParamsDto } from 'src/shared/dto/query-params.base.dto';
 
 @Injectable()
-export class DocumentoContratoService {
+export class DocumentoContratoService extends BaseCrudService<DocumentoContrato> {
   constructor(
     @InjectRepository(DocumentoContrato)
     private documentoContratoRepository: Repository<DocumentoContrato>,
     @InjectRepository(ContratoGeneral)
     private contratoGeneralRepository: Repository<ContratoGeneral>,
-  ) {}
+  ) {
+    super(documentoContratoRepository);
+  }
 
   async create(
     createDocumentoDto: CreateDocumentoContratoDto,
@@ -43,8 +48,10 @@ export class DocumentoContratoService {
     }
   }
 
-  async findAll(): Promise<DocumentoContrato[]> {
-    return await this.documentoContratoRepository.find();
+  async findAll(
+    queryParams: BaseQueryParamsDto
+  ): Promise<[DocumentoContrato[], ResponseMetadata]> {
+    return this.findAllWithFilters(queryParams);
   }
 
   async findOne(id: string): Promise<DocumentoContrato> {
