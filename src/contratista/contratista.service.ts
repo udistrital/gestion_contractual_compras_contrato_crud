@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contratista } from './entities/contratista.entity';
@@ -20,6 +20,18 @@ export class ContratistaService {
   ): Promise<Contratista> {
     const { contrato_general_id, ...contratistaData } = createContratistaDto;
 
+    const currentContratista = await this.contratistaRepository.findOne({
+      where: {
+        contrato_general_id: contrato_general_id,
+      },
+    });
+
+    if (currentContratista) {
+      throw new ConflictException(
+        'Ya existe un solicitante con este contrato_general_id',
+      );
+    }
+
     const contratoGeneral = await this.contratoGeneralRepository.findOne({
       where: { id: contrato_general_id },
     });
@@ -31,7 +43,7 @@ export class ContratistaService {
     }
 
     const contratista = this.contratistaRepository.create(contratistaData);
-    contratista.contrato_general_id = contratoGeneral;
+    contratista.contrato_general = contratoGeneral;
 
     return await this.contratistaRepository.save(contratista);
   }
@@ -67,7 +79,7 @@ export class ContratistaService {
           `ContratoGeneral con ID "${updateContratistaDto.contrato_general_id}" no encontrado`,
         );
       }
-      contratista.contrato_general_id = contratoGeneral;
+      contratista.contrato_general = contratoGeneral;
       delete updateContratistaDto.contrato_general_id;
     }
 
@@ -86,7 +98,7 @@ export class ContratistaService {
     contratoGeneralId: number,
   ): Promise<Contratista> {
     const contratista = await this.contratistaRepository.findOne({
-      where: { contrato_general_id: { id: contratoGeneralId } },
+      where: { contrato_general: { id: contratoGeneralId } },
     });
 
     if (!contratista) {

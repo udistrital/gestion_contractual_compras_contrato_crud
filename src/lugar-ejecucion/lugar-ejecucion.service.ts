@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LugarEjecucion } from './entities/lugar-ejecucion.entity';
@@ -20,6 +24,18 @@ export class LugarEjecucionService {
   ): Promise<LugarEjecucion> {
     const { contrato_general_id, ...lugarEjecucionData } =
       createLugarEjecucionDto;
+
+    const currentLugarEjecucion = await this.lugarEjecucionRepository.findOne({
+      where: {
+        contrato_general_id: contrato_general_id,
+      },
+    });
+
+    if (currentLugarEjecucion) {
+      throw new ConflictException(
+        'Ya existe un solicitante con este contrato_general_id',
+      );
+    }
 
     const contratoGeneral = await this.contratoGeneralRepository.findOne({
       where: { id: contrato_general_id },
