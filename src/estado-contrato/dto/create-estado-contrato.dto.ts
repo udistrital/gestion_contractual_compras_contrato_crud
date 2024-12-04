@@ -1,9 +1,4 @@
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  IsDate,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsDate } from 'class-validator';
 
 export class CreateEstadoContratoDto {
   @IsNotEmpty()
@@ -13,6 +8,10 @@ export class CreateEstadoContratoDto {
   @IsNotEmpty()
   @IsNumber()
   estado_parametro_id: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  estado_interno_parametro_id: number;
 
   @IsNotEmpty()
   @IsString()
