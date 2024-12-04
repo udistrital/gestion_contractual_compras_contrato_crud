@@ -8,6 +8,11 @@ interface FieldSelectionMap {
   relationFields: Map<string, Set<string>>;
 }
 
+interface DateRange {
+  start: string;
+  end: string;
+}
+
 export abstract class BaseCrudService<T> {
   protected readonly defaultLimit = 10;
   protected readonly defaultFields = [
@@ -15,6 +20,7 @@ export abstract class BaseCrudService<T> {
     'fechaCreacion',
     'fechaModificacion',
   ];
+  protected readonly dateFields = ['fechaCreacion', 'fechaModificacion'];
 
   protected constructor(
     protected readonly repository: Repository<T>,
@@ -158,6 +164,27 @@ export abstract class BaseCrudService<T> {
     return limit;
   }
 
+  private isValidDateString(dateStr: string): boolean {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(dateStr)) return false;
+
+    const date = new Date(dateStr);
+    return date instanceof Date && !isNaN(date.getTime());
+  }
+
+  private isDateRange(value: any): value is DateRange {
+    return (
+      typeof value === 'object' &&
+      value !== null &&
+      'start' in value &&
+      'end' in value &&
+      typeof value.start === 'string' &&
+      typeof value.end === 'string' &&
+      this.isValidDateString(value.start) &&
+      this.isValidDateString(value.end)
+    );
+  }
+
   protected async applyDynamicFilters(
     queryBuilder: SelectQueryBuilder<T>,
     queryString: string,
@@ -192,8 +219,19 @@ export abstract class BaseCrudService<T> {
             });
           }
         } else if (this.isValidField(key)) {
-          // Es un filtro para un campo directo de la entidad
-          if (typeof value === 'string' && value.includes('%')) {
+          // Manejo especial para rangos de fecha
+          if (this.dateFields.includes(key) && this.isDateRange(value)) {
+            const startParam = `${key}Start`;
+            const endParam = `${key}End`;
+
+            queryBuilder.andWhere(
+              `${this.alias}.${key} BETWEEN :${startParam} AND :${endParam}`,
+              {
+                [startParam]: value.start,
+                [endParam]: value.end,
+              },
+            );
+          } else if (typeof value === 'string' && value.includes('%')) {
             queryBuilder.andWhere(`${this.alias}.${key} LIKE :${key}`, {
               [key]: value,
             });
