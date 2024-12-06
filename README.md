@@ -23,7 +23,7 @@ pnpm run start:dev
 
 # Modelo de Datos :card_file_box:
 
-![Modelo de datos Formularios dinámicos](/modelo-database/modelo-basedatos-core-Argos.png)
+![Modelo de datos Formularios dinámicos](/modelo-database/modelo-basedatos-core-Argo.png)
 
 [![Descargar Modelo de Datos](https://img.shields.io/badge/Descargar%20Modelo%20de%20Datos-Download-blue?style=for-the-badge)](/modelo-database/modelo-datos-core-argo.drawio)
 

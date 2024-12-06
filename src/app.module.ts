@@ -21,6 +21,7 @@ import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
 import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
 import { SolicitanteModule } from './solicitante/solicitante.module';
 import { SolicitanteEntity } from './solicitante/entities/solicitante.entity';
+import { OrdenadorContratoModule } from './ordenador-contrato/ordenador-contrato.module';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { SolicitanteEntity } from './solicitante/entities/solicitante.entity';
     EspecificacionTecnicaModule,
     ActaInicioModule,
     SolicitanteModule,
+    OrdenadorContratoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
