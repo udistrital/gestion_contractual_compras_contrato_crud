@@ -56,7 +56,6 @@ export class BaseQueryParamsDto {
     required: false,
     description: 'Relaciones a Incliur (separadas por comas)',
     type: String,
-    example: 'estados,contratista',
   })
   @IsOptional()
   @IsString()

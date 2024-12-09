@@ -85,7 +85,6 @@
             "in": "query",
             "description": "Relaciones a incluir (separadas por comas). Ejemplo: estados,solicitante,lugarEjecucion",
             "schema": {
-              "example": "estados,contratista",
               "type": "string"
             }
           }
@@ -220,7 +219,6 @@
             "in": "query",
             "description": "Relaciones a incluir (separadas por comas). Ejemplo: estados,contratista",
             "schema": {
-              "example": "estados,contratista",
               "type": "string"
             }
           }
@@ -351,7 +349,77 @@
       },
       "get": {
         "operationId": "DocumentoContratoController_findAll",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "fields",
+            "required": false,
+            "in": "query",
+            "description": "Campos a retornar (separados por comas)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "Campo por el cual ordenar",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderBy",
+            "required": false,
+            "in": "query",
+            "description": "Dirección del ordenamiento",
+            "schema": {
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Número de registros a retornar",
+            "schema": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "Número de registros a saltar",
+            "schema": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          {
+            "name": "query",
+            "required": false,
+            "in": "query",
+            "description": "Filtros dinámicos en formato JSON",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "include",
+            "required": false,
+            "in": "query",
+            "description": "Relaciones a Incliur (separadas por comas)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Devuelve todos los documentos contratos.",
@@ -813,7 +881,6 @@
             "in": "query",
             "description": "Relaciones a Incliur (separadas por comas)",
             "schema": {
-              "example": "estados,contratista",
               "type": "string"
             }
           }
@@ -1482,7 +1549,6 @@
             "in": "query",
             "description": "Relaciones a Incliur (separadas por comas)",
             "schema": {
-              "example": "estados,contratista",
               "type": "string"
             }
           }

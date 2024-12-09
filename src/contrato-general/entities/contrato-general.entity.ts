@@ -172,6 +172,6 @@ export class ContratoGeneral {
   )
   lugarEjecucion: LugarEjecucion;
 
-  @OneToOne(() => Contratista, (contratista) => contratista.contrato_general_id)
+  @OneToOne(() => Contratista, (contratista) => contratista.contrato_general)
   contratista: Contratista;
 }
