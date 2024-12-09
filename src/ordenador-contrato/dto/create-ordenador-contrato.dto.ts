@@ -1,49 +1,57 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
-    IsNotEmpty,
-    IsNumber,
-    IsString,
-    IsBoolean,
-    IsDate,
-    IsOptional,
-  } from 'class-validator';
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  IsBoolean,
+  IsDate,
+  IsOptional,
+} from 'class-validator';
 export class CreateOrdenadorContratoDto {
-    @IsNotEmpty()
-    @IsNumber()
-    terceroId: number;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  terceroId: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    ordenadorArgoId: number;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  ordenadorArgoId: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    ordenadorSikarcaId: number;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  ordenadorSikarcaId: number;
 
-    @IsNotEmpty()
-    @IsString()
-    resolucion: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  resolucion: string;
 
-    @IsNotEmpty()
-    @IsString()
-    documentoIdentidad: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  documentoIdentidad: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    cargoId: number;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  cargoId: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    contrato_general_id: number;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  contrato_general_id: number;
 
-    @IsOptional()
-    @IsBoolean()
-    activo?: boolean;
-  
-    @IsOptional()
-    @IsDate()
-    fecha_creacion?: Date;
-  
-    @IsOptional()
-    @IsDate()
-    fecha_modificacion?: Date;
+  @IsOptional()
+  @IsBoolean()
+  activo?: boolean;
+
+  @IsOptional()
+  @IsDate()
+  fecha_creacion?: Date;
+
+  @IsOptional()
+  @IsDate()
+  fecha_modificacion?: Date;
 }

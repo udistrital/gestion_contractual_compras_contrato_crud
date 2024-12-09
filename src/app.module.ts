@@ -21,6 +21,7 @@ import { ActaInicioModule } from './acta-inicio/acta-inicio.module';
 import { ActaInicio } from './acta-inicio/entities/acta-inicio-entity';
 import { SolicitanteModule } from './solicitante/solicitante.module';
 import { SolicitanteEntity } from './solicitante/entities/solicitante.entity';
+import { OrdenadorContrato } from './ordenador-contrato/entities/ordenador-contrato.entity';
 import { OrdenadorContratoModule } from './ordenador-contrato/ordenador-contrato.module';
 
 @Module({
@@ -48,6 +49,7 @@ import { OrdenadorContratoModule } from './ordenador-contrato/ordenador-contrato
           ActaInicio,
           EspecificacionTecnica,
           SolicitanteEntity,
+          OrdenadorContrato,
         ],
         synchronize: configService.get('DEVELOPER_MODE'), // Solo para desarrollo, en producción se debe desactivar
         ssl: {

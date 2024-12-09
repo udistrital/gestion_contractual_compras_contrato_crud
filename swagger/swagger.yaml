@@ -1213,6 +1213,76 @@ paths:
             especificado.
       summary: Obtiene el lugar de ejecución por id de contrato
       tags: *ref_8
+  /ordenador-contrato:
+    get:
+      operationId: OrdenadorContratoController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      summary: Obtener todos los ordenadores
+      tags: &ref_9
+        - ordenadores-contrato
+    post:
+      operationId: OrdenadorContratoController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrdenadorContratoDto'
+      responses:
+        '201':
+          description: ''
+      summary: Crear un nuevo ordenador
+      tags: *ref_9
+  /ordenador-contrato/{id}:
+    get:
+      operationId: OrdenadorContratoController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      summary: Obtener un ordenador por ID
+      tags: *ref_9
+    put:
+      operationId: OrdenadorContratoController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrdenadorContratoDto'
+      responses:
+        '200':
+          description: ''
+      summary: Actualizar un ordenador
+      tags: *ref_9
+    delete:
+      operationId: OrdenadorContratoController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      summary: Eliminar un ordenador
+      tags: *ref_9
 info:
   title: Gestion Contractual CRUD
   description: API para la gestión contractual
@@ -1605,3 +1675,45 @@ components:
     UpdateSolicitanteDto:
       type: object
       properties: {}
+    CreateOrdenadorContratoDto:
+      type: object
+      properties:
+        terceroId:
+          type: number
+        ordenadorArgoId:
+          type: number
+        ordenadorSikarcaId:
+          type: number
+        resolucion:
+          type: string
+        documentoIdentidad:
+          type: string
+        cargoId:
+          type: number
+        contrato_general_id:
+          type: number
+      required:
+        - terceroId
+        - ordenadorArgoId
+        - ordenadorSikarcaId
+        - resolucion
+        - documentoIdentidad
+        - cargoId
+        - contrato_general_id
+    UpdateOrdenadorContratoDto:
+      type: object
+      properties:
+        terceroId:
+          type: number
+        ordenadorArgoId:
+          type: number
+        ordenadorSikarcaId:
+          type: number
+        resolucion:
+          type: string
+        documentoIdentidad:
+          type: string
+        cargoId:
+          type: number
+        contrato_general_id:
+          type: number

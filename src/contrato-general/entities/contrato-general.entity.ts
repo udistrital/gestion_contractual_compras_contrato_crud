@@ -10,6 +10,7 @@ import { EstadoContrato } from '../../estado-contrato/entities/estado-contrato.e
 import { Cdp } from '../../cdp/entities/cdp.entity';
 import { LugarEjecucion } from '../../lugar-ejecucion/entities/lugar-ejecucion.entity';
 import { Contratista } from '../../contratista/entities/contratista.entity';
+import { OrdenadorContrato } from 'src/ordenador-contrato/entities/ordenador-contrato.entity';
 
 @Entity('contrato_general')
 export class ContratoGeneral {
@@ -174,4 +175,7 @@ export class ContratoGeneral {
 
   @OneToOne(() => Contratista, (contratista) => contratista.contrato_general_id)
   contratista: Contratista;
+
+  @OneToOne(() => OrdenadorContrato, (ordenador) => ordenador.contrato_general_id)
+  ordenador: OrdenadorContrato;
 }
