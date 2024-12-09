@@ -145,7 +145,7 @@ export class ContratoGeneral {
 
   @OneToMany(
     () => EstadoContrato,
-    (estadoContrato) => estadoContrato.contrato_general_id,
+    (estadoContrato) => estadoContrato.contrato_general,
   )
   estados: EstadoContrato[];
 
@@ -176,6 +176,9 @@ export class ContratoGeneral {
   @OneToOne(() => Contratista, (contratista) => contratista.contrato_general)
   contratista: Contratista;
 
-  @OneToOne(() => OrdenadorContrato, (ordenador) => ordenador.contrato_general_id)
+  @OneToOne(
+    () => OrdenadorContrato,
+    (ordenador) => ordenador.contrato_general_id,
+  )
   ordenador: OrdenadorContrato;
 }

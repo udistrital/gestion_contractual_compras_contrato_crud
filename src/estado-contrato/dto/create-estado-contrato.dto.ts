@@ -6,6 +6,10 @@ export class CreateEstadoContratoDto {
   usuario_id: number;
 
   @IsNotEmpty()
+  @IsString()
+  usuario_rol: string;
+
+  @IsNotEmpty()
   @IsNumber()
   estado_parametro_id: number;
 

@@ -13,10 +13,13 @@ export class EstadoContrato {
   id: number;
 
   @Column({ name: 'contrato_general_id' })
-  contratoGeneralId: number;
+  contrato_general_id: number;
 
   @Column({ type: 'integer' })
   usuario_id: number;
+
+  @Column({ type: 'varchar', length: 25, nullable: true })
+  usuario_rol: string;
 
   @Column({ type: 'integer', nullable: true })
   estado_parametro_id: number;
@@ -47,5 +50,5 @@ export class EstadoContrato {
     (contratoGeneral) => contratoGeneral.estados,
   )
   @JoinColumn({ name: 'contrato_general_id' })
-  contrato_general_id: ContratoGeneral;
+  contrato_general: ContratoGeneral;
 }

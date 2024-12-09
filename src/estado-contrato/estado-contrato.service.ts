@@ -41,7 +41,7 @@ export class EstadoContratoService extends BaseCrudService<EstadoContrato> {
     // Buscar el estado actual activo
     const estadoActual = await this.estadoContratoRepository.findOne({
       where: {
-        contrato_general_id: { id: contrato_general_id },
+        contrato_general: { id: contrato_general_id },
         activo: true,
       },
     });
@@ -50,7 +50,7 @@ export class EstadoContratoService extends BaseCrudService<EstadoContrato> {
     const nuevoEstado = this.estadoContratoRepository.create({
       ...estadoContratoData,
       estado_parametro_id,
-      contrato_general_id: contratoGeneral,
+      contrato_general: contratoGeneral,
       actual: true,
     });
 
@@ -94,7 +94,7 @@ export class EstadoContratoService extends BaseCrudService<EstadoContrato> {
           `ContratoGeneral con ID ${updateEstadoContratoDto.contrato_general_id} no encontado`,
         );
       }
-      estadoContrato.contrato_general_id = contratoGeneral;
+      estadoContrato.contrato_general = contratoGeneral;
       delete updateEstadoContratoDto.contrato_general_id;
     }
 
@@ -114,14 +114,14 @@ export class EstadoContratoService extends BaseCrudService<EstadoContrato> {
     contratoGeneralId: number,
   ): Promise<EstadoContrato[]> {
     return await this.estadoContratoRepository.find({
-      where: { contrato_general_id: { id: contratoGeneralId } },
+      where: { contrato_general: { id: contratoGeneralId } },
       order: { fecha_ejecucion_estado: 'DESC' },
     });
   }
 
   async findCurrentEstado(contratoGeneralId: number): Promise<EstadoContrato> {
     const currentEstado = await this.estadoContratoRepository.findOne({
-      where: { contrato_general_id: { id: contratoGeneralId }, activo: true },
+      where: { contrato_general: { id: contratoGeneralId }, activo: true },
       order: { fecha_ejecucion_estado: 'DESC' },
     });
 
