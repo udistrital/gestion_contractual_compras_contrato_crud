@@ -21,6 +21,7 @@ export abstract class BaseCrudService<T> {
     'fechaModificacion',
   ];
   protected readonly dateFields = ['fechaCreacion', 'fechaModificacion'];
+  protected readonly defaultStartDate = '2024-01-01';
 
   protected constructor(
     protected readonly repository: Repository<T>,
@@ -173,16 +174,26 @@ export abstract class BaseCrudService<T> {
   }
 
   private isDateRange(value: any): value is DateRange {
-    return (
-      typeof value === 'object' &&
-      value !== null &&
-      'start' in value &&
-      'end' in value &&
-      typeof value.start === 'string' &&
-      typeof value.end === 'string' &&
-      this.isValidDateString(value.start) &&
-      this.isValidDateString(value.end)
-    );
+    if (typeof value !== 'object' || value === null) return false;
+
+    if (!('start' in value) && !('end' in value)) return false;
+
+    if ('start' in value && value.start !== undefined) {
+      if (
+        typeof value.start !== 'string' ||
+        !this.isValidDateString(value.start)
+      ) {
+        return false;
+      }
+    }
+
+    if ('end' in value && value.end !== undefined) {
+      if (typeof value.end !== 'string' || !this.isValidDateString(value.end)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   protected async applyDynamicFilters(
@@ -197,40 +208,19 @@ export abstract class BaseCrudService<T> {
       for (const [key, value] of Object.entries(filters)) {
         if (value === null || value === undefined) continue;
 
-        // Verifica si el filtro es para un campo de una relación
         const [relationName, fieldName] = key.split('.');
 
         if (fieldName && relations.includes(relationName)) {
-          // Es un filtro para un campo de una relación
-          if (typeof value === 'string' && value.includes('%')) {
-            queryBuilder.andWhere(`${relationName}.${fieldName} LIKE :${key}`, {
-              [key]: value,
-            });
-          } else if (Array.isArray(value)) {
-            queryBuilder.andWhere(
-              `${relationName}.${fieldName} IN (:...${key})`,
-              {
-                [key]: value,
-              },
-            );
-          } else {
-            queryBuilder.andWhere(`${relationName}.${fieldName} = :${key}`, {
-              [key]: value,
-            });
-          }
+          this.applyRelationFilter(
+            queryBuilder,
+            relationName,
+            fieldName,
+            value,
+            key,
+          );
         } else if (this.isValidField(key)) {
-          // Manejo especial para rangos de fecha
           if (this.dateFields.includes(key) && this.isDateRange(value)) {
-            const startParam = `${key}Start`;
-            const endParam = `${key}End`;
-
-            queryBuilder.andWhere(
-              `${this.alias}.${key} BETWEEN :${startParam} AND :${endParam}`,
-              {
-                [startParam]: value.start,
-                [endParam]: value.end,
-              },
-            );
+            this.applyDateRangeFilter(queryBuilder, key, value);
           } else if (typeof value === 'string' && value.includes('%')) {
             queryBuilder.andWhere(`${this.alias}.${key} LIKE :${key}`, {
               [key]: value,
@@ -250,6 +240,55 @@ export abstract class BaseCrudService<T> {
       throw new BadRequestException(
         `Error en el formato del query JSON: ${error.message}`,
       );
+    }
+  }
+
+  private applyDateRangeFilter(
+    queryBuilder: SelectQueryBuilder<T>,
+    key: string,
+    value: DateRange,
+  ): void {
+    const startDate = value.start || this.defaultStartDate;
+    const endDate = value.end || new Date().toISOString().split('T')[0];
+
+    if (value.start && !value.end) {
+      queryBuilder.andWhere(`${this.alias}.${key} >= :${key}Start`, {
+        [`${key}Start`]: startDate,
+      });
+    } else if (!value.start && value.end) {
+      queryBuilder.andWhere(`${this.alias}.${key} <= :${key}End`, {
+        [`${key}End`]: endDate,
+      });
+    } else {
+      queryBuilder.andWhere(
+        `${this.alias}.${key} BETWEEN :${key}Start AND :${key}End`,
+        {
+          [`${key}Start`]: startDate,
+          [`${key}End`]: endDate,
+        },
+      );
+    }
+  }
+
+  private applyRelationFilter(
+    queryBuilder: SelectQueryBuilder<T>,
+    relationName: string,
+    fieldName: string,
+    value: any,
+    key: string,
+  ): void {
+    if (typeof value === 'string' && value.includes('%')) {
+      queryBuilder.andWhere(`${relationName}.${fieldName} LIKE :${key}`, {
+        [key]: value,
+      });
+    } else if (Array.isArray(value)) {
+      queryBuilder.andWhere(`${relationName}.${fieldName} IN (:...${key})`, {
+        [key]: value,
+      });
+    } else {
+      queryBuilder.andWhere(`${relationName}.${fieldName} = :${key}`, {
+        [key]: value,
+      });
     }
   }
 
