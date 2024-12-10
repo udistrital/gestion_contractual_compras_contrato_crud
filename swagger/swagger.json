@@ -2361,7 +2361,30 @@
       },
       "CreateEstadoContratoDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "activo": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indica si el registro está activo o no"
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-01-04T00:00:00Z",
+            "description": "Fecha de creación del registro"
+          },
+          "fecha_modificacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-01-04T00:00:00Z",
+            "description": "Fecha de última modificación del registro"
+          }
+        },
+        "required": [
+          "activo",
+          "fecha_creacion",
+          "fecha_modificacion"
+        ]
       },
       "EstadoContrato": {
         "type": "object",
@@ -2369,7 +2392,25 @@
       },
       "UpdateEstadoContratoDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "activo": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indica si el registro está activo o no"
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-01-04T00:00:00Z",
+            "description": "Fecha de creación del registro"
+          },
+          "fecha_modificacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-01-04T00:00:00Z",
+            "description": "Fecha de última modificación del registro"
+          }
+        }
       },
       "CreateLugarEjecucionDto": {
         "type": "object",

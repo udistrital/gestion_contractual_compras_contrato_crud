@@ -48,6 +48,7 @@ export class EstadoContrato {
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
+    nullable: true,
   })
   fecha_modificacion: Date;
 
