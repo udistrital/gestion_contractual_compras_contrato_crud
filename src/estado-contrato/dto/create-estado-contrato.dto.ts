@@ -37,7 +37,7 @@ export class CreateEstadoContratoDto {
     example: true,
     description: 'Indica si el registro está activo o no',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsBoolean()
   activo: boolean;
 

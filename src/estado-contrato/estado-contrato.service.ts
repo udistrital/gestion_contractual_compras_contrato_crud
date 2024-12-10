@@ -42,7 +42,7 @@ export class EstadoContratoService extends BaseCrudService<EstadoContrato> {
     const estadoActual = await this.estadoContratoRepository.findOne({
       where: {
         contrato_general: { id: contrato_general_id },
-        activo: true,
+        actual: true,
       },
     });
 
