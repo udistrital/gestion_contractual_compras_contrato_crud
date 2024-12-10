@@ -1,6 +1,11 @@
-import { IsNotEmpty, IsNumber, IsString, IsDate } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumber, IsString, IsDate, IsBoolean } from 'class-validator';
 
 export class CreateEstadoContratoDto {
+  @IsNotEmpty()
+  @IsNumber()
+  contrato_general_id: number;
+
   @IsNotEmpty()
   @IsNumber()
   usuario_id: number;
@@ -21,15 +26,27 @@ export class CreateEstadoContratoDto {
   @IsString()
   motivo: string;
 
+  @ApiProperty({
+    example: true,
+    description: 'Indica si el registro está activo o no',
+  })
   @IsNotEmpty()
-  @IsDate()
-  fecha_ejecucion_estado: Date;
+  @IsBoolean()
+  activo: boolean;
 
-  @IsNotEmpty()
-  @IsNumber()
-  contrato_general_id: number;
-
+  @ApiProperty({
+    example: '2024-01-04T00:00:00Z',
+    description: 'Fecha de creación del registro',
+  })
   @IsNotEmpty()
   @IsDate()
   fecha_creacion: Date;
+
+  @ApiProperty({
+    example: '2024-01-04T00:00:00Z',
+    description: 'Fecha de última modificación del registro',
+  })
+  @IsNotEmpty()
+  @IsDate()
+  fecha_modificacion: Date;
 }

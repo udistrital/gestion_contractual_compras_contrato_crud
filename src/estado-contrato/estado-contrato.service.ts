@@ -115,14 +115,14 @@ export class EstadoContratoService extends BaseCrudService<EstadoContrato> {
   ): Promise<EstadoContrato[]> {
     return await this.estadoContratoRepository.find({
       where: { contrato_general: { id: contratoGeneralId } },
-      order: { fecha_ejecucion_estado: 'DESC' },
+      order: { fecha_creacion: 'DESC' },
     });
   }
 
   async findCurrentEstado(contratoGeneralId: number): Promise<EstadoContrato> {
     const currentEstado = await this.estadoContratoRepository.findOne({
       where: { contrato_general: { id: contratoGeneralId }, activo: true },
-      order: { fecha_ejecucion_estado: 'DESC' },
+      order: { fecha_creacion: 'DESC' },
     });
 
     if (!currentEstado) {

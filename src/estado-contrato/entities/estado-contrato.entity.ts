@@ -30,20 +30,26 @@ export class EstadoContrato {
   @Column({ type: 'varchar', length: 250 })
   motivo: string;
 
-  @Column({ type: 'timestamp' })
-  fecha_ejecucion_estado: Date;
-
   @Column({ type: 'boolean', nullable: true })
   actual: boolean;
 
   @Column({ type: 'boolean', default: true })
   activo: boolean;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({
+    name: 'fecha_creacion',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   fecha_creacion: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
-  fecha_modificacion: Date | null;
+  @Column({
+    name: 'fecha_modificacion',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  fecha_modificacion: Date;
 
   @ManyToOne(
     () => ContratoGeneral,
