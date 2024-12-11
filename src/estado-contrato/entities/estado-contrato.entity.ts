@@ -13,10 +13,13 @@ export class EstadoContrato {
   id: number;
 
   @Column({ name: 'contrato_general_id' })
-  contratoGeneralId: number;
+  contrato_general_id: number;
 
   @Column({ type: 'integer' })
   usuario_id: number;
+
+  @Column({ type: 'varchar', length: 25, nullable: true })
+  usuario_rol: string;
 
   @Column({ type: 'integer', nullable: true })
   estado_parametro_id: number;
@@ -27,25 +30,32 @@ export class EstadoContrato {
   @Column({ type: 'varchar', length: 250 })
   motivo: string;
 
-  @Column({ type: 'timestamp' })
-  fecha_ejecucion_estado: Date;
-
   @Column({ type: 'boolean', nullable: true })
   actual: boolean;
 
   @Column({ type: 'boolean', default: true })
   activo: boolean;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({
+    name: 'fecha_creacion',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   fecha_creacion: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
-  fecha_modificacion: Date | null;
+  @Column({
+    name: 'fecha_modificacion',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+    nullable: true,
+  })
+  fecha_modificacion: Date;
 
   @ManyToOne(
     () => ContratoGeneral,
     (contratoGeneral) => contratoGeneral.estados,
   )
   @JoinColumn({ name: 'contrato_general_id' })
-  contrato_general_id: ContratoGeneral;
+  contrato_general: ContratoGeneral;
 }
