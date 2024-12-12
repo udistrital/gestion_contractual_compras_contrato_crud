@@ -11,6 +11,7 @@ import { Cdp } from '../../cdp/entities/cdp.entity';
 import { LugarEjecucion } from '../../lugar-ejecucion/entities/lugar-ejecucion.entity';
 import { Contratista } from '../../contratista/entities/contratista.entity';
 import { OrdenadorContrato } from 'src/ordenador-contrato/entities/ordenador-contrato.entity';
+import { SupervisorEntity } from '../../supervisor/entities/supervisor.entity';
 
 @Entity('contrato_general')
 export class ContratoGeneral {
@@ -152,13 +153,15 @@ export class ContratoGeneral {
   @OneToMany(() => Cdp, (cdp) => cdp.contrato_general_id)
   cdps: Cdp[];
 
+  @OneToMany(
+    () => SupervisorEntity,
+    (supervisor) => supervisor.contrato_general,
+  )
+  supervisores: SupervisorEntity[];
+
   /*
   @OneToOne(() => Solicitante, solicitante => solicitante.contratoGeneral)
   solicitante: Solicitante;
-
-  @OneToMany(() => SupervisorContrato, supervisor => supervisor.contratoGeneral)
-  supervisores: SupervisorContrato[];
-
 
   @OneToOne(() => ContratoArrendamiento, arrendamiento => arrendamiento.contratoGeneral)
   contratoArrendamiento: ContratoArrendamiento;
