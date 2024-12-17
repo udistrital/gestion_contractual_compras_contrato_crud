@@ -13,7 +13,7 @@ export class OrdenadorContratoService {
     private readonly ordenadorRepository: Repository<OrdenadorContrato>,
     @InjectRepository(ContratoGeneral)
     private readonly contratoGeneralRepository: Repository<ContratoGeneral>,
-  ) { }
+  ) {}
 
   async findAll(): Promise<OrdenadorContrato[]> {
     return this.ordenadorRepository.find();
@@ -31,8 +31,13 @@ export class OrdenadorContratoService {
     return found;
   }
 
-  async create(createOrdenadorContratoDto: CreateOrdenadorContratoDto): Promise<OrdenadorContrato> {
-    console.log('Datos recibidos para crear Ordenador:', createOrdenadorContratoDto);
+  async create(
+    createOrdenadorContratoDto: CreateOrdenadorContratoDto,
+  ): Promise<OrdenadorContrato> {
+    console.log(
+      'Datos recibidos para crear Ordenador:',
+      createOrdenadorContratoDto,
+    );
     const contratoExiste = await this.contratoGeneralRepository.findOne({
       where: { id: createOrdenadorContratoDto.contrato_general_id },
       select: ['id'],
@@ -43,12 +48,12 @@ export class OrdenadorContratoService {
       );
     }
     const newOrdenador = this.ordenadorRepository.create({
-      terceroId: createOrdenadorContratoDto.terceroId,
-      ordenadorArgoId: createOrdenadorContratoDto.ordenadorArgoId,
-      ordenadorSikarcaId: createOrdenadorContratoDto.ordenadorSikarcaId,
+      tercero_id: createOrdenadorContratoDto.tercero_id,
+      ordenador_argo_id: createOrdenadorContratoDto.ordenador_argo_id,
+      ordenador_sikarca_id: createOrdenadorContratoDto.ordenador_sikarca_id,
       resolucion: createOrdenadorContratoDto.resolucion,
-      documentoIdentidad: createOrdenadorContratoDto.documentoIdentidad,
-      cargoId: createOrdenadorContratoDto.cargoId,
+      documento_identidad: createOrdenadorContratoDto.documento_identidad,
+      cargo_id: createOrdenadorContratoDto.cargo_id,
       contrato_general_id: createOrdenadorContratoDto.contrato_general_id,
       activo: createOrdenadorContratoDto.activo,
       fecha_creacion: new Date(),
@@ -59,14 +64,17 @@ export class OrdenadorContratoService {
     return await this.ordenadorRepository.save(newOrdenador);
   }
 
-  async update(id: number, updateOrdenadorContratoDto: UpdateOrdenadorContratoDto): Promise<OrdenadorContrato> {
+  async update(
+    id: number,
+    updateOrdenadorContratoDto: UpdateOrdenadorContratoDto,
+  ): Promise<OrdenadorContrato> {
     const {
-      terceroId,
-      ordenadorArgoId,
-      ordenadorSikarcaId,
+      tercero_id,
+      ordenador_argo_id,
+      ordenador_sikarca_id,
       resolucion,
-      documentoIdentidad,
-      cargoId,
+      documento_identidad,
+      cargo_id,
       contrato_general_id,
       activo,
     } = updateOrdenadorContratoDto;
@@ -77,12 +85,12 @@ export class OrdenadorContratoService {
       throw new NotFoundException(`Ordenador con ID "${id}" no encontrado`);
     }
 
-    ordenador.terceroId = terceroId;
-    ordenador.ordenadorArgoId = ordenadorArgoId ;
-    ordenador.ordenadorSikarcaId = ordenadorSikarcaId;
+    ordenador.tercero_id = tercero_id;
+    ordenador.ordenador_argo_id = ordenador_argo_id;
+    ordenador.ordenador_sikarca_id = ordenador_sikarca_id;
     ordenador.resolucion = resolucion;
-    ordenador.documentoIdentidad = documentoIdentidad;
-    ordenador.cargoId = cargoId;
+    ordenador.documento_identidad = documento_identidad;
+    ordenador.cargo_id = cargo_id;
     ordenador.contrato_general_id = contrato_general_id;
     ordenador.activo = activo;
 
@@ -93,7 +101,7 @@ export class OrdenadorContratoService {
     const ordenador = await this.ordenadorRepository.findOne({
       where: { id },
     });
-    if(!ordenador){
+    if (!ordenador) {
       throw new NotFoundException(`Ordenador con ID "${id}" no encontrada`);
     }
 
