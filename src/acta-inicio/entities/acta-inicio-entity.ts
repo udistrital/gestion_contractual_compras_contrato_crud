@@ -14,27 +14,26 @@ export class ActaInicio {
   id: number;
 
   @Column({ name: 'usuario_id', nullable: true })
-  usuarioId: number;
+  usuario_id: number;
 
   @Column({ name: 'usuario_legado', length: 20, nullable: true })
-  usuarioLegado: string;
+  usuario_legado: string;
 
   @Column({ name: 'descripcion', type: 'varchar', length: 255, nullable: true })
   descripcion: string;
 
   @Column({ name: 'fecha_inicio', type: 'date', nullable: true })
-  fechaInicio: Date;
+  fecha_inicio: Date;
 
   @Column({ name: 'fecha_fin', type: 'date', nullable: true })
-  fechaFin: Date;
+  fecha_fin: Date;
 
-  @RelationId((acta: ActaInicio) => acta.contratoGeneral)
   @Column({ name: 'contrato_general_id' })
-  contratoGeneralId: number;
+  contrato_general_id: number;
 
   @ManyToOne(() => ContratoGeneral)
   @JoinColumn({ name: 'contrato_general_id' })
-  contratoGeneral: ContratoGeneral;
+  contrato_general: ContratoGeneral;
 
   @Column({ name: 'activo', type: 'boolean', default: true })
   activo: boolean;
@@ -44,12 +43,12 @@ export class ActaInicio {
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  fechaCreacion: Date;
+  fecha_creacion: Date;
 
   @Column({
     name: 'fecha_modificacion',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  fechaModificacion: Date;
+  fecha_modificacion: Date;
 }
