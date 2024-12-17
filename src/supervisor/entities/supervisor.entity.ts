@@ -33,11 +33,11 @@ export class SupervisorEntity {
   @Column({ name: 'digito_verificacion', type: 'integer', nullable: true })
   digito_verificacion: number;
 
-  @Column({ name: 'sede', type: 'varchar', nullable: true })
-  sede: string;
+  @Column({ name: 'sede', type: 'integer', nullable: true })
+  sede_id: number;
 
-  @Column({ name: 'dependencia', type: 'varchar', nullable: true })
-  dependencia: string;
+  @Column({ name: 'dependencia', type: 'integer', nullable: true })
+  dependencia_id: number;
 
   @Column({ type: 'boolean', default: true })
   activo: boolean;

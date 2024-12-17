@@ -9,11 +9,11 @@ import {
 export class CreateSupervisorDto {
   @IsNotEmpty()
   @IsNumber()
-  dependenciaSolicitanteId: number;
+  dependencia_solicitante_id: number;
 
   @IsNotEmpty()
   @IsNumber()
-  sedeSolicitanteId: number;
+  sede_solicitante_id: number;
 
   @IsOptional()
   @IsBoolean()
