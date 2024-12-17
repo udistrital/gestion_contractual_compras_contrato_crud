@@ -10,23 +10,23 @@ import {
 export class CreateLugarEjecucionDto {
   @IsNotEmpty()
   @IsNumber()
-  paisId: number;
+  pais_id: number;
 
   @IsNotEmpty()
   @IsNumber()
-  ciudadId: number;
+  ciudad_id: number;
 
   @IsNotEmpty()
   @IsNumber()
-  municipioId: number;
+  municipio_id: number;
 
   @IsNotEmpty()
   @IsNumber()
-  dependenciaId: number;
+  dependencia_id: number;
 
   @IsNotEmpty()
   @IsNumber()
-  sedeId: number;
+  sede_id: number;
 
   @IsNotEmpty()
   @IsString()
