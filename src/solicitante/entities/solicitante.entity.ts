@@ -13,10 +13,10 @@ export class SolicitanteEntity {
   id: number;
 
   @Column({ name: 'dependencia_solicitante_id', type: 'integer' })
-  dependenciaSolicitanteId: number;
+  dependencia_solicitante_id: number;
 
   @Column({ name: 'sede_solicitante_id', type: 'integer' })
-  sedeSolicitanteId: number;
+  sede_solicitante_id: number;
 
   @Column({ type: 'boolean', default: true })
   activo: boolean;
