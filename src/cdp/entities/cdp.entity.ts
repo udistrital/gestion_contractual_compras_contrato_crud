@@ -25,7 +25,10 @@ export class Cdp {
 
   @ManyToOne(() => ContratoGeneral, (contratoGeneral) => contratoGeneral.cdps)
   @JoinColumn({ name: 'contrato_general_id' })
-  contrato_general_id: ContratoGeneral;
+  contrato_general: ContratoGeneral;
+
+  @Column({ name: 'contrato_general_id' })
+  contrato_general_id: number;
 
   @Column({ default: true })
   activo: boolean;
