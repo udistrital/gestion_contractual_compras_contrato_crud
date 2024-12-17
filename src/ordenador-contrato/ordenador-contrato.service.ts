@@ -24,7 +24,7 @@ export class OrdenadorContratoService {
     const found = await this.ordenadorRepository.findOne({
       where: { id },
     });
-    console.log('Resultado de la búsqueda en finsOne:', found);
+    console.log('Resultado de la búsqueda en findOne:', found);
     if (!found) {
       throw new NotFoundException(`Ordenador con ID "${id}" no encontrado`);
     }
@@ -43,12 +43,12 @@ export class OrdenadorContratoService {
       );
     }
     const newOrdenador = this.ordenadorRepository.create({
-      terceroId: createOrdenadorContratoDto.terceroId,
-      ordenadorArgoId: createOrdenadorContratoDto.ordenadorArgoId,
-      ordenadorSikarcaId: createOrdenadorContratoDto.ordenadorSikarcaId,
+      tercero_id: createOrdenadorContratoDto.tercero_id,
+      ordenador_argo_id: createOrdenadorContratoDto.ordenador_argo_id,
+      ordenador_sikarca_id: createOrdenadorContratoDto.ordenador_sikarca_id,
       resolucion: createOrdenadorContratoDto.resolucion,
-      documentoIdentidad: createOrdenadorContratoDto.documentoIdentidad,
-      cargoId: createOrdenadorContratoDto.cargoId,
+      documento_identidad: createOrdenadorContratoDto.documento_identidad,
+      cargo_id: createOrdenadorContratoDto.cargo_id,
       contrato_general_id: createOrdenadorContratoDto.contrato_general_id,
       activo: createOrdenadorContratoDto.activo,
       fecha_creacion: new Date(),
@@ -60,16 +60,6 @@ export class OrdenadorContratoService {
   }
 
   async update(id: number, updateOrdenadorContratoDto: UpdateOrdenadorContratoDto): Promise<OrdenadorContrato> {
-    const {
-      terceroId,
-      ordenadorArgoId,
-      ordenadorSikarcaId,
-      resolucion,
-      documentoIdentidad,
-      cargoId,
-      contrato_general_id,
-      activo,
-    } = updateOrdenadorContratoDto;
     const ordenador = await this.ordenadorRepository.findOne({
       where: { id },
     });
@@ -77,14 +67,16 @@ export class OrdenadorContratoService {
       throw new NotFoundException(`Ordenador con ID "${id}" no encontrado`);
     }
 
-    ordenador.terceroId = terceroId;
-    ordenador.ordenadorArgoId = ordenadorArgoId ;
-    ordenador.ordenadorSikarcaId = ordenadorSikarcaId;
-    ordenador.resolucion = resolucion;
-    ordenador.documentoIdentidad = documentoIdentidad;
-    ordenador.cargoId = cargoId;
-    ordenador.contrato_general_id = contrato_general_id;
-    ordenador.activo = activo;
+    // Actualizar con los nuevos nombres de propiedades en snake_case
+    ordenador.tercero_id = updateOrdenadorContratoDto.tercero_id;
+    ordenador.ordenador_argo_id = updateOrdenadorContratoDto.ordenador_argo_id;
+    ordenador.ordenador_sikarca_id = updateOrdenadorContratoDto.ordenador_sikarca_id;
+    ordenador.resolucion = updateOrdenadorContratoDto.resolucion;
+    ordenador.documento_identidad = updateOrdenadorContratoDto.documento_identidad;
+    ordenador.cargo_id = updateOrdenadorContratoDto.cargo_id;
+    ordenador.contrato_general_id = updateOrdenadorContratoDto.contrato_general_id;
+    ordenador.activo = updateOrdenadorContratoDto.activo;
+    ordenador.fecha_modificacion = new Date();
 
     return await this.ordenadorRepository.save(ordenador);
   }
