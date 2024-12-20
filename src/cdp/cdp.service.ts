@@ -30,7 +30,7 @@ export class CdpService {
 
     const cdp = this.cdpRepository.create({
       ...cdpData,
-      contrato_general_id: contratoGeneral,
+      contrato_general: contratoGeneral,
       activo: true,
     });
 
@@ -67,7 +67,7 @@ export class CdpService {
           `ContratoGeneral con ID "${updateCdpDto.contrato_general_id}" no encontrado`,
         );
       }
-      cdp.contrato_general_id = contratoGeneral;
+      cdp.contrato_general = contratoGeneral;
       delete updateCdpDto.contrato_general_id;
     }
 
@@ -84,7 +84,7 @@ export class CdpService {
 
   async findByContratoGeneralId(contratoGeneralId: number): Promise<Cdp[]> {
     const cdps = await this.cdpRepository.find({
-      where: { contrato_general_id: { id: contratoGeneralId } },
+      where: { contrato_general: { id: contratoGeneralId } },
     });
 
     if (!cdps.length) {

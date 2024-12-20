@@ -13,19 +13,19 @@ export class LugarEjecucion {
   id: number;
 
   @Column({ name: 'pais_id', type: 'integer' })
-  paisId: number;
+  pais_id: number;
 
   @Column({ name: 'ciudad_id', type: 'integer' })
-  ciudadId: number;
+  ciudad_id: number;
 
   @Column({ name: 'municipio_id', type: 'integer' })
-  municipioId: number;
+  municipio_id: number;
 
   @Column({ name: 'dependencia_id', type: 'integer' })
-  dependenciaId: number;
+  dependencia_id: number;
 
   @Column({ name: 'sede_id', type: 'integer' })
-  sedeId: number;
+  sede_id: number;
 
   @Column({ type: 'varchar', length: 120 })
   direccion: string;

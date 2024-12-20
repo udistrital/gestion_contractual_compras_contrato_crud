@@ -17,7 +17,7 @@ export class EspecificacionTecnica {
     scale: 2,
     transformer: { from: (value) => Number(value), to: (value) => value },
   })
-  valorUnitario: number;
+  valor_unitario: number;
 
   @Column('decimal', {
     name: 'valor_total',
@@ -25,10 +25,10 @@ export class EspecificacionTecnica {
     scale: 2,
     transformer: { from: (value) => Number(value), to: (value) => value },
   })
-  valorTotal: number;
+  valor_total: number;
 
   @Column({ name: 'contrato_general_id', nullable: true })
-  contratoGeneralId: number;
+  contrato_general_id: number;
 
   @Column({ default: true })
   activo: boolean;
@@ -38,7 +38,7 @@ export class EspecificacionTecnica {
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  fechaCreacion: Date;
+  fecha_creacion: Date;
 
   @Column({
     name: 'fecha_modificacion',
@@ -46,5 +46,5 @@ export class EspecificacionTecnica {
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })
-  fechaModificacion: Date;
+  fecha_modificacion: Date;
 }

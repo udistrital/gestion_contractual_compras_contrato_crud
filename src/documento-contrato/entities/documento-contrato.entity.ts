@@ -48,5 +48,5 @@ export class DocumentoContrato {
 
   @ManyToOne(() => ContratoGeneral, (contrato) => contrato.documentos)
   @JoinColumn({ name: 'contrato_general_id' })
-  contratoGeneral: ContratoGeneral;
+  contrato_general: ContratoGeneral;
 }

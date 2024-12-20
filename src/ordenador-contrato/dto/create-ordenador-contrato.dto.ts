@@ -11,17 +11,17 @@ export class CreateOrdenadorContratoDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  terceroId: number;
+  tercero_id: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  ordenadorArgoId: number;
+  ordenador_argo_id: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  ordenadorSikarcaId: number;
+  ordenador_sikarca_id: number;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -31,12 +31,12 @@ export class CreateOrdenadorContratoDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  documentoIdentidad: string;
+  documento_identidad: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  cargoId: number;
+  cargo_id: number;
 
   @ApiProperty()
   @IsNotEmpty()

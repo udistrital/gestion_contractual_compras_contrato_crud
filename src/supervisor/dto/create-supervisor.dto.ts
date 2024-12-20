@@ -6,7 +6,7 @@ import {
   IsOptional,
 } from 'class-validator';
 
-export class CreateSolicitanteDto {
+export class CreateSupervisorDto {
   @IsNotEmpty()
   @IsNumber()
   dependencia_solicitante_id: number;

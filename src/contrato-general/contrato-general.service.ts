@@ -77,7 +77,7 @@ export class ContratoGeneralService extends BaseCrudService<ContratoGeneral> {
       await this.findOne(id);
       await this.contratoGeneralRepository.update(id, {
         ...contratoGeneral,
-        fechaModificacion: new Date(),
+        fecha_modificacion: new Date(),
       });
       return this.findOne(id);
     } catch (error) {
@@ -98,7 +98,7 @@ export class ContratoGeneralService extends BaseCrudService<ContratoGeneral> {
 
       await this.contratoGeneralRepository.update(id, {
         activo: false,
-        fechaModificacion: new Date(),
+        fecha_modificacion: new Date(),
       });
     } catch (error) {
       if (error instanceof NotFoundException) {

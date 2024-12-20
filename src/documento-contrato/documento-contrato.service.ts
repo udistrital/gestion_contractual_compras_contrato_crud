@@ -49,7 +49,7 @@ export class DocumentoContratoService extends BaseCrudService<DocumentoContrato>
   }
 
   async findAll(
-    queryParams: BaseQueryParamsDto
+    queryParams: BaseQueryParamsDto,
   ): Promise<[DocumentoContrato[], ResponseMetadata]> {
     return this.findAllWithFilters(queryParams);
   }
@@ -72,7 +72,7 @@ export class DocumentoContratoService extends BaseCrudService<DocumentoContrato>
 
   async findByContratoId(contratoId: number): Promise<DocumentoContrato[]> {
     return await this.documentoContratoRepository.find({
-      where: { contratoGeneral: { id: contratoId } },
+      where: { contrato_general: { id: contratoId } },
     });
   }
 }
