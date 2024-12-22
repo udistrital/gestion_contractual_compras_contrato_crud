@@ -17,10 +17,10 @@ export abstract class BaseCrudService<T> {
   protected readonly defaultLimit = 10;
   protected readonly defaultFields = [
     'id',
-    'fechaCreacion',
-    'fechaModificacion',
+    'fecha_creacion',
+    'fecha_modificacion',
   ];
-  protected readonly dateFields = ['fechaCreacion', 'fechaModificacion'];
+  protected readonly dateFields = ['fecha_creacion', 'fecha_modificacion'];
   protected readonly defaultStartDate = '2024-01-01';
 
   protected constructor(
