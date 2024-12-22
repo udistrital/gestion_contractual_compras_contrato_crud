@@ -46,15 +46,15 @@ export class ActaInicioService {
     }
 
     const newActaInicio = this.actaInicioRepository.create({
-      usuarioId: actaInicioDto.usuario_id,
-      usuarioLegado: actaInicioDto.usuario_legado,
+      usuario_id: actaInicioDto.usuario_id,
+      usuario_legado: actaInicioDto.usuario_legado,
       descripcion: actaInicioDto.descripcion,
-      fechaInicio: actaInicioDto.fecha_inicio,
-      fechaFin: actaInicioDto.fecha_fin,
-      contratoGeneralId: actaInicioDto.contrato_general_id,
+      fecha_inicio: actaInicioDto.fecha_inicio,
+      fecha_fin: actaInicioDto.fecha_fin,
+      contrato_general_id: actaInicioDto.contrato_general_id,
       activo: actaInicioDto.activo,
-      fechaCreacion: new Date(),
-      fechaModificacion: new Date(),
+      fecha_creacion: new Date(),
+      fecha_modificacion: new Date(),
     });
 
     console.log('Entidad ActaInicio creada:', newActaInicio);
@@ -83,14 +83,16 @@ export class ActaInicioService {
       throw new NotFoundException(`ActaInicio con ID "${id}" no encontrada`);
     }
 
-    actaInicio.usuarioId = usuario_id;
-    actaInicio.usuarioLegado = usuario_legado;
+    actaInicio.usuario_id = usuario_id;
+    actaInicio.usuario_legado = usuario_legado;
     actaInicio.descripcion = descripcion;
-    actaInicio.fechaInicio = fecha_inicio
+    actaInicio.fecha_inicio = fecha_inicio
       ? new Date(fecha_inicio)
-      : actaInicio.fechaInicio;
-    actaInicio.fechaFin = fecha_fin ? new Date(fecha_fin) : actaInicio.fechaFin;
-    actaInicio.contratoGeneralId = contrato_general_id;
+      : actaInicio.fecha_inicio;
+    actaInicio.fecha_fin = fecha_fin
+      ? new Date(fecha_fin)
+      : actaInicio.fecha_fin;
+    actaInicio.contrato_general_id = contrato_general_id;
     actaInicio.activo = activo;
 
     return await this.actaInicioRepository.save(actaInicio);
@@ -106,7 +108,7 @@ export class ActaInicioService {
     }
 
     actaInicio.activo = false;
-    actaInicio.fechaModificacion = new Date();
+    actaInicio.fecha_modificacion = new Date();
 
     return await this.actaInicioRepository.save(actaInicio);
   }

@@ -23,6 +23,7 @@ import { SolicitanteModule } from './solicitante/solicitante.module';
 import { SolicitanteEntity } from './solicitante/entities/solicitante.entity';
 import { OrdenadorContrato } from './ordenador-contrato/entities/ordenador-contrato.entity';
 import { OrdenadorContratoModule } from './ordenador-contrato/ordenador-contrato.module';
+import { SupervisorEntity } from './supervisor/entities/supervisor.entity';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { OrdenadorContratoModule } from './ordenador-contrato/ordenador-contrato
           EspecificacionTecnica,
           SolicitanteEntity,
           OrdenadorContrato,
+          SupervisorEntity,
         ],
         synchronize: configService.get('DEVELOPER_MODE'), // Solo para desarrollo, en producción se debe desactivar
         ssl: {

@@ -15,7 +15,7 @@ export class CrearContratoGeneralDto {
   })
   @IsOptional()
   @IsNumber()
-  tipoCompromisoId: number;
+  tipo_compromiso_id: number;
 
   @ApiProperty({
     example: 1,
@@ -24,7 +24,7 @@ export class CrearContratoGeneralDto {
   })
   @IsOptional()
   @IsNumber()
-  tipoContratoId: number;
+  tipo_contrato_id: number;
 
   @ApiProperty({
     example: 1,
@@ -33,11 +33,11 @@ export class CrearContratoGeneralDto {
   })
   @IsOptional()
   @IsNumber()
-  perfilContratistaId: number;
+  perfil_contratista_id: number;
 
   @IsOptional()
   @IsDate()
-  fechaSuscripcionEstudios: Date;
+  fecha_suscripcion_estudios: Date;
 
   @ApiProperty({
     example: true,
@@ -45,7 +45,7 @@ export class CrearContratoGeneralDto {
   })
   @IsOptional()
   @IsBoolean()
-  aplicaPoliza: boolean;
+  aplica_poliza: boolean;
 
   @ApiProperty({
     example: 1,
@@ -54,7 +54,7 @@ export class CrearContratoGeneralDto {
   })
   @IsOptional()
   @IsNumber()
-  modalidadSeleccionId: number;
+  modalidad_seleccion_id: number;
 
   @ApiProperty({
     example: 30,
@@ -63,7 +63,7 @@ export class CrearContratoGeneralDto {
   })
   @IsOptional()
   @IsNumber()
-  tipologiaEspecificaId: number;
+  tipologia_especifica_id: number;
 
   @ApiProperty({
     example: 1,
@@ -72,7 +72,7 @@ export class CrearContratoGeneralDto {
   })
   @IsOptional()
   @IsNumber()
-  regimenContratacionId: number;
+  regimen_contratacion_id: number;
 
   @ApiProperty({
     example: 1,
@@ -81,7 +81,7 @@ export class CrearContratoGeneralDto {
   })
   @IsOptional()
   @IsNumber()
-  procedimientoId: number;
+  procedimiento_id: number;
 
   @ApiProperty({
     example: 30,
@@ -90,7 +90,7 @@ export class CrearContratoGeneralDto {
   })
   @IsOptional()
   @IsNumber()
-  plazoEjecucion: number;
+  plazo_ejecucion: number;
 
   @ApiProperty({
     example: 1,
@@ -99,63 +99,63 @@ export class CrearContratoGeneralDto {
   })
   @IsOptional()
   @IsNumber()
-  unidadEjecutoraId: number;
+  unidad_ejecucion_id: number;
 
   @IsOptional()
   @IsNumber()
-  ordenadorId: number;
+  ordenador_id: number;
 
   @IsOptional()
   @IsNumber()
-  numeroConstancia: number;
+  numero_constancia: number;
 
   @IsOptional()
   @IsNumber()
-  claseContratistaId: number;
+  clase_contratista_id: number;
 
   @IsOptional()
   @IsNumber()
-  tipoMonedaId: number;
+  tipo_moneda_id: number;
 
   @IsOptional()
   @IsNumber()
-  valorPesos: number;
+  valor_pesos: number;
 
   @IsOptional()
   @IsNumber()
-  tipoGastoId: number;
+  tipo_gasto_id: number;
 
   @IsOptional()
   @IsNumber()
-  origenRecursosId: number;
+  origen_recursos_id: number;
 
   @IsOptional()
   @IsNumber()
-  origenPresupuestosId: number;
+  origen_presupuestos_id: number;
 
   @IsOptional()
   @IsNumber()
-  temaGastoInversionId: number;
+  tema_gasto_inversionId: number;
 
   @IsOptional()
   @IsNumber()
-  valorContratoMe: number;
+  valor_contrato_me: number;
 
   @IsOptional()
   @IsNumber()
-  valorTasaCambio: number;
+  valor_tasa_cambio: number;
 
   @IsOptional()
   @IsNumber()
-  medioPagoId: number;
+  medio_pago_id: number;
 
   @IsOptional()
   @IsBoolean()
-  clausulaRegistroPresupuestal: boolean;
+  clausula_registro_presupuestal: boolean;
 
   @IsOptional()
   @IsString()
-  modoPago: string;
+  modo_pago: string;
 
   @IsOptional()
   @IsString()
@@ -167,17 +167,21 @@ export class CrearContratoGeneralDto {
 
   @IsOptional()
   @IsString()
-  consecutivoElaboracion: string;
+  consecutivo_elaboracion: string;
 
   @IsOptional()
   @IsDate()
-  fechaInicial: Date;
+  fecha_inicial: Date;
 
   @IsOptional()
   @IsDate()
-  fechaFinal: Date;
+  fecha_final: Date;
 
   @IsOptional()
   @IsString()
-  usuarioLegado: string;
+  usuario_legado: string;
+
+  @IsOptional()
+  @IsNumber()
+  unidad_ejecutora_id: number;
 }

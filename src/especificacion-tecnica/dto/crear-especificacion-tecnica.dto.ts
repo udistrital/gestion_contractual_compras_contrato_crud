@@ -1,4 +1,10 @@
-import { IsBoolean, IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CrearEspecificacionTecnicaDto {
@@ -6,7 +12,6 @@ export class CrearEspecificacionTecnicaDto {
     example: '1',
     description: 'Identificador del ítem en la especificación técnica',
   })
-
   @ApiProperty({
     example: 'Especificación 1',
     description: 'Descripción del ítem',
@@ -26,14 +31,14 @@ export class CrearEspecificacionTecnicaDto {
     description: 'Valor unitario del ítem',
   })
   @IsNumber()
-  valorUnitario: number;
+  valor_unitario: number;
 
   @ApiProperty({
     example: 1000,
     description: 'Valor total del ítem (cantidad * valorUnitario)',
   })
   @IsNumber()
-  valorTotal: number;
+  valor_total: number;
 
   @ApiProperty({
     example: 2,
@@ -41,7 +46,7 @@ export class CrearEspecificacionTecnicaDto {
   })
   @IsOptional()
   @IsNumber()
-  contratoGeneralId: number;
+  contrato_general_id: number;
 
   @ApiProperty({
     example: true,
@@ -57,7 +62,7 @@ export class CrearEspecificacionTecnicaDto {
   })
   @IsOptional()
   @IsDate()
-  fechaCreacion: Date;
+  fecha_creacion: Date;
 
   @ApiProperty({
     example: '2024-01-04T00:00:00Z',
@@ -65,5 +70,5 @@ export class CrearEspecificacionTecnicaDto {
   })
   @IsOptional()
   @IsDate()
-  fechaModificacion: Date;
+  fecha_modificacion: Date;
 }

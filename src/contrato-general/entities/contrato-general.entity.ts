@@ -11,6 +11,7 @@ import { Cdp } from '../../cdp/entities/cdp.entity';
 import { LugarEjecucion } from '../../lugar-ejecucion/entities/lugar-ejecucion.entity';
 import { Contratista } from '../../contratista/entities/contratista.entity';
 import { OrdenadorContrato } from 'src/ordenador-contrato/entities/ordenador-contrato.entity';
+import { SupervisorEntity } from '../../supervisor/entities/supervisor.entity';
 
 @Entity('contrato_general')
 export class ContratoGeneral {
@@ -18,49 +19,49 @@ export class ContratoGeneral {
   id: number;
 
   @Column({ name: 'tipo_compromiso_id', nullable: true })
-  tipoCompromisoId: number;
+  tipo_compromiso_id: number;
 
   @Column({ name: 'tipo_contrato_id', nullable: true })
-  tipoContratoId: number;
+  tipo_contrato_id: number;
 
   @Column({ name: 'perfil_contratista_id', nullable: true })
-  perfilContratistaId: number;
+  perfil_contratista_id: number;
 
   @Column({ name: 'fecha_suscripcion_estudios', type: 'date', nullable: true })
-  fechaSuscripcionEstudios: Date;
+  fecha_suscripcion_estudios: Date;
 
   @Column({ name: 'aplica_poliza', nullable: true })
-  aplicaPoliza: boolean;
+  aplica_poliza: boolean;
 
   @Column({ name: 'ordenador_id', nullable: true })
-  ordenadorId: number;
+  ordenador_id: number;
 
   @Column({ name: 'modalidad_seleccion_id', nullable: true })
-  modalidadSeleccionId: number;
+  modalidad_seleccion_id: number;
 
   @Column({ name: 'tipologia_especifica_id', nullable: true })
-  tipologiaEspecificaId: number;
+  tipologia_especifica_id: number;
 
   @Column({ name: 'regimen_contratacion_id', nullable: true })
-  regimenContratacionId: number;
+  regimen_contratacion_id: number;
 
   @Column({ name: 'procedimiento_id', nullable: true })
-  procedimientoId: number;
+  procedimiento_id: number;
 
   @Column({ name: 'plazo_ejecucion', nullable: true })
-  plazoEjecucion: number;
+  plazo_ejecucion: number;
 
-  @Column({ name: 'unidad_ejecutora_id', nullable: true })
-  unidadEjecutoraId: number;
+  @Column({ name: 'unidad_ejecucion_id', nullable: true })
+  unidad_ejecucion_id: number;
 
   @Column({ name: 'numero_constancia', nullable: true })
-  numeroConstancia: number;
+  numero_constancia: number;
 
   @Column({ name: 'clase_contratista_id', nullable: true })
-  claseContratistaId: number;
+  clase_contratista_id: number;
 
   @Column({ name: 'tipo_moneda_id', nullable: true })
-  tipoMonedaId: number;
+  tipo_moneda_id: number;
 
   @Column({
     name: 'valor_pesos',
@@ -69,19 +70,19 @@ export class ContratoGeneral {
     scale: 2,
     nullable: true,
   })
-  valorPesos: number;
+  valor_pesos: number;
 
   @Column({ name: 'tipo_gasto_id', nullable: true })
-  tipoGastoId: number;
+  tipo_gasto_id: number;
 
   @Column({ name: 'origen_recursos_id', nullable: true })
-  origenRecursosId: number;
+  origen_recursos_id: number;
 
   @Column({ name: 'origen_presupuestos_id', nullable: true })
-  origenPresupuestosId: number;
+  origen_presupuestos_id: number;
 
   @Column({ name: 'tema_gasto_inversion_id', nullable: true })
-  temaGastoInversionId: number;
+  tema_gasto_inversion_id: number;
 
   @Column({
     name: 'valor_contrato_me',
@@ -90,7 +91,7 @@ export class ContratoGeneral {
     scale: 3,
     nullable: true,
   })
-  valorContratoMe: number;
+  valor_contrato_me: number;
 
   @Column({
     name: 'valor_tasa_cambio',
@@ -99,16 +100,16 @@ export class ContratoGeneral {
     scale: 10,
     nullable: true,
   })
-  valorTasaCambio: number;
+  valor_tasa_cambio: number;
 
   @Column({ name: 'medio_pago_id', nullable: true })
-  medioPagoId: number;
+  medio_pago_id: number;
 
   @Column({ name: 'clausula_registro_presupuestal', nullable: true })
-  clausulaRegistroPresupuestal: boolean;
+  clausula_registro_presupuestal: boolean;
 
   @Column({ name: 'modo_pago', nullable: true })
-  modoPago: string;
+  modo_pago: string;
 
   @Column({ length: 500, nullable: true })
   observaciones: string;
@@ -117,13 +118,13 @@ export class ContratoGeneral {
   vigencia: string;
 
   @Column({ name: 'consecutivo_elaboracion', length: 50, nullable: true })
-  consecutivoElaboracion: string;
+  consecutivo_elaboracion: string;
 
   @Column({ name: 'fecha_inicial', type: 'date', nullable: true })
-  fechaInicial: Date;
+  fecha_inicial: Date;
 
   @Column({ name: 'fecha_final', type: 'date', nullable: true })
-  fechaFinal: Date;
+  fecha_final: Date;
 
   @Column({ name: 'usuario_legado', length: 15, nullable: true })
   usuario_legado: string;
@@ -132,14 +133,14 @@ export class ContratoGeneral {
   activo: boolean;
 
   @Column({ name: 'fecha_creacion', default: () => 'CURRENT_TIMESTAMP' })
-  fechaCreacion: Date;
+  fecha_creacion: Date;
 
   @Column({ name: 'fecha_modificacion', default: () => 'CURRENT_TIMESTAMP' })
-  fechaModificacion: Date;
+  fecha_modificacion: Date;
 
   @OneToMany(
     () => DocumentoContrato,
-    (documentoContrato) => documentoContrato.contratoGeneral,
+    (documentoContrato) => documentoContrato.contrato_general,
   )
   documentos: DocumentoContrato[];
 
@@ -152,13 +153,15 @@ export class ContratoGeneral {
   @OneToMany(() => Cdp, (cdp) => cdp.contrato_general_id)
   cdps: Cdp[];
 
+  @OneToMany(
+    () => SupervisorEntity,
+    (supervisor) => supervisor.contrato_general,
+  )
+  supervisores: SupervisorEntity[];
+
   /*
   @OneToOne(() => Solicitante, solicitante => solicitante.contratoGeneral)
   solicitante: Solicitante;
-
-  @OneToMany(() => SupervisorContrato, supervisor => supervisor.contratoGeneral)
-  supervisores: SupervisorContrato[];
-
 
   @OneToOne(() => ContratoArrendamiento, arrendamiento => arrendamiento.contratoGeneral)
   contratoArrendamiento: ContratoArrendamiento;
@@ -171,7 +174,7 @@ export class ContratoGeneral {
     () => LugarEjecucion,
     (lugarEjecucion) => lugarEjecucion.contrato_general_id,
   )
-  lugarEjecucion: LugarEjecucion;
+  lugar_ejecucion: LugarEjecucion;
 
   @OneToOne(() => Contratista, (contratista) => contratista.contrato_general)
   contratista: Contratista;
@@ -181,4 +184,7 @@ export class ContratoGeneral {
     (ordenador) => ordenador.contrato_general_id,
   )
   ordenador: OrdenadorContrato;
+
+  @Column({ name: 'unidad_ejecutora_id', nullable: true })
+  unidad_ejecutora_id: number;
 }

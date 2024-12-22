@@ -1343,71 +1343,71 @@ components:
     CrearContratoGeneralDto:
       type: object
       properties:
-        tipoCompromisoId:
+        tipo_compromiso_id:
           type: number
           example: 1
           description: >-
             Id Parámetros CRUD: Tipo Compromiso. 1. Convenio. 2. Contrato 3.
             Orden
-        tipoContratoId:
+        tipo_contrato_id:
           type: number
           example: 1
           description: >-
             Id Parámetros CRUD: Tipo Contrato. 1. Orden de Servicio, 2. Orden de
             Compra
-        perfilContratistaId:
+        perfil_contratista_id:
           type: number
           example: 1
           description: >-
             Id Parámetros CRUD: Perfil Contratista. 1. Asistencial, 2. Técnico,
             3. Profesional, 4. Especializado, ...
-        aplicaPoliza:
+        aplica_poliza:
           type: boolean
           example: true
           description: Aplica Poliza
-        modalidadSeleccionId:
+        modalidad_seleccion_id:
           type: number
           example: 1
           description: >-
             Id Parámetros CRUD: Modalidad Selección. 1. Licitación Pública, 2.
             Selección Abreviada, ...
-        tipologiaEspecificaId:
+        tipologia_especifica_id:
           type: number
           example: 30
           description: >-
             Id Parámetros CRUD: Tipología Específica. 30. Servicios de
             Mantenimiento y Reparación, ...
-        regimenContratacionId:
+        regimen_contratacion_id:
           type: number
           example: 1
           description: >-
             Id Parámetros CRUD: Regimen Contratación. 1. Ley 80, 2. Régimen
             Privado, 3. Convenio Ley 489, ...
-        procedimientoId:
+        procedimiento_id:
           type: number
           example: 1
           description: >-
             Id Parámetros CRUD: Procedimiento. 1. Subasta Inversa, 2. Mínima
             Cuantía, 3. Concurso de Méritos ...
-        plazoEjecucion:
+        plazo_ejecucion:
           type: number
           example: 30
           description: Cantidad de días, meses o años para la ejecución del contrato
-        unidadEjecutoraId:
+        unidad_ejecucion_id:
           type: number
           example: 1
           description: 'Id Parámetros CRUD: Unidad de Tiempo. 1. Días, 2. Meses, 3. Años'
       required:
-        - tipoCompromisoId
-        - tipoContratoId
-        - perfilContratistaId
-        - aplicaPoliza
-        - modalidadSeleccionId
-        - tipologiaEspecificaId
-        - regimenContratacionId
-        - procedimientoId
-        - plazoEjecucion
-        - unidadEjecutoraId
+        - tipo_compromiso_id
+        - tipo_contrato_id
+        - perfil_contratista_id
+        - aplica_poliza
+        - modalidad_seleccion_id
+        - tipologia_especifica_id
+        - regimen_contratacion_id
+        - procedimiento_id
+        - plazo_ejecucion
+        - unidad_ejecucion_id
     ActualizarContratoGeneralDto:
       type: object
       properties: {}
@@ -1633,15 +1633,15 @@ components:
           type: number
           example: 10
           description: Cantidad del ítem
-        valorUnitario:
+        valor_unitario:
           type: number
           example: 100
           description: Valor unitario del ítem
-        valorTotal:
+        valor_total:
           type: number
           example: 1000
           description: Valor total del ítem (cantidad * valorUnitario)
-        contratoGeneralId:
+        contrato_general_id:
           type: number
           example: 2
           description: ID del contrato general relacionado
@@ -1649,12 +1649,12 @@ components:
           type: boolean
           example: true
           description: Indica si el registro está activo o no
-        fechaCreacion:
+        fecha_creacion:
           format: date-time
           type: string
           example: '2024-01-04T00:00:00Z'
           description: Fecha de creación del registro
-        fechaModificacion:
+        fecha_modificacion:
           format: date-time
           type: string
           example: '2024-01-04T00:00:00Z'
@@ -1662,12 +1662,12 @@ components:
       required:
         - descripcion
         - cantidad
-        - valorUnitario
-        - valorTotal
-        - contratoGeneralId
+        - valor_unitario
+        - valor_total
+        - contrato_general_id
         - activo
-        - fechaCreacion
-        - fechaModificacion
+        - fecha_creacion
+        - fecha_modificacion
     ActualizarEspecificacionTecnicaDto:
       type: object
       properties: {}
@@ -1753,42 +1753,42 @@ components:
     CreateOrdenadorContratoDto:
       type: object
       properties:
-        terceroId:
+        tercero_id:
           type: number
-        ordenadorArgoId:
+        ordenador_argo_id:
           type: number
-        ordenadorSikarcaId:
+        ordenador_sikarca_id:
           type: number
         resolucion:
           type: string
-        documentoIdentidad:
+        documento_identidad:
           type: string
-        cargoId:
+        cargo_id:
           type: number
         contrato_general_id:
           type: number
       required:
-        - terceroId
-        - ordenadorArgoId
-        - ordenadorSikarcaId
+        - tercero_id
+        - ordenador_argo_id
+        - ordenador_sikarca_id
         - resolucion
-        - documentoIdentidad
-        - cargoId
+        - documento_identidad
+        - cargo_id
         - contrato_general_id
     UpdateOrdenadorContratoDto:
       type: object
       properties:
-        terceroId:
+        tercero_id:
           type: number
-        ordenadorArgoId:
+        ordenador_argo_id:
           type: number
-        ordenadorSikarcaId:
+        ordenador_sikarca_id:
           type: number
         resolucion:
           type: string
-        documentoIdentidad:
+        documento_identidad:
           type: string
-        cargoId:
+        cargo_id:
           type: number
         contrato_general_id:
           type: number
