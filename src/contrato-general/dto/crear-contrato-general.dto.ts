@@ -135,7 +135,7 @@ export class CrearContratoGeneralDto {
 
   @IsOptional()
   @IsNumber()
-  tema_gasto_inversionId: number;
+  tema_gasto_inversion_id: number;
 
   @IsOptional()
   @IsNumber()

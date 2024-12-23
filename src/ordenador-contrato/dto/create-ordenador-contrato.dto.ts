@@ -10,7 +10,7 @@ import {
 
 export class CreateOrdenadorContratoDto {
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   tercero_id: number;
 
@@ -25,12 +25,12 @@ export class CreateOrdenadorContratoDto {
   ordenador_sikarca_id: number;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   resolucion: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   documento_identidad: string;
 

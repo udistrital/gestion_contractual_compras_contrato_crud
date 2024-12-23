@@ -34,10 +34,6 @@ export class OrdenadorContratoService {
   async create(
     createOrdenadorContratoDto: CreateOrdenadorContratoDto,
   ): Promise<OrdenadorContrato> {
-    console.log(
-      'Datos recibidos para crear Ordenador:',
-      createOrdenadorContratoDto,
-    );
     const contratoExiste = await this.contratoGeneralRepository.findOne({
       where: { id: createOrdenadorContratoDto.contrato_general_id },
       select: ['id'],
@@ -47,6 +43,13 @@ export class OrdenadorContratoService {
         `ContratoGeneral con ID "${createOrdenadorContratoDto.contrato_general_id}" no encontrado`,
       );
     }
+
+    const found = await this.ordenadorRepository.findOne({
+      where: {
+        contrato_general_id: createOrdenadorContratoDto.contrato_general_id,
+      },
+    });
+
     const newOrdenador = this.ordenadorRepository.create({
       tercero_id: createOrdenadorContratoDto.tercero_id,
       ordenador_argo_id: createOrdenadorContratoDto.ordenador_argo_id,
@@ -60,8 +63,14 @@ export class OrdenadorContratoService {
       fecha_modificacion: new Date(),
     });
 
-    console.log('Entidad Ordenador creada:', newOrdenador);
-    return await this.ordenadorRepository.save(newOrdenador);
+    if (found) {
+      await this.ordenadorRepository.update(found.id, newOrdenador);
+      return await this.ordenadorRepository.findOne({
+        where: { id: found.id },
+      });
+    } else {
+      return await this.ordenadorRepository.save(newOrdenador);
+    }
   }
 
   async update(
