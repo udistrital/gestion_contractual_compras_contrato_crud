@@ -1,230 +1,139 @@
 TRUNCATE TABLE contrato_general CASCADE;
+TRUNCATE TABLE convenio CASCADE;
+TRUNCATE TABLE contratista CASCADE;
+TRUNCATE TABLE contrato_arrendamiento CASCADE;
+TRUNCATE TABLE cdp CASCADE;
+TRUNCATE TABLE registro_presupuestal CASCADE;
+TRUNCATE TABLE supervisor_contrato CASCADE;
+TRUNCATE TABLE lugar_ejecucion CASCADE;
+TRUNCATE TABLE acta_inicio CASCADE;
+TRUNCATE TABLE especificacion_tecnica CASCADE;
+TRUNCATE TABLE estado_contrato CASCADE;
+TRUNCATE TABLE documento_contrato CASCADE;
+TRUNCATE TABLE solicitante CASCADE;
 
 INSERT INTO contrato_general (
-    id, 
-    tipo_contratacion_id,
+    id,
+    tipo_compromiso_id,
     tipo_contrato_id,
+    perfil_contratista_id,
     fecha_suscripcion_estudios,
     aplica_poliza,
     ordenador_id,
-    modalidad_id,
+    modalidad_seleccion_id,
+    tipo_control,
     tipologia_especifica_id,
     regimen_contratacion_id,
     procedimiento_id,
     plazo_ejecucion,
-    fecha_proyeccion_id,
+    unidad_ejecutora_id,
     numero_constancia,
-    clase_constancia_id,
-    valor_acumulados,
-    tipo_smlmv_id,
+    clase_contratista_id,
+    tipo_moneda_id,
     valor_pesos,
+    tipo_gasto_id,
     origen_recursos_id,
-    origen_presupuesto_id,
-    forma_pago_inversion_id,
+    origen_presupuestos_id,
+    tema_gasto_inversion_id,
     valor_contrato_me,
     valor_tasa_cambio,
-    modelo_pago_id,
+    medio_pago_id,
     clausula_registro_presupuestal,
     modo_pago,
-    objeto_contrato,
-    actividades,
-    condiciones,
-    justificacion,
     observaciones,
     vigencia,
-    concepto_elaboracion,
+    consecutivo_elaboracion,
     fecha_inicial,
     fecha_final,
     usuario_legado,
+    numero_contrato,
+    unidad_ejecucion_id,
     activo
-) VALUES 
-(1, 1, 1, '2024-01-15', true, 101, 1, 1, 1, 1, 180, 2024, 10001, 1, 
- 1500000.0, 1, 45000000.00, 1, 1, 1, 0.000, 1.0000000000, 1, true,
- 'Mensual', 'Prestación de servicios profesionales de desarrollo de software', 
- 'Desarrollo, mantenimiento y soporte de aplicaciones', 
- 'Cumplimiento de entregables mensuales según cronograma',
- 'Necesidad de fortalecer el equipo de desarrollo',
- 'Contrato inicial del área de TI', 
- '2024', 'Elaboración directa', '2024-01-15', '2024-07-15', 'USR001', true),
+) VALUES
+      (1, 101, 201, 301, '2024-01-15', true, 401, 501, 1, 601, 701, 801, 180, 901, 10001, 1001, 1, 45000000.00, 1101, 1201, 1301, 1401, 0.000, 1.0000000000, 1501, true, 'Mensual', 'Contrato inicial del área de TI', '2024', 'CONT-2024-001', '2024-01-15', '2024-07-15', 'USR001', 'CT-2024-001', 1601, true),
 
-(2, 2, 2, '2024-01-20', true, 102, 2, 2, 2, 2, 365, 2024, 10002, 2, 
- 2500000.0, 2, 120000000.00, 2, 2, 2, 0.000, 1.0000000000, 2, true,
- 'Bimestral', 'Servicios de consultoría en gestión de proyectos', 
- 'Asesoría, seguimiento y control de proyectos estratégicos',
- 'Entregables bimestrales con informes detallados',
- 'Optimización de la gestión de proyectos institucionales',
- 'Contrato de consultoría estratégica', 
- '2024', 'Elaboración por convocatoria', '2024-02-01', '2025-01-31', 'USR002', true),
+      (2, 102, 202, 302, '2024-01-20', true, 402, 502, 1, 602, 702, 802, 365, 902, 10002, 1002, 1, 120000000.00, 1102, 1202, 1302, 1402, 0.000, 1.0000000000, 1502, true, 'Bimestral', 'Contrato de consultoría estratégica', '2024', 'CONT-2024-002', '2024-02-01', '2025-01-31', 'USR002', 'CT-2024-002', 1602, true),
 
-(3, 1, 3, '2024-02-01', false, 103, 1, 3, 1, 3, 90, 2024, 10003, 1, 
- 800000.0, 1, 25000000.00, 1, 1, 1, 0.000, 1.0000000000, 1, true,
- 'Único pago', 'Adquisición de equipos de cómputo', 
- 'Compra e instalación de equipos informáticos',
- 'Entrega única con garantía de 3 años',
- 'Renovación tecnológica programada',
- 'Compra de equipos departamento TI', 
- '2024', 'Elaboración por suministro', '2024-02-15', '2024-05-15', 'USR003', true),
+      (3, 103, 203, 303, '2024-02-01', false, 403, 503, 2, 603, 703, 803, 90, 903, 10003, 1003, 1, 25000000.00, 1103, 1203, 1303, 1403, 0.000, 1.0000000000, 1503, true, 'Único pago', 'Compra de equipos departamento TI', '2024', 'CONT-2024-003', '2024-02-15', '2024-05-15', 'USR003', 'CT-2024-003', 1603, true),
 
-(4, 2, 1, '2024-02-15', true, 104, 2, 1, 2, 1, 240, 2024, 10004, 2, 
- 3000000.0, 2, 180000000.00, 2, 2, 2, 0.000, 1.0000000000, 2, true,
- 'Trimestral', 'Servicios de auditoría y control interno', 
- 'Auditoría interna y evaluación de procesos',
- 'Informes trimestrales de auditoría y seguimiento',
- 'Cumplimiento normativo y mejora continua',
- 'Auditoría general 2024', 
- '2024', 'Elaboración especializada', '2024-03-01', '2024-10-31', 'USR004', true),
+      (4, 104, 204, 304, '2024-02-15', true, 404, 504, 2, 604, 704, 804, 240, 904, 10004, 1004, 1, 180000000.00, 1104, 1204, 1304, 1404, 0.000, 1.0000000000, 1504, true, 'Trimestral', 'Auditoría general 2024', '2024', 'CONT-2024-004', '2024-03-01', '2024-10-31', 'USR004', 'CT-2024-004', 1604, true),
 
-(5, 1, 2, '2024-03-01', true, 105, 1, 2, 1, 2, 150, 2024, 10005, 1, 
- 1200000.0, 1, 55000000.00, 1, 1, 1, 0.000, 1.0000000000, 1, false,
- 'Mensual', 'Mantenimiento de infraestructura física', 
- 'Mantenimiento preventivo y correctivo de instalaciones',
- 'Cronograma mensual de mantenimiento',
- 'Preservación y mejora de instalaciones',
- 'Mantenimiento sede principal', 
- '2024', 'Elaboración técnica', '2024-03-15', '2024-08-15', 'USR005', true),
+      (5, 105, 205, 305, '2024-03-01', true, 405, 505, 1, 605, 705, 805, 150, 905, 10005, 1005, 1, 55000000.00, 1105, 1205, 1305, 1405, 0.000, 1.0000000000, 1505, false, 'Mensual', 'Mantenimiento sede principal', '2024', 'CONT-2024-005', '2024-03-15', '2024-08-15', 'USR005', 'CT-2024-005', 1605, true),
 
-(6, 2, 3, '2024-03-15', true, 106, 2, 3, 2, 3, 300, 2024, 10006, 2, 
- 4000000.0, 2, 220000000.00, 2, 2, 2, 0.000, 1.0000000000, 2, true,
- 'Bimestral', 'Desarrollo e implementación de sistema ERP', 
- 'Desarrollo, pruebas y despliegue de sistema integrado',
- 'Entregables según cronograma de implementación',
- 'Modernización de sistemas administrativos',
- 'Proyecto ERP fase 1', 
- '2024', 'Elaboración por proyecto', '2024-04-01', '2024-12-31', 'USR006', true),
+      (6, 106, 206, 306, '2024-03-15', true, 406, 506, 2, 606, 706, 806, 300, 906, 10006, 1006, 1, 220000000.00, 1106, 1206, 1306, 1406, 0.000, 1.0000000000, 1506, true, 'Bimestral', 'Proyecto ERP fase 1', '2024', 'CONT-2024-006', '2024-04-01', '2024-12-31', 'USR006', 'CT-2024-006', 1606, true),
 
-(7, 1, 1, '2024-04-01', false, 107, 1, 1, 1, 1, 120, 2024, 10007, 1, 
- 900000.0, 1, 35000000.00, 1, 1, 1, 0.000, 1.0000000000, 1, true,
- 'Mensual', 'Servicios de capacitación en competencias digitales', 
- 'Capacitación y evaluación de personal',
- 'Reportes mensuales de avance y evaluación',
- 'Fortalecimiento de competencias institucionales',
- 'Programa capacitación TI', 
- '2024', 'Elaboración formativa', '2024-04-15', '2024-08-15', 'USR007', true),
+      (7, 107, 207, 307, '2024-04-01', false, 407, 507, 1, 607, 707, 807, 120, 907, 10007, 1007, 1, 35000000.00, 1107, 1207, 1307, 1407, 0.000, 1.0000000000, 1507, true, 'Mensual', 'Programa capacitación TI', '2024', 'CONT-2024-007', '2024-04-15', '2024-08-15', 'USR007', 'CT-2024-007', 1607, true),
 
-(8, 2, 2, '2024-04-15', true, 108, 2, 2, 2, 2, 270, 2024, 10008, 2, 
- 3500000.0, 2, 160000000.00, 2, 2, 2, 0.000, 1.0000000000, 2, true,
- 'Trimestral', 'Consultoría en transformación digital', 
- 'Asesoría y acompañamiento en transformación digital',
- 'Entregables trimestrales según plan de transformación',
- 'Modernización de procesos institucionales',
- 'Transformación digital 2024', 
- '2024', 'Elaboración estratégica', '2024-05-01', '2025-01-31', 'USR008', true),
+      (8, 108, 208, 308, '2024-04-15', true, 408, 508, 2, 608, 708, 808, 270, 908, 10008, 1008, 1, 160000000.00, 1108, 1208, 1308, 1408, 0.000, 1.0000000000, 1508, true, 'Trimestral', 'Transformación digital 2024', '2024', 'CONT-2024-008', '2024-05-01', '2025-01-31', 'USR008', 'CT-2024-008', 1608, true),
 
-(9, 1, 3, '2024-05-01', true, 109, 1, 3, 1, 3, 60, 2024, 10009, 1, 
- 600000.0, 1, 28000000.00, 1, 1, 1, 0.000, 1.0000000000, 1, false,
- 'Único pago', 'Adquisición de licencias de software', 
- 'Compra e instalación de licencias especializadas',
- 'Entrega única con soporte por 1 año',
- 'Actualización de licenciamiento institucional',
- 'Licencias software 2024', 
- '2024', 'Elaboración por suministro', '2024-05-15', '2024-07-15', 'USR009', true),
+      (9, 109, 209, 309, '2024-05-01', true, 409, 509, 1, 609, 709, 809, 60, 909, 10009, 1009, 1, 28000000.00, 1109, 1209, 1309, 1409, 0.000, 1.0000000000, 1509, false, 'Único pago', 'Licencias software 2024', '2024', 'CONT-2024-009', '2024-05-15', '2024-07-15', 'USR009', 'CT-2024-009', 1609, true),
 
-(10, 2, 1, '2024-05-15', true, 110, 2, 1, 2, 1, 330, 2024, 10010, 2, 
- 4500000.0, 2, 250000000.00, 2, 2, 2, 0.000, 1.0000000000, 2, true,
- 'Mensual', 'Servicios de seguridad informática', 
- 'Implementación y monitoreo de seguridad IT',
- 'Informes mensuales de seguridad y eventos',
- 'Fortalecimiento de la seguridad informática',
- 'Seguridad IT 2024', 
- '2024', 'Elaboración especializada', '2024-06-01', '2025-04-30', 'USR010', true);
+      (10, 110, 210, 310, '2024-05-15', true, 410, 510, 2, 610, 710, 810, 330, 910, 10010, 1010, 1, 250000000.00, 1110, 1210, 1310, 1410, 0.000, 1.0000000000, 1510, true, 'Mensual', 'Seguridad IT 2024', '2024', 'CONT-2024-010', '2024-06-01', '2025-04-30', 'USR010', 'CT-2024-010', 1610, true);
 
-
-TRUNCATE TABLE convenio CASCADE;
 
 INSERT INTO convenio (
     id,
-    monto_convenio_id,
+    vigencia,
+    nombre,
     tipo_convenio_id,
     contrato_general_id,
-    activo
-) VALUES 
-(1, 1, 1, 1, true),   
-(2, 2, 2, 1, true),
-(3, 1, 3, 2, true),   
-(4, 2, 1, 2, true),
-(5, 3, 2, 3, true),  
-(6, 1, 3, 3, true),
-(7, 2, 1, 4, true),  
-(8, 3, 2, 4, true),
-(9, 1, 3, 5, true),  
-(10, 2, 1, 5, true),
-(11, 3, 2, 6, true), 
-(12, 1, 3, 6, true),
-(13, 2, 1, 7, true), 
-(14, 3, 2, 7, true),
-(15, 1, 3, 8, true),  
-(16, 2, 1, 8, true),
-(17, 3, 2, 9, true),  
-(18, 1, 3, 9, true),
-(19, 2, 1, 10, true), 
-(20, 3, 2, 10, true);
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (1, 2024, 'Convenio desarrollo software empresarial', 1, 1, true, NOW(), NOW()),
+      (2, 2024, 'Convenio consultoría estratégica', 2, 2, true, NOW(), NOW()),
+      (3, 2024, 'Convenio actualización tecnológica', 1, 3, true, NOW(), NOW()),
+      (4, 2024, 'Convenio auditoría sistemas', 2, 4, true, NOW(), NOW()),
+      (5, 2024, 'Convenio mantenimiento infraestructura', 1, 5, true, NOW(), NOW()),
+      (6, 2024, 'Convenio implementación ERP', 2, 6, true, NOW(), NOW()),
+      (7, 2024, 'Convenio capacitación TI', 1, 7, true, NOW(), NOW()),
+      (8, 2024, 'Convenio transformación digital', 2, 8, true, NOW(), NOW()),
+      (9, 2024, 'Convenio licenciamiento software', 1, 9, true, NOW(), NOW()),
+      (10, 2024, 'Convenio seguridad informática', 2, 10, true, NOW(), NOW());
 
-TRUNCATE TABLE contratista CASCADE;
 
 INSERT INTO contratista (
     id,
     numero_documento,
-    tipo_persona,
+    tipo_persona_id,
     contrato_general_id,
-    activo
-) VALUES 
-(1, '1098765432', 'Natural', 1, true),
-(2, '1098765433', 'Natural', 1, true),
-(3, '1098765434', 'Natural', 2, true),
-(4, '1098765435', 'Natural', 2, true),
-(5, '1098765436', 'Natural', 3, true),
-(6, '900123456-1', 'Juridica', 3, true),
-(7, '900123457-2', 'Juridica', 4, true),
-(8, '900123458-3', 'Juridica', 4, true),
-(9, '900123459-4', 'Juridica', 5, true),
-(10, '900123460-5', 'Juridica', 5, true),
-(11, '1098765437', 'Natural', 6, true),
-(12, '1098765438', 'Natural', 6, true),
-(13, '1098765439', 'Natural', 7, true),
-(14, '1098765440', 'Natural', 7, true),
-(15, '1098765441', 'Natural', 8, true),
-(16, '900123461-6', 'Juridica', 8, true),
-(17, '900123462-7', 'Juridica', 9, true),
-(18, '900123463-8', 'Juridica', 9, true),
-(19, '900123464-9', 'Juridica', 10, true),
-(20, '900123465-0', 'Juridica', 10, true);
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (uuid_generate_v4(), '1098765432', 1, 1, true, NOW(), NOW()),
+      (uuid_generate_v4(), '900123456-1', 2, 2, true, NOW(), NOW()),
+      (uuid_generate_v4(), '1098765434', 1, 3, true, NOW(), NOW()),
+      (uuid_generate_v4(), '900123458-3', 2, 4, true, NOW(), NOW()),
+      (uuid_generate_v4(), '1098765436', 1, 5, true, NOW(), NOW()),
+      (uuid_generate_v4(), '900123460-5', 2, 6, true, NOW(), NOW()),
+      (uuid_generate_v4(), '1098765438', 1, 7, true, NOW(), NOW()),
+      (uuid_generate_v4(), '900123462-7', 2, 8, true, NOW(), NOW()),
+      (uuid_generate_v4(), '1098765440', 1, 9, true, NOW(), NOW()),
+      (uuid_generate_v4(), '900123464-9', 2, 10, true, NOW(), NOW());
 
-TRUNCATE TABLE contrato_arrendamiento CASCADE;
 
 INSERT INTO contrato_arrendamiento (
     id,
+    destinacion,
     plazo_pago_mensual,
+    reajuste,
     plazo_administracion,
     valor_administracion,
     plazo_entrega,
     valor_arrendamiento,
     contrato_general_id,
-    activo
-) VALUES 
-(1, 30, 365, 500000, 15, 2500000, 1, true),
-(2, 30, 180, 300000, 10, 1800000, 1, true),
-(3, 30, 365, 600000, 15, 3000000, 2, true),
-(4, 30, 180, 400000, 10, 2000000, 2, true),
-(5, 30, 365, 550000, 15, 2700000, 3, true),
-(6, 30, 180, 350000, 10, 1900000, 3, true),
-(7, 30, 365, 650000, 15, 3200000, 4, true),
-(8, 30, 180, 450000, 10, 2200000, 4, true),
-(9, 30, 365, 700000, 15, 3500000, 5, true),
-(10, 30, 180, 480000, 10, 2400000, 5, true),
-(11, 30, 365, 520000, 15, 2600000, 6, true),
-(12, 30, 180, 320000, 10, 1850000, 6, true),
-(13, 30, 365, 580000, 15, 2900000, 7, true),
-(14, 30, 180, 380000, 10, 1950000, 7, true),
-(15, 30, 365, 620000, 15, 3100000, 8, true),
-(16, 30, 180, 420000, 10, 2100000, 8, true),
-(17, 30, 365, 680000, 15, 3400000, 9, true),
-(18, 30, 180, 460000, 10, 2300000, 9, true),
-(19, 30, 365, 720000, 15, 3600000, 10, true),
-(20, 30, 180, 500000, 10, 2500000, 10, true);
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (1, 'Oficinas administrativas', 30, 'IPC + 3%', 365, 500000.00, 15, 2500000.00, 1, true, NOW(), NOW()),
+      (2, 'Centro de datos', 30, 'IPC + 2%', 365, 600000.00, 15, 3000000.00, 2, true, NOW(), NOW()),
+      (3, 'Área de capacitación', 30, 'IPC + 2.5%', 365, 450000.00, 15, 2200000.00, 3, true, NOW(), NOW()),
+      (4, 'Laboratorio IT', 30, 'IPC + 3%', 365, 550000.00, 15, 2800000.00, 4, true, NOW(), NOW()),
+      (5, 'Almacén equipos', 30, 'IPC + 2%', 365, 400000.00, 15, 2000000.00, 5, true, NOW(), NOW());
 
-
-TRUNCATE TABLE registro_presupuestal CASCADE;
-TRUNCATE TABLE cdp CASCADE;
 
 INSERT INTO cdp (
     id,
@@ -232,28 +141,21 @@ INSERT INTO cdp (
     fecha_registro,
     vigencia_cdp,
     contrato_general_id,
-    activo
-) VALUES 
-(1, 20240001, '2024-01-10', 2024, 1, true),
-(2, 20240002, '2024-01-15', 2024, 1, true),
-(3, 20240003, '2024-01-20', 2024, 2, true),
-(4, 20240004, '2024-01-25', 2024, 2, true),
-(5, 20240005, '2024-02-01', 2024, 3, true),
-(6, 20240006, '2024-02-05', 2024, 3, true),
-(7, 20240007, '2024-02-10', 2024, 4, true),
-(8, 20240008, '2024-02-15', 2024, 4, true),
-(9, 20240009, '2024-02-20', 2024, 5, true),
-(10, 20240010, '2024-02-25', 2024, 5, true),
-(11, 20240011, '2024-03-01', 2024, 6, true),
-(12, 20240012, '2024-03-05', 2024, 6, true),
-(13, 20240013, '2024-03-10', 2024, 7, true),
-(14, 20240014, '2024-03-15', 2024, 7, true),
-(15, 20240015, '2024-03-20', 2024, 8, true),
-(16, 20240016, '2024-03-25', 2024, 8, true),
-(17, 20240017, '2024-04-01', 2024, 9, true),
-(18, 20240018, '2024-04-05', 2024, 9, true),
-(19, 20240019, '2024-04-10', 2024, 10, true),
-(20, 20240020, '2024-04-15', 2024, 10, true);
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (1, 20240001, '2024-01-10', 2024, 1, true, NOW(), NOW()),
+      (2, 20240002, '2024-01-15', 2024, 1, true, NOW(), NOW()),
+      (3, 20240003, '2024-01-20', 2024, 2, true, NOW(), NOW()),
+      (4, 20240004, '2024-01-25', 2024, 2, true, NOW(), NOW()),
+      (5, 20240005, '2024-02-01', 2024, 3, true, NOW(), NOW()),
+      (6, 20240006, '2024-02-05', 2024, 3, true, NOW(), NOW()),
+      (7, 20240007, '2024-02-10', 2024, 4, true, NOW(), NOW()),
+      (8, 20240008, '2024-02-15', 2024, 4, true, NOW(), NOW()),
+      (9, 20240009, '2024-02-20', 2024, 5, true, NOW(), NOW()),
+      (10, 20240010, '2024-02-25', 2024, 5, true, NOW(), NOW());
+
 
 INSERT INTO registro_presupuestal (
     id,
@@ -261,93 +163,84 @@ INSERT INTO registro_presupuestal (
     fecha_registro,
     vigencia_cdp,
     cdp_id,
-    activo
-) VALUES 
-(1, 240001, '2024-01-12', 2024, 1, true),
-(2, 240002, '2024-01-17', 2024, 2, true),
-(3, 240003, '2024-01-22', 2024, 3, true),
-(4, 240004, '2024-01-27', 2024, 4, true),
-(5, 240005, '2024-02-03', 2024, 5, true),
-(6, 240006, '2024-02-07', 2024, 6, true),
-(7, 240007, '2024-02-12', 2024, 7, true),
-(8, 240008, '2024-02-17', 2024, 8, true),
-(9, 240009, '2024-02-22', 2024, 9, true),
-(10, 240010, '2024-02-27', 2024, 10, true),
-(11, 240011, '2024-03-03', 2024, 11, true),
-(12, 240012, '2024-03-07', 2024, 12, true),
-(13, 240013, '2024-03-12', 2024, 13, true),
-(14, 240014, '2024-03-17', 2024, 14, true),
-(15, 240015, '2024-03-22', 2024, 15, true),
-(16, 240016, '2024-03-27', 2024, 16, true),
-(17, 240017, '2024-04-03', 2024, 17, true),
-(18, 240018, '2024-04-07', 2024, 18, true),
-(19, 240019, '2024-04-12', 2024, 19, true),
-(20, 240020, '2024-04-17', 2024, 20, true);
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (1, 240001, '2024-01-12', 2024, 1, true, NOW(), NOW()),
+      (2, 240002, '2024-01-17', 2024, 2, true, NOW(), NOW()),
+      (3, 240003, '2024-01-22', 2024, 3, true, NOW(), NOW()),
+      (4, 240004, '2024-01-27', 2024, 4, true, NOW(), NOW()),
+      (5, 240005, '2024-02-03', 2024, 5, true, NOW(), NOW()),
+      (6, 240006, '2024-02-07', 2024, 6, true, NOW(), NOW()),
+      (7, 240007, '2024-02-12', 2024, 7, true, NOW(), NOW()),
+      (8, 240008, '2024-02-17', 2024, 8, true, NOW(), NOW()),
+      (9, 240009, '2024-02-22', 2024, 9, true, NOW(), NOW()),
+      (10, 240010, '2024-02-27', 2024, 10, true, NOW(), NOW());
 
-TRUNCATE TABLE supervisor_contrato CASCADE;
-TRUNCATE TABLE lugar_ejecucion CASCADE;
 
 INSERT INTO supervisor_contrato (
     id,
     contrato_general_id,
     supervisor_id,
-    activo
-) VALUES 
-(1, 1, 101, true),
-(2, 1, 102, true),
-(3, 2, 103, true),
-(4, 2, 104, true),
-(5, 3, 105, true),
-(6, 3, 106, true),
-(7, 4, 107, true),
-(8, 4, 108, true),
-(9, 5, 109, true),
-(10, 5, 110, true),
-(11, 6, 111, true),
-(12, 6, 112, true),
-(13, 7, 113, true),
-(14, 7, 114, true),
-(15, 8, 115, true),
-(16, 8, 116, true),
-(17, 9, 117, true),
-(18, 9, 118, true),
-(19, 10, 119, true),
-(20, 10, 120, true);
+    sede_legado,
+    dependencia_legado,
+    cargo_legado,
+    cargo_id,
+    documento,
+    digito_verificacion,
+    sede_id,
+    dependencia_id,
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (1, 1, 101, 'SEDE-01', 'DEP-TI', 'COORD-TI', 201, 79123456, 1, 301, 401, true, NOW(), NOW()),
+      (2, 1, 102, 'SEDE-01', 'DEP-TI', 'DIR-TI', 202, 79123457, 2, 301, 401, true, NOW(), NOW()),
+      (3, 2, 103, 'SEDE-02', 'DEP-CONS', 'COORD-CONS', 203, 79123458, 3, 302, 402, true, NOW(), NOW()),
+      (4, 2, 104, 'SEDE-02', 'DEP-CONS', 'DIR-CONS', 204, 79123459, 4, 302, 402, true, NOW(), NOW()),
+      (5, 3, 105, 'SEDE-03', 'DEP-COMP', 'COORD-COMP', 205, 79123460, 5, 303, 403, true, NOW(), NOW()),
+      (6, 3, 106, 'SEDE-03', 'DEP-COMP', 'DIR-COMP', 206, 79123461, 6, 303, 403, true, NOW(), NOW()),
+      (7, 4, 107, 'SEDE-04', 'DEP-AUD', 'COORD-AUD', 207, 79123462, 7, 304, 404, true, NOW(), NOW()),
+      (8, 4, 108, 'SEDE-04', 'DEP-AUD', 'DIR-AUD', 208, 79123463, 8, 304, 404, true, NOW(), NOW()),
+      (9, 5, 109, 'SEDE-05', 'DEP-MANT', 'COORD-MANT', 209, 79123464, 9, 305, 405, true, NOW(), NOW()),
+      (10, 5, 110, 'SEDE-05', 'DEP-MANT', 'DIR-MANT', 210, 79123465, 0, 305, 405, true, NOW(), NOW()),
+      (11, 6, 111, 'SEDE-06', 'DEP-ERP', 'COORD-ERP', 211, 79123466, 1, 306, 406, true, NOW(), NOW()),
+      (12, 6, 112, 'SEDE-06', 'DEP-ERP', 'DIR-ERP', 212, 79123467, 2, 306, 406, true, NOW(), NOW()),
+      (13, 7, 113, 'SEDE-07', 'DEP-CAP', 'COORD-CAP', 213, 79123468, 3, 307, 407, true, NOW(), NOW()),
+      (14, 7, 114, 'SEDE-07', 'DEP-CAP', 'DIR-CAP', 214, 79123469, 4, 307, 407, true, NOW(), NOW()),
+      (15, 8, 115, 'SEDE-08', 'DEP-DIG', 'COORD-DIG', 215, 79123470, 5, 308, 408, true, NOW(), NOW()),
+      (16, 8, 116, 'SEDE-08', 'DEP-DIG', 'DIR-DIG', 216, 79123471, 6, 308, 408, true, NOW(), NOW()),
+      (17, 9, 117, 'SEDE-09', 'DEP-LIC', 'COORD-LIC', 217, 79123472, 7, 309, 409, true, NOW(), NOW()),
+      (18, 9, 118, 'SEDE-09', 'DEP-LIC', 'DIR-LIC', 218, 79123473, 8, 309, 409, true, NOW(), NOW()),
+      (19, 10, 119, 'SEDE-10', 'DEP-SEG', 'COORD-SEG', 219, 79123474, 9, 310, 410, true, NOW(), NOW()),
+      (20, 10, 120, 'SEDE-10', 'DEP-SEG', 'DIR-SEG', 220, 79123475, 0, 310, 410, true, NOW(), NOW());
+
 
 INSERT INTO lugar_ejecucion (
     id,
     pais_id,
+    ciudad_id,
     municipio_id,
     dependencia_id,
-    ciudad_id,
     sede_id,
     direccion,
     contrato_general_id,
-    activo
-) VALUES 
-(1, 1, 1, 1, 1, 1, 'Calle 100 #15-20', 1, true),
-(2, 1, 1, 2, 1, 2, 'Carrera 7 #71-52', 1, true),
-(3, 1, 2, 1, 2, 1, 'Avenida El Dorado #68C-61', 2, true),
-(4, 1, 2, 2, 2, 2, 'Calle 72 #7-64', 2, true),
-(5, 1, 3, 1, 3, 1, 'Carrera 15 #93-60', 3, true),
-(6, 1, 3, 2, 3, 2, 'Calle 80 #11-42', 3, true),
-(7, 1, 4, 1, 4, 1, 'Avenida Suba #116-70', 4, true),
-(8, 1, 4, 2, 4, 2, 'Carrera 11 #82-76', 4, true),
-(9, 1, 5, 1, 5, 1, 'Calle 26 #59-51', 5, true),
-(10, 1, 5, 2, 5, 2, 'Carrera 13 #36-24', 5, true),
-(11, 1, 6, 1, 6, 1, 'Autopista Norte #106-35', 6, true),
-(12, 1, 6, 2, 6, 2, 'Calle 67 #7-35', 6, true),
-(13, 1, 7, 1, 7, 1, 'Carrera 7 #32-16', 7, true),
-(14, 1, 7, 2, 7, 2, 'Calle 53 #10-60', 7, true),
-(15, 1, 8, 1, 8, 1, 'Avenida 68 #75A-50', 8, true),
-(16, 1, 8, 2, 8, 2, 'Carrera 9 #73-44', 8, true),
-(17, 1, 9, 1, 9, 1, 'Calle 116 #23-06', 9, true),
-(18, 1, 9, 2, 9, 2, 'Carrera 15 #88-21', 9, true),
-(19, 1, 10, 1, 10, 1, 'Avenida Caracas #46-72', 10, true),
-(20, 1, 10, 2, 10, 2, 'Calle 95 #13-55', 10, true);
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (1, 1, 11, 101, 201, 301, 'Calle 100 #15-20', 1, true, NOW(), NOW()),
+      (2, 1, 12, 102, 202, 302, 'Carrera 7 #71-52', 2, true, NOW(), NOW()),
+      (3, 1, 13, 103, 203, 303, 'Avenida El Dorado #68C-61', 3, true, NOW(), NOW()),
+      (4, 1, 14, 104, 204, 304, 'Calle 72 #7-64', 4, true, NOW(), NOW()),
+      (5, 1, 15, 105, 205, 305, 'Carrera 15 #93-60', 5, true, NOW(), NOW()),
+      (6, 1, 16, 106, 206, 306, 'Calle 80 #11-42', 6, true, NOW(), NOW()),
+      (7, 1, 17, 107, 207, 307, 'Avenida Suba #116-70', 7, true, NOW(), NOW()),
+      (8, 1, 18, 108, 208, 308, 'Carrera 11 #82-76', 8, true, NOW(), NOW()),
+      (9, 1, 19, 109, 209, 309, 'Calle 26 #59-51', 9, true, NOW(), NOW()),
+      (10, 1, 20, 110, 210, 310, 'Carrera 13 #36-24', 10, true, NOW(), NOW());
 
-TRUNCATE TABLE acta_inicio CASCADE;
-TRUNCATE TABLE especificaciones_tecnicas CASCADE;
 
 INSERT INTO acta_inicio (
     id,
@@ -357,75 +250,138 @@ INSERT INTO acta_inicio (
     fecha_inicio,
     fecha_fin,
     contrato_general_id,
-    activo
-) VALUES 
-(1, 201, 'USER001', 'Inicio de desarrollo de software - Fase 1', '2024-01-20', '2024-07-20', 1, true),
-(3, 203, 'USER003', 'Consultoría estratégica organizacional', '2024-02-05', '2025-02-04', 2, true),
-(5, 205, 'USER005', 'Equipamiento tecnológico sede principal', '2024-02-20', '2024-05-20', 3, true),
-(7, 207, 'USER007', 'Auditoría procesos internos', '2024-03-05', '2024-11-05', 4, true),
-(9, 209, 'USER009', 'Mantenimiento infraestructura física', '2024-03-20', '2024-08-20', 5, true),
-(11, 211, 'USER011', 'Desarrollo ERP corporativo', '2024-04-05', '2025-01-05', 6, true),
-(14, 214, 'USER014', 'Formación competencias IT', '2024-04-25', '2024-08-25', 7, true),
-(16, 216, 'USER016', 'Modernización procesos', '2024-05-10', '2025-02-10', 8, true),
-(18, 218, 'USER018', 'Implementación nuevas licencias', '2024-05-25', '2024-07-25', 9, true),
-(20, 220, 'USER020', 'Monitoreo seguridad IT', '2024-06-10', '2025-05-10', 10, true);
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (1, 201, 'USER001', 'Inicio proyecto desarrollo software - Fase I', '2024-01-20', '2024-07-20', 1, true, NOW(), NOW()),
+      (2, 202, 'USER002', 'Inicio consultoría estratégica organizacional', '2024-02-05', '2025-02-04', 2, true, NOW(), NOW()),
+      (3, 203, 'USER003', 'Inicio proceso actualización tecnológica', '2024-02-20', '2024-05-20', 3, true, NOW(), NOW()),
+      (4, 204, 'USER004', 'Inicio auditoría sistemas y procesos', '2024-03-05', '2024-11-05', 4, true, NOW(), NOW()),
+      (5, 205, 'USER005', 'Inicio mantenimiento infraestructura física', '2024-03-20', '2024-08-20', 5, true, NOW(), NOW()),
+      (6, 206, 'USER006', 'Inicio implementación ERP empresarial', '2024-04-05', '2025-01-05', 6, true, NOW(), NOW()),
+      (7, 207, 'USER007', 'Inicio programa capacitación TI', '2024-04-25', '2024-08-25', 7, true, NOW(), NOW()),
+      (8, 208, 'USER008', 'Inicio proyecto transformación digital', '2024-05-10', '2025-02-10', 8, true, NOW(), NOW()),
+      (9, 209, 'USER009', 'Inicio implementación nuevas licencias', '2024-05-25', '2024-07-25', 9, true, NOW(), NOW()),
+      (10, 210, 'USER010', 'Inicio proyecto seguridad TI', '2024-06-10', '2025-05-10', 10, true, NOW(), NOW());
 
-INSERT INTO especificaciones_tecnicas (
+
+INSERT INTO especificacion_tecnica (
     id,
-    especificacion,
     descripcion,
+    cantidad,
+    valor_unitario,
+    valor_total,
     contrato_general_id,
-    activo
-) VALUES 
-(1, 'SPEC-DEV-001', 'Desarrollo en Stack MEAN con MongoDB, Express, Angular y Node.js', 1, true),
-(2, 'SPEC-DEV-002', 'Implementación de API RESTful y documentación Swagger', 1, true),
-(3, 'SPEC-CONS-001', 'Metodología Agile para gestión de proyectos', 2, true),
-(4, 'SPEC-CONS-002', 'Framework TOGAF para arquitectura empresarial', 2, true),
-(5, 'SPEC-EQ-001', 'Equipos con procesador i7 12va generación o superior', 3, true),
-(6, 'SPEC-EQ-002', 'Minimum 16GB RAM, 512GB SSD', 3, true),
-(7, 'SPEC-AUD-001', 'Marco COBIT para auditoría IT', 4, true),
-(8, 'SPEC-AUD-002', 'ISO 27001 para seguridad de información', 4, true),
-(9, 'SPEC-MANT-001', 'Normas técnicas de construcción NSR-10', 5, true),
-(10, 'SPEC-MANT-002', 'Certificaciones de calidad ISO 9001', 5, true),
-(11, 'SPEC-ERP-001', 'Sistema ERP basado en SAP S/4HANA', 6, true),
-(12, 'SPEC-ERP-002', 'Integración con sistemas', 6, true),
-(13, 'SPEC-CAP-001', 'Certificación internacional en cloud computing', 7, true),
-(14, 'SPEC-CAP-002', 'Formación en metodologías DevOps', 7, true),
-(15, 'SPEC-TRANS-001', 'Framework ITIL v4 para servicios IT', 8, true),
-(16, 'SPEC-TRANS-002', 'Metodología Design Thinking', 8, true),
-(17, 'SPEC-LIC-001', 'Licencias Microsoft 365 E3', 9, true),
-(18, 'SPEC-LIC-002', 'Adobe Creative Cloud Team', 9, true),
-(19, 'SPEC-SEC-001', 'Implementación Zero Trust Security', 10, true),
-(20, 'SPEC-SEC-002', 'SOC basado en IBM QRadar', 10, true);
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (1, 'Desarrollo de módulos backend en Node.js', 3, 5000000.00, 15000000.00, 1, true, NOW(), NOW()),
+      (2, 'Desarrollo de interfaces frontend en Angular', 2, 4500000.00, 9000000.00, 1, true, NOW(), NOW()),
+      (3, 'Consultoría en arquitectura empresarial', 4, 8000000.00, 32000000.00, 2, true, NOW(), NOW()),
+      (4, 'Talleres de planeación estratégica', 3, 6000000.00, 18000000.00, 2, true, NOW(), NOW()),
+      (5, 'Computadores portátiles i7 16GB RAM', 10, 4500000.00, 45000000.00, 3, true, NOW(), NOW()),
+      (6, 'Servidores de desarrollo', 2, 15000000.00, 30000000.00, 3, true, NOW(), NOW()),
+      (7, 'Auditoría de sistemas críticos', 5, 7000000.00, 35000000.00, 4, true, NOW(), NOW()),
+      (8, 'Evaluación de seguridad informática', 3, 8000000.00, 24000000.00, 4, true, NOW(), NOW()),
+      (9, 'Mantenimiento preventivo infraestructura', 12, 2500000.00, 30000000.00, 5, true, NOW(), NOW()),
+      (10, 'Actualización sistemas eléctricos', 1, 25000000.00, 25000000.00, 5, true, NOW(), NOW()),
+      (11, 'Implementación módulo financiero ERP', 1, 45000000.00, 45000000.00, 6, true, NOW(), NOW()),
+      (12, 'Migración de datos legacy', 1, 35000000.00, 35000000.00, 6, true, NOW(), NOW()),
+      (13, 'Curso certificación cloud computing', 15, 1200000.00, 18000000.00, 7, true, NOW(), NOW()),
+      (14, 'Taller práctico DevOps', 10, 800000.00, 8000000.00, 7, true, NOW(), NOW()),
+      (15, 'Consultoría transformación digital', 6, 7000000.00, 42000000.00, 8, true, NOW(), NOW()),
+      (16, 'Implementación metodologías ágiles', 4, 6000000.00, 24000000.00, 8, true, NOW(), NOW()),
+      (17, 'Licencias Microsoft 365 Enterprise', 50, 450000.00, 22500000.00, 9, true, NOW(), NOW()),
+      (18, 'Licencias Adobe Creative Cloud', 10, 550000.00, 5500000.00, 9, true, NOW(), NOW()),
+      (19, 'Implementación firewall nueva generación', 2, 35000000.00, 70000000.00, 10, true, NOW(), NOW()),
+      (20, 'Sistema de monitoreo SIEM', 1, 45000000.00, 45000000.00, 10, true, NOW(), NOW());
 
-TRUNCATE TABLE estado_contrato CASCADE;
 
 INSERT INTO estado_contrato (
     id,
     usuario_id,
     motivo,
-    fecha_ejecucion_estado,
     contrato_general_id,
-    estado_id,
-    activo
-) VALUES 
-(1, 301, 'Inicio de ejecución del contrato', '2024-01-20 09:00:00', 1, 1, true),
-(2, 301, 'Avance del 25% en desarrollo', '2024-02-20 10:00:00', 1, 2, true),
-(3, 302, 'Inicio fase de consultoría', '2024-02-05 09:00:00', 2, 1, true),
-(4, 302, 'Entrega primer informe trimestral', '2024-05-05 14:00:00', 2, 2, true),
-(5, 303, 'Inicio proceso de compra', '2024-02-20 09:00:00', 3, 1, true),
-(6, 303, 'Recepción de equipos', '2024-03-20 11:00:00', 3, 2, true),
-(7, 304, 'Inicio auditoría', '2024-03-05 09:00:00', 4, 1, true),
-(8, 304, 'Hallazgos preliminares', '2024-04-05 15:00:00', 4, 2, true),
-(9, 305, 'Inicio mantenimiento', '2024-03-20 09:00:00', 5, 1, true),
-(10, 305, 'Primera fase completada', '2024-04-20 16:00:00', 5, 2, true),
-(11, 306, 'Inicio desarrollo ERP', '2024-04-05 09:00:00', 6, 1, true),
-(12, 306, 'Módulo financiero completado', '2024-06-05 14:00:00', 6, 2, true),
-(13, 307, 'Inicio programa capacitación', '2024-04-20 09:00:00', 7, 1, true),
-(14, 307, 'Primer módulo completado', '2024-05-20 17:00:00', 7, 2, true),
-(15, 308, 'Inicio consultoría digital', '2024-05-05 09:00:00', 8, 1, true),
-(16, 308, 'Diagnóstico inicial completado', '2024-06-05 10:00:00', 8, 2, true),
-(17, 309, 'Inicio proceso licenciamiento', '2024-05-20 09:00:00', 9, 1, true),
-(18, 309, 'Activación de licencias', '2024-06-01 11:00:00', 9, 2, true),
-(19, 310, 'Inicio implementación seguridad', '2024-06-05 09:00:00', 10, 1, true),
-(20, 310, 'Primera fase de seguridad', '2024-07-05 15:00:00', 10, 2, true);
+    estado_parametro_id,
+    estado_interno_parametro_id,
+    actual,
+    usuario_rol,
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (1, 301, 'Inicio de ejecución del contrato', 1, 101, 201, true, 'SUPERVISOR', true, NOW(), NOW()),
+      (2, 301, 'Avance del 25% en desarrollo', 1, 102, 202, true, 'SUPERVISOR', true, NOW(), NOW()),
+      (3, 302, 'Inicio fase de consultoría', 2, 101, 201, true, 'COORDINADOR', true, NOW(), NOW()),
+      (4, 302, 'Entrega primer informe trimestral', 2, 102, 202, true, 'COORDINADOR', true, NOW(), NOW()),
+      (5, 303, 'Inicio proceso de compra', 3, 101, 201, true, 'SUPERVISOR', true, NOW(), NOW()),
+      (6, 303, 'Recepción de equipos', 3, 102, 202, true, 'SUPERVISOR', true, NOW(), NOW()),
+      (7, 304, 'Inicio auditoría', 4, 101, 201, true, 'AUDITOR', true, NOW(), NOW()),
+      (8, 304, 'Hallazgos preliminares', 4, 102, 202, true, 'AUDITOR', true, NOW(), NOW()),
+      (9, 305, 'Inicio mantenimiento', 5, 101, 201, true, 'SUPERVISOR', true, NOW(), NOW()),
+      (10, 305, 'Primera fase completada', 5, 102, 202, true, 'SUPERVISOR', true, NOW(), NOW()),
+      (11, 306, 'Inicio desarrollo ERP', 6, 101, 201, true, 'COORDINADOR', true, NOW(), NOW()),
+      (12, 306, 'Módulo financiero completado', 6, 102, 202, true, 'COORDINADOR', true, NOW(), NOW()),
+      (13, 307, 'Inicio programa capacitación', 7, 101, 201, true, 'INSTRUCTOR', true, NOW(), NOW()),
+      (14, 307, 'Primer módulo completado', 7, 102, 202, true, 'INSTRUCTOR', true, NOW(), NOW()),
+      (15, 308, 'Inicio consultoría digital', 8, 101, 201, true, 'CONSULTOR', true, NOW(), NOW()),
+      (16, 308, 'Diagnóstico inicial completado', 8, 102, 202, true, 'CONSULTOR', true, NOW(), NOW()),
+      (17, 309, 'Inicio proceso licenciamiento', 9, 101, 201, true, 'SUPERVISOR', true, NOW(), NOW()),
+      (18, 309, 'Activación de licencias', 9, 102, 202, true, 'SUPERVISOR', true, NOW(), NOW()),
+      (19, 310, 'Inicio implementación seguridad', 10, 101, 201, true, 'COORDINADOR', true, NOW(), NOW()),
+      (20, 310, 'Primera fase de seguridad', 10, 102, 202, true, 'COORDINADOR', true, NOW(), NOW());
+
+
+INSERT INTO documento_contrato (
+    id,
+    tipo_documento_id,
+    contrato_general_id,
+    documento_enlace,
+    documento_id,
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (uuid_generate_v4(), 101, 1, 'DOC-2024-001', 501, true, NOW(), NOW()),
+      (uuid_generate_v4(), 102, 1, 'DOC-2024-002', 502, true, NOW(), NOW()),
+      (uuid_generate_v4(), 103, 2, 'DOC-2024-003', 503, true, NOW(), NOW()),
+      (uuid_generate_v4(), 104, 2, 'DOC-2024-004', 504, true, NOW(), NOW()),
+      (uuid_generate_v4(), 105, 3, 'DOC-2024-005', 505, true, NOW(), NOW()),
+      (uuid_generate_v4(), 106, 3, 'DOC-2024-006', 506, true, NOW(), NOW()),
+      (uuid_generate_v4(), 107, 4, 'DOC-2024-007', 507, true, NOW(), NOW()),
+      (uuid_generate_v4(), 108, 4, 'DOC-2024-008', 508, true, NOW(), NOW()),
+      (uuid_generate_v4(), 109, 5, 'DOC-2024-009', 509, true, NOW(), NOW()),
+      (uuid_generate_v4(), 110, 5, 'DOC-2024-010', 510, true, NOW(), NOW()),
+      (uuid_generate_v4(), 111, 6, 'DOC-2024-011', 511, true, NOW(), NOW()),
+      (uuid_generate_v4(), 112, 6, 'DOC-2024-012', 512, true, NOW(), NOW()),
+      (uuid_generate_v4(), 113, 7, 'DOC-2024-013', 513, true, NOW(), NOW()),
+      (uuid_generate_v4(), 114, 7, 'DOC-2024-014', 514, true, NOW(), NOW()),
+      (uuid_generate_v4(), 115, 8, 'DOC-2024-015', 515, true, NOW(), NOW()),
+      (uuid_generate_v4(), 116, 8, 'DOC-2024-016', 516, true, NOW(), NOW()),
+      (uuid_generate_v4(), 117, 9, 'DOC-2024-017', 517, true, NOW(), NOW()),
+      (uuid_generate_v4(), 118, 9, 'DOC-2024-018', 518, true, NOW(), NOW()),
+      (uuid_generate_v4(), 119, 10, 'DOC-2024-019', 519, true, NOW(), NOW()),
+      (uuid_generate_v4(), 120, 10, 'DOC-2024-020', 520, true, NOW(), NOW());
+
+
+INSERT INTO solicitante (
+    id,
+    dependencia_solicitante_id,
+    sede_solicitante_id,
+    contrato_general_id,
+    activo,
+    fecha_creacion,
+    fecha_modificacion
+) VALUES
+      (1, 101, 201, 1, true, NOW(), NOW()),
+      (2, 102, 202, 2, true, NOW(), NOW()),
+      (3, 103, 203, 3, true, NOW(), NOW()),
+      (4, 104, 204, 4, true, NOW(), NOW()),
+      (5, 105, 205, 5, true, NOW(), NOW()),
+      (6, 106, 206, 6, true, NOW(), NOW()),
+      (7, 107, 207, 7, true, NOW(), NOW()),
+      (8, 108, 208, 8, true, NOW(), NOW()),
+      (9, 109, 209, 9, true, NOW(), NOW()),
+      (10, 110, 210, 10, true, NOW(), NOW());
