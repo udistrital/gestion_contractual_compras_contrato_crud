@@ -2686,6 +2686,17 @@
           },
           "contrato_general_id": {
             "type": "number"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "fecha_modificacion": {
+            "format": "date-time",
+            "type": "string"
           }
         },
         "required": [
@@ -2695,7 +2706,10 @@
           "resolucion",
           "documento_identidad",
           "cargo_id",
-          "contrato_general_id"
+          "contrato_general_id",
+          "activo",
+          "fecha_creacion",
+          "fecha_modificacion"
         ]
       },
       "UpdateOrdenadorContratoDto": {
@@ -2721,6 +2735,17 @@
           },
           "contrato_general_id": {
             "type": "number"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "fecha_modificacion": {
+            "format": "date-time",
+            "type": "string"
           }
         }
       }

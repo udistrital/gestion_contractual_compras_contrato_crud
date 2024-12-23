@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { ContratoGeneral } from '../../contrato-general/entities/contrato-general.entity';
 
-@Entity('ordenador-contrato')
+@Entity('ordenador_contrato')
 export class OrdenadorContrato {
   @PrimaryGeneratedColumn()
   id: number;
@@ -21,7 +21,7 @@ export class OrdenadorContrato {
   @Column({ name: 'ordenador_sikarca_id', type: 'integer' })
   ordenador_sikarca_id: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ name: 'resolucion', type: 'varchar' })
   resolucion: string;
 
   @Column({ name: 'documento_identidad', type: 'varchar' })
@@ -34,15 +34,19 @@ export class OrdenadorContrato {
   @JoinColumn({ name: 'contrato_general_id' })
   contrato_general: ContratoGeneral;
 
-  @Column()
+  @Column({ name: 'contrato_general_id' })
   contrato_general_id: number;
 
-  @Column({ type: 'boolean', default: true })
+  @Column({ name: 'activo', type: 'boolean', default: true })
   activo: boolean;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    name: 'fecha_creacion',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   fecha_creacion: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ name: 'fecha_modificacion', type: 'timestamp', nullable: true })
   fecha_modificacion: Date | null;
 }

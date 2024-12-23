@@ -1767,6 +1767,14 @@ components:
           type: number
         contrato_general_id:
           type: number
+        activo:
+          type: boolean
+        fecha_creacion:
+          format: date-time
+          type: string
+        fecha_modificacion:
+          format: date-time
+          type: string
       required:
         - tercero_id
         - ordenador_argo_id
@@ -1775,6 +1783,9 @@ components:
         - documento_identidad
         - cargo_id
         - contrato_general_id
+        - activo
+        - fecha_creacion
+        - fecha_modificacion
     UpdateOrdenadorContratoDto:
       type: object
       properties:
@@ -1792,3 +1803,11 @@ components:
           type: number
         contrato_general_id:
           type: number
+        activo:
+          type: boolean
+        fecha_creacion:
+          format: date-time
+          type: string
+        fecha_modificacion:
+          format: date-time
+          type: string
