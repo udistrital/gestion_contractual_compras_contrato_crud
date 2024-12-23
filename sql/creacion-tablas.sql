@@ -17,6 +17,7 @@ CREATE TABLE contrato_general (
     procedimiento_id INTEGER,
     plazo_ejecucion INTEGER,
     unidad_ejecutora_id INTEGER,
+    numero_constancia INTEGER,
     clase_contratista_id INTEGER,
     tipo_moneda_id INTEGER,
     valor_pesos NUMERIC(16,2),
@@ -35,7 +36,8 @@ CREATE TABLE contrato_general (
     fecha_inicial DATE,
     fecha_final DATE,
     usuario_legado VARCHAR(15),
-    numero_contrato VARCHAR,
+    numero_contrato VARCHAR(50),
+    unidad_ejecucion_id INTEGER,
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
     fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
@@ -52,7 +54,9 @@ COMMENT ON COLUMN contrato_general.plazo_ejecucion IS 'Duración del contrato';
 CREATE TABLE documento_contrato (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     tipo_documento_id INTEGER,
-    contrato_general_id INTEGER REFERENCES contrato_general(id),
+    contrato_general_id INTEGER NOT NULL REFERENCES contrato_general(id),
+    documento_enlace VARCHAR(50),
+    documento_id INTEGER,
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
     fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
@@ -66,10 +70,11 @@ CREATE TABLE estado_contrato (
     id SERIAL PRIMARY KEY,
     usuario_id INTEGER NOT NULL,
     motivo VARCHAR(250) NOT NULL,
-    contrato_general_id INTEGER REFERENCES contrato_general(id),
+    contrato_general_id INTEGER NOT NULL REFERENCES contrato_general(id),
     estado_parametro_id INTEGER,
     estado_interno_parametro_id INTEGER,
     actual BOOLEAN NO NULL,
+    usuario_rol VARCHAR(25),
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
     fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
@@ -77,17 +82,16 @@ CREATE TABLE estado_contrato (
 
 COMMENT ON TABLE estado_contrato IS 'Registra el historial de estados por los que pasa un contrato';
 COMMENT ON COLUMN estado_contrato.motivo IS 'Razón del cambio de estado del contrato';
-COMMENT ON COLUMN estado_contrato.fecha_ejecucion_estado IS 'Fecha y hora en que se realizó el cambio de estado';
 
 -- Tabla de solicitantes
 CREATE TABLE solicitante (
     id SERIAL PRIMARY KEY,
-    dependencia_solicitante_id INTEGER,
-    sede_solicitante_id INTEGER,
+    dependencia_solicitante_id INTEGER NOT NULL,
+    sede_solicitante_id INTEGER NOT NULL,
     contrato_general_id INTEGER NOT NULL UNIQUE REFERENCES contrato_general(id),
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
-    fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
+    fecha_modificacion TIMESTAMP
 );
 
 COMMENT ON TABLE solicitante IS 'Información de la dependencia o área que solicita el contrato';
@@ -106,7 +110,7 @@ CREATE TABLE lugar_ejecucion (
     contrato_general_id INTEGER UNIQUE REFERENCES contrato_general(id),
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
-    fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
+    fecha_modificacion TIMESTAMP
 );
 
 COMMENT ON TABLE lugar_ejecucion IS 'Especifica la ubicación donde se ejecutará el contrato';
@@ -117,17 +121,17 @@ CREATE TABLE supervisor_contrato (
     id SERIAL PRIMARY KEY,
     contrato_general_id INTEGER NOT NULL REFERENCES contrato_general(id),
     supervisor_id INTEGER NOT NULL,
-    sede_legado VARCHAR NOT NULL,
-    dependencia_legado VARCHAR NOT NULL,
-    cargo_legado VARCHAR NOT NULL,
+    sede_legado VARCHAR,
+    dependencia_legado VARCHAR,
+    cargo_legado VARCHAR,
     cargo_id INTEGER NOT NULL,
     documento INTEGER NOT NULL,
-    digito_verficacion INTEGERER NOT NULL,
-    sede VARCHAR NOT NULL,
-    dependencia VARCHAR NOT NULL,
+    digito_verificacion INTEGER,
+    sede_id INTEGER NOT NULL,
+    dependencia_id INTEGER NOT NULL,
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
-    fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
+    fecha_modificacion TIMESTAMP
 );
 
 COMMENT ON TABLE supervisor_contrato IS 'Registro de supervisores asignados a cada contrato';
@@ -139,7 +143,7 @@ CREATE TABLE cdp (
     numero_cdp_id INTEGER NOT NULL,
     fecha_registro DATE NOT NULL,
     vigencia_cdp INTEGER NOT NULL,
-    contrato_general_id INTEGER REFERENCES contrato_general(id),
+    contrato_general_id INTEGER NOT NULL REFERENCES contrato_general(id),
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
     fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
@@ -156,9 +160,9 @@ CREATE TABLE registro_presupuestal (
     fecha_registro DATE,
     vigencia_cdp INTEGER,
     cdp_id INTEGER NOT NULL UNIQUE REFERENCES cdp(id),
-    activo BOOLEAN DEFAULT TRUE NOT NULL,
-    fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
-    fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
+    activo BOOLEAN NOT NULL,
+    fecha_creacion TIMESTAMP NOT NULL,
+    fecha_modificacion TIMESTAMP NOT NULL
 );
 
 COMMENT ON TABLE registro_presupuestal IS 'Registros presupuestales asociados a los CDP';
@@ -176,9 +180,9 @@ CREATE TABLE contrato_arrendamiento (
     plazo_entrega INTEGER,
     valor_arrendamiento NUMERIC(16,2),
     contrato_general_id INTEGER NOT NULL UNIQUE REFERENCES contrato_general(id),
-    activo BOOLEAN DEFAULT TRUE NOT NULL,
-    fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
-    fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
+    activo BOOLEAN NOT NULL,
+    fecha_creacion TIMESTAMP NOT NULL,
+    fecha_modificacion TIMESTAMP NOT NULL
 );
 
 COMMENT ON TABLE contrato_arrendamiento IS 'Información específica para contratos de tipo arrendamiento';
@@ -194,7 +198,7 @@ CREATE TABLE contratista (
     contrato_general_id INTEGER UNIQUE REFERENCES contrato_general(id),
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
-    fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
+    fecha_modificacion TIMESTAMP
 );
 
 COMMENT ON TABLE contratista IS 'Información de los contratistas';
@@ -208,9 +212,9 @@ CREATE TABLE convenio (
     nombre VARCHAR(100) NOT NULL,
     tipo_convenio_id INTEGER NOT NULL,
     contrato_general_id INTEGER NOT NULL UNIQUE REFERENCES contrato_general(id),
-    activo BOOLEAN DEFAULT TRUE NOT NULL,
-    fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
-    fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
+    activo BOOLEAN NOT NULL,
+    fecha_creacion TIMESTAMP NOT NULL,
+    fecha_modificacion TIMESTAMP NOT NULL
 );
 
 COMMENT ON TABLE convenio IS 'Información específica para contratos de tipo convenio';
@@ -221,7 +225,7 @@ COMMENT ON COLUMN convenio.tipo_convenio_id IS 'Tipo de convenio (marco, especí
 CREATE TABLE especificacion_tecnica (
     id SERIAL PRIMARY KEY,
     descripcion TEXT NOT NULL,
-    cantidad NUMERIC(10,2) NOT NULL,
+    cantidad INTEGER NOT NULL,
     valor_unitario NUMERIC(10,2) NOT NULL,
     valor_total NUMERIC(15,2) NOT NULL,
     contrato_general_id INTEGER REFERENCES contrato_general(id),
@@ -251,6 +255,25 @@ CREATE TABLE acta_inicio (
 COMMENT ON TABLE acta_inicio IS 'Registro de las actas de inicio de los contratos';
 COMMENT ON COLUMN acta_inicio.fecha_inicio IS 'Fecha de inicio de ejecución del contrato';
 COMMENT ON COLUMN acta_inicio.fecha_fin IS 'Fecha prevista de finalización del contrato';
+
+-- Tabla de ordenadores de contrato
+CREATE TABLE ordenador_contrato (
+    id SERIAL PRIMARY KEY,
+    tercero_id INTEGER NOT NULL,
+    ordenador_argo_id INTEGER NOT NULL,
+    ordenador_sikarca_id INTEGER NOT NULL,
+    resolucion VARCHAR NOT NULL,
+    documento_identidad VARCHAR NOT NULL,
+    cargo_id INTEGER NOT NULL,
+    contrato_general_id INTEGER NOT NULL UNIQUE REFERENCES contrato_general(id),
+    activo BOOLEAN DEFAULT TRUE NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
+    fecha_modificacion TIMESTAMP
+);
+
+COMMENT ON TABLE ordenador_contrato IS 'Información de los ordenadores de gasto para cada contrato';
+COMMENT ON COLUMN ordenador_contrato.tercero_id IS 'Identificador del tercero que actúa como ordenador';
+COMMENT ON COLUMN ordenador_contrato.resolucion IS 'Número de resolución que autoriza al ordenador';
 
 -- Crear índices para mejorar el rendimiento
 CREATE INDEX idx_contrato_general_tipo_contrato ON contrato_general(tipo_contrato_id);
