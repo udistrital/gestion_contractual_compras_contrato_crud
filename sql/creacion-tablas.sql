@@ -69,7 +69,7 @@ COMMENT ON COLUMN documento_contrato.tipo_documento_id IS 'Tipo de documento seg
 CREATE TABLE estado_contrato (
     id SERIAL PRIMARY KEY,
     usuario_id INTEGER NOT NULL,
-    motivo VARCHAR(250) NOT NULL,
+    motivo VARCHAR(250),
     contrato_general_id INTEGER NOT NULL REFERENCES contrato_general(id),
     estado_parametro_id INTEGER,
     estado_interno_parametro_id INTEGER,

@@ -29,7 +29,7 @@ export class CreateEstadoContratoDto {
   @IsNumber()
   estado_interno_parametro_id: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   motivo: string;
 
