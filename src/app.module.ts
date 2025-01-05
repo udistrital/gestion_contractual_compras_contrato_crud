@@ -24,6 +24,7 @@ import { SolicitanteEntity } from './solicitante/entities/solicitante.entity';
 import { OrdenadorContrato } from './ordenador-contrato/entities/ordenador-contrato.entity';
 import { OrdenadorContratoModule } from './ordenador-contrato/ordenador-contrato.module';
 import { SupervisorEntity } from './supervisor/entities/supervisor.entity';
+import { SupervisorModule } from './supervisor/supervisor.module';
 
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import { SupervisorEntity } from './supervisor/entities/supervisor.entity';
     ActaInicioModule,
     SolicitanteModule,
     OrdenadorContratoModule,
+    SupervisorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

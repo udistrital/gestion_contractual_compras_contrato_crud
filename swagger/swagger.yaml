@@ -1326,6 +1326,126 @@ paths:
           description: ''
       summary: Eliminar un ordenador
       tags: *ref_9
+  /supervisores:
+    post:
+      operationId: SupervisorController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSupervisorDto'
+      responses:
+        '201':
+          description: El Supervisor ha sido creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupervisorEntity'
+        '400':
+          description: Solicitud incorrecta.
+      summary: Crear un nuevo supervisor
+      tags: &ref_10
+        - supervisores
+    get:
+      operationId: SupervisorController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: Devuelve todos los supervisores.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SupervisorEntity'
+      summary: Obtener todos los supervisores
+      tags: *ref_10
+  /supervisores/{id}:
+    get:
+      operationId: SupervisorController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Devuelve el supervisor especificado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupervisorEntity'
+        '404':
+          description: Supervisor no encontrado.
+      summary: Obtener un supervisor por id
+      tags: *ref_10
+    patch:
+      operationId: SupervisorController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSupervisorDto'
+      responses:
+        '200':
+          description: El supervisor ha sido actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupervisorEntity'
+        '400':
+          description: Solicitud incorrecta.
+        '404':
+          description: Supervisor no encontrado.
+      summary: Actualizar un supervisor
+      tags: *ref_10
+    delete:
+      operationId: SupervisorController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: El Supervisor ha sido eliminado exitosamente.
+        '404':
+          description: Supervisor no encontrado.
+      summary: Eliminar un Supervisor
+      tags: *ref_10
+  /supervisores/contrato/{contratoId}:
+    get:
+      operationId: SupervisorController_findByContratoGeneralId
+      parameters:
+        - name: contratoId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Devuelve los supervisores para el contrato especificado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SupervisorEntity'
+        '404':
+          description: No se supervisores para el contrato especificado.
+      summary: Obtiene el supervisor por id de contrato
+      tags: *ref_10
 info:
   title: Gestion Contractual CRUD
   description: API para la gestión contractual
@@ -1811,3 +1931,12 @@ components:
         fecha_modificacion:
           format: date-time
           type: string
+    CreateSupervisorDto:
+      type: object
+      properties: {}
+    SupervisorEntity:
+      type: object
+      properties: {}
+    UpdateSupervisorDto:
+      type: object
+      properties: {}

@@ -105,14 +105,12 @@ export class SupervisorController {
   @ApiParam({ name: 'contratoId', type: 'string' })
   @ApiResponse({
     status: 200,
-    description:
-      'Devuelve los supervisores para el contrato especificado.',
+    description: 'Devuelve los supervisores para el contrato especificado.',
     type: [SupervisorEntity],
   })
   @ApiResponse({
     status: 404,
-    description:
-      'No se supervisores para el contrato especificado.',
+    description: 'No se supervisores para el contrato especificado.',
   })
   findByContratoGeneralId(@Param('contratoId') contratoId: string) {
     return this.supervisorService.findByContratoGeneralId(+contratoId);
