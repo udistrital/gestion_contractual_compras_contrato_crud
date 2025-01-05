@@ -20,11 +20,9 @@ export class OrdenadorContratoService {
   }
 
   async findOne(id: number): Promise<OrdenadorContrato> {
-    console.log('ID recibido en findOne:', id);
     const found = await this.ordenadorRepository.findOne({
       where: { id },
     });
-    console.log('Resultado de la búsqueda en findOne:', found);
     if (!found) {
       throw new NotFoundException(`Ordenador con ID "${id}" no encontrado`);
     }
@@ -112,5 +110,21 @@ export class OrdenadorContratoService {
     ordenador.fecha_modificacion = new Date();
 
     return await this.ordenadorRepository.save(ordenador);
+  }
+
+  async findByContratoGeneralId(
+    contratoGeneralId: number,
+  ): Promise<OrdenadorContrato> {
+    const ordenador = await this.ordenadorRepository.findOne({
+      where: { contrato_general: { id: contratoGeneralId } },
+    });
+
+    if (!ordenador) {
+      throw new Error(
+        `No se encontró ningún Ordenador para el contrato con id ${contratoGeneralId}`,
+      );
+    }
+
+    return ordenador;
   }
 }

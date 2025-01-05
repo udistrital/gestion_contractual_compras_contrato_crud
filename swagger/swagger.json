@@ -2135,46 +2135,105 @@
         ]
       }
     },
-    "/supervisores": {
-      "post": {
-        "operationId": "SupervisorController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateSupervisorDto"
-              }
+    "/ordenador-contrato/contrato/{contratoId}": {
+      "get": {
+        "operationId": "OrdenadorContratoController_findByContratoGeneralId",
+        "parameters": [
+          {
+            "name": "contratoId",
+            "required": true,
+            "in": "path",
+            "description": "ID del contrato",
+            "schema": {
+              "type": "number"
             }
           }
-        },
+        ],
         "responses": {
-          "201": {
-            "description": "El Supervisor ha sido creado exitosamente.",
+          "200": {
+            "description": "Ordenaodres encontrados",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SupervisorEntity"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrdenadorContrato"
+                  }
                 }
               }
             }
           },
-          "400": {
-            "description": "Solicitud incorrecta."
+          "404": {
+            "description": "No se encontraron ordenadores"
           }
         },
-        "summary": "Crear un nuevo supervisor",
+        "summary": "Obtener ordenador por ID de contrato",
         "tags": [
-          "supervisores"
+          "ordenadores-contrato"
         ]
-      },
+      }
+    },
+    "/supervisores": {
       "get": {
         "operationId": "SupervisorController_findAll",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "Número de registros a saltar",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Número máximo de registros a retornar",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "orderBy",
+            "required": false,
+            "in": "query",
+            "description": "Dirección del ordenamiento (ASC o DESC)",
+            "schema": {}
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "Campo por el cual ordenar",
+            "schema": {}
+          },
+          {
+            "name": "fields",
+            "required": false,
+            "in": "query",
+            "description": "Campos a incluir en la respuesta (separados por comas)",
+            "schema": {}
+          },
+          {
+            "name": "query",
+            "required": false,
+            "in": "query",
+            "description": "Filtros en formato JSON",
+            "schema": {}
+          },
+          {
+            "name": "include",
+            "required": false,
+            "in": "query",
+            "description": "Relaciones a incluir (separadas por comas). Ejemplo: contratos,usuario",
+            "schema": {}
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Devuelve todos los supervisores.",
+            "description": "Lista de supervisores",
             "content": {
               "application/json": {
                 "schema": {
@@ -2191,6 +2250,36 @@
         "tags": [
           "supervisores"
         ]
+      },
+      "post": {
+        "operationId": "SupervisorController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSupervisorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Supervisor creado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupervisorEntity"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Crear un nuevo supervisor",
+        "tags": [
+          "supervisores"
+        ]
       }
     },
     "/supervisores/{id}": {
@@ -2201,14 +2290,22 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "description": "ID del supervisor",
             "schema": {
-              "type": "string"
+              "type": "number"
             }
+          },
+          {
+            "name": "include",
+            "required": false,
+            "in": "query",
+            "description": "Relaciones a incluir (separadas por comas)",
+            "schema": {}
           }
         ],
         "responses": {
           "200": {
-            "description": "Devuelve el supervisor especificado.",
+            "description": "Supervisor encontrado",
             "content": {
               "application/json": {
                 "schema": {
@@ -2218,23 +2315,24 @@
             }
           },
           "404": {
-            "description": "Supervisor no encontrado."
+            "description": "Supervisor no encontrado"
           }
         },
-        "summary": "Obtener un supervisor por id",
+        "summary": "Obtener un supervisor por ID",
         "tags": [
           "supervisores"
         ]
       },
-      "patch": {
+      "put": {
         "operationId": "SupervisorController_update",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
+            "description": "ID del supervisor a actualizar",
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
@@ -2250,7 +2348,7 @@
         },
         "responses": {
           "200": {
-            "description": "El supervisor ha sido actualizado exitosamente.",
+            "description": "Supervisor actualizado",
             "content": {
               "application/json": {
                 "schema": {
@@ -2259,11 +2357,8 @@
               }
             }
           },
-          "400": {
-            "description": "Solicitud incorrecta."
-          },
           "404": {
-            "description": "Supervisor no encontrado."
+            "description": "Supervisor no encontrado"
           }
         },
         "summary": "Actualizar un supervisor",
@@ -2278,20 +2373,21 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "description": "ID del supervisor a eliminar",
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "El Supervisor ha sido eliminado exitosamente."
+            "description": "Supervisor eliminado"
           },
           "404": {
-            "description": "Supervisor no encontrado."
+            "description": "Supervisor no encontrado"
           }
         },
-        "summary": "Eliminar un Supervisor",
+        "summary": "Eliminar un supervisor",
         "tags": [
           "supervisores"
         ]
@@ -2305,14 +2401,15 @@
             "name": "contratoId",
             "required": true,
             "in": "path",
+            "description": "ID del contrato",
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Devuelve los supervisores para el contrato especificado.",
+            "description": "Supervisores encontrados",
             "content": {
               "application/json": {
                 "schema": {
@@ -2325,10 +2422,10 @@
             }
           },
           "404": {
-            "description": "No se supervisores para el contrato especificado."
+            "description": "No se encontraron supervisores"
           }
         },
-        "summary": "Obtiene el supervisor por id de contrato",
+        "summary": "Obtener supervisores por ID de contrato",
         "tags": [
           "supervisores"
         ]
@@ -2948,11 +3045,15 @@
           }
         }
       },
-      "CreateSupervisorDto": {
+      "OrdenadorContrato": {
         "type": "object",
         "properties": {}
       },
       "SupervisorEntity": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateSupervisorDto": {
         "type": "object",
         "properties": {}
       },

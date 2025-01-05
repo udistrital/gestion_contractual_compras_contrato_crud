@@ -6,11 +6,16 @@ import {
   Param,
   Delete,
   Put,
+  Res,
+  HttpStatus,
 } from '@nestjs/common';
 import { OrdenadorContratoService } from './ordenador-contrato.service';
 import { CreateOrdenadorContratoDto } from './dto/create-ordenador-contrato.dto';
 import { UpdateOrdenadorContratoDto } from './dto/update-ordenador-contrato.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
+import { StandardResponse } from '../utils/standardResponse.interface';
+import { OrdenadorContrato } from './entities/ordenador-contrato.entity';
 
 @ApiTags('ordenadores-contrato')
 @Controller('ordenador-contrato')
@@ -53,5 +58,45 @@ export class OrdenadorContratoController {
   @ApiOperation({ summary: 'Eliminar un ordenador' })
   remove(@Param('id') id: string) {
     return this.ordenadorContratoService.remove(+id);
+  }
+
+  @Get('contrato/:contratoId')
+  @ApiOperation({ summary: 'Obtener ordenador por ID de contrato' })
+  @ApiParam({
+    name: 'contratoId',
+    type: 'number',
+    description: 'ID del contrato',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Ordenaodres encontrados',
+    type: [OrdenadorContrato],
+  })
+  @ApiResponse({ status: 404, description: 'No se encontraron ordenadores' })
+  async findByContratoGeneralId(
+    @Res() res: Response,
+    @Param('contratoId') contratoId: string,
+  ): Promise<void> {
+    try {
+      const supervisores =
+        await this.ordenadorContratoService.findByContratoGeneralId(
+          +contratoId,
+        );
+      const response: StandardResponse<OrdenadorContrato> = {
+        Success: true,
+        Status: HttpStatus.OK,
+        Message: 'Supervisores encontrados',
+        Data: supervisores,
+      };
+      res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      const response: StandardResponse<any> = {
+        Success: false,
+        Status: HttpStatus.NOT_FOUND,
+        Message: 'No se encontraron supervisores para el contrato especificado',
+        Data: error,
+      };
+      res.status(HttpStatus.NOT_FOUND).json(response);
+    }
   }
 }

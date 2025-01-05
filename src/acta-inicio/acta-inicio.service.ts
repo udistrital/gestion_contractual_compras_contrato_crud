@@ -20,11 +20,9 @@ export class ActaInicioService {
   }
 
   async findOne(id: number): Promise<ActaInicio> {
-    console.log('ID recibido en findOne:', id);
     const found = await this.actaInicioRepository.findOne({
       where: { id },
     });
-    console.log('Resultado de la búsqueda en findOne:', found);
     if (!found) {
       throw new NotFoundException(`ActaInicio con ID "${id}" no encontrada`);
     }
@@ -32,8 +30,6 @@ export class ActaInicioService {
   }
 
   async create(actaInicioDto: CrearActaInicioDto): Promise<ActaInicio> {
-    console.log('Datos recibidos para crear ActaInicio:', actaInicioDto);
-
     const contratoExiste = await this.contratoGeneralRepository.findOne({
       where: { id: actaInicioDto.contrato_general_id },
       select: ['id'],
@@ -56,8 +52,6 @@ export class ActaInicioService {
       fecha_creacion: new Date(),
       fecha_modificacion: new Date(),
     });
-
-    console.log('Entidad ActaInicio creada:', newActaInicio);
 
     return await this.actaInicioRepository.save(newActaInicio);
   }

@@ -1326,7 +1326,84 @@ paths:
           description: ''
       summary: Eliminar un ordenador
       tags: *ref_9
+  /ordenador-contrato/contrato/{contratoId}:
+    get:
+      operationId: OrdenadorContratoController_findByContratoGeneralId
+      parameters:
+        - name: contratoId
+          required: true
+          in: path
+          description: ID del contrato
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Ordenaodres encontrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrdenadorContrato'
+        '404':
+          description: No se encontraron ordenadores
+      summary: Obtener ordenador por ID de contrato
+      tags: *ref_9
   /supervisores:
+    get:
+      operationId: SupervisorController_findAll
+      parameters:
+        - name: offset
+          required: false
+          in: query
+          description: Número de registros a saltar
+          schema:
+            type: number
+        - name: limit
+          required: false
+          in: query
+          description: Número máximo de registros a retornar
+          schema:
+            type: number
+        - name: orderBy
+          required: false
+          in: query
+          description: Dirección del ordenamiento (ASC o DESC)
+          schema: {}
+        - name: sortBy
+          required: false
+          in: query
+          description: Campo por el cual ordenar
+          schema: {}
+        - name: fields
+          required: false
+          in: query
+          description: Campos a incluir en la respuesta (separados por comas)
+          schema: {}
+        - name: query
+          required: false
+          in: query
+          description: Filtros en formato JSON
+          schema: {}
+        - name: include
+          required: false
+          in: query
+          description: >-
+            Relaciones a incluir (separadas por comas). Ejemplo:
+            contratos,usuario
+          schema: {}
+      responses:
+        '200':
+          description: Lista de supervisores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SupervisorEntity'
+      summary: Obtener todos los supervisores
+      tags: &ref_10
+        - supervisores
     post:
       operationId: SupervisorController_create
       parameters: []
@@ -1338,29 +1415,12 @@ paths:
               $ref: '#/components/schemas/CreateSupervisorDto'
       responses:
         '201':
-          description: El Supervisor ha sido creado exitosamente.
+          description: Supervisor creado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SupervisorEntity'
-        '400':
-          description: Solicitud incorrecta.
       summary: Crear un nuevo supervisor
-      tags: &ref_10
-        - supervisores
-    get:
-      operationId: SupervisorController_findAll
-      parameters: []
-      responses:
-        '200':
-          description: Devuelve todos los supervisores.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SupervisorEntity'
-      summary: Obtener todos los supervisores
       tags: *ref_10
   /supervisores/{id}:
     get:
@@ -1369,27 +1429,34 @@ paths:
         - name: id
           required: true
           in: path
+          description: ID del supervisor
           schema:
-            type: string
+            type: number
+        - name: include
+          required: false
+          in: query
+          description: Relaciones a incluir (separadas por comas)
+          schema: {}
       responses:
         '200':
-          description: Devuelve el supervisor especificado.
+          description: Supervisor encontrado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SupervisorEntity'
         '404':
-          description: Supervisor no encontrado.
-      summary: Obtener un supervisor por id
+          description: Supervisor no encontrado
+      summary: Obtener un supervisor por ID
       tags: *ref_10
-    patch:
+    put:
       operationId: SupervisorController_update
       parameters:
         - name: id
           required: true
           in: path
+          description: ID del supervisor a actualizar
           schema:
-            type: string
+            type: number
       requestBody:
         required: true
         content:
@@ -1398,15 +1465,13 @@ paths:
               $ref: '#/components/schemas/UpdateSupervisorDto'
       responses:
         '200':
-          description: El supervisor ha sido actualizado exitosamente.
+          description: Supervisor actualizado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SupervisorEntity'
-        '400':
-          description: Solicitud incorrecta.
         '404':
-          description: Supervisor no encontrado.
+          description: Supervisor no encontrado
       summary: Actualizar un supervisor
       tags: *ref_10
     delete:
@@ -1415,14 +1480,15 @@ paths:
         - name: id
           required: true
           in: path
+          description: ID del supervisor a eliminar
           schema:
-            type: string
+            type: number
       responses:
         '200':
-          description: El Supervisor ha sido eliminado exitosamente.
+          description: Supervisor eliminado
         '404':
-          description: Supervisor no encontrado.
-      summary: Eliminar un Supervisor
+          description: Supervisor no encontrado
+      summary: Eliminar un supervisor
       tags: *ref_10
   /supervisores/contrato/{contratoId}:
     get:
@@ -1431,11 +1497,12 @@ paths:
         - name: contratoId
           required: true
           in: path
+          description: ID del contrato
           schema:
-            type: string
+            type: number
       responses:
         '200':
-          description: Devuelve los supervisores para el contrato especificado.
+          description: Supervisores encontrados
           content:
             application/json:
               schema:
@@ -1443,8 +1510,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/SupervisorEntity'
         '404':
-          description: No se supervisores para el contrato especificado.
-      summary: Obtiene el supervisor por id de contrato
+          description: No se encontraron supervisores
+      summary: Obtener supervisores por ID de contrato
       tags: *ref_10
 info:
   title: Gestion Contractual CRUD
@@ -1931,10 +1998,13 @@ components:
         fecha_modificacion:
           format: date-time
           type: string
-    CreateSupervisorDto:
+    OrdenadorContrato:
       type: object
       properties: {}
     SupervisorEntity:
+      type: object
+      properties: {}
+    CreateSupervisorDto:
       type: object
       properties: {}
     UpdateSupervisorDto:

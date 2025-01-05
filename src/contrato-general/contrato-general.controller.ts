@@ -8,7 +8,8 @@ import {
   Put,
   HttpStatus,
   Res,
-  Query, Patch,
+  Query,
+  Patch,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ContratoGeneralService } from './contrato-general.service';
