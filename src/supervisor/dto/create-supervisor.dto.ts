@@ -1,33 +1,61 @@
 import {
   IsNotEmpty,
   IsNumber,
-  IsBoolean,
-  IsDate,
+  IsString,
   IsOptional,
+  IsBoolean,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateSupervisorDto {
   @IsNotEmpty()
   @IsNumber()
-  dependencia_solicitante_id: number;
+  @Type(() => Number)
+  supervisor_id: number;
 
-  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  sede_legado?: string;
+
+  @IsOptional()
+  @IsString()
+  dependencia_legado?: string;
+
+  @IsOptional()
+  @IsString()
+  cargo_legado?: string;
+
+  @IsOptional()
   @IsNumber()
-  sede_solicitante_id: number;
+  @Type(() => Number)
+  cargo_id?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  documento?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  digito_verificacion?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  sede_id?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  dependencia_id?: number;
 
   @IsOptional()
   @IsBoolean()
   activo?: boolean;
 
-  @IsOptional()
-  @IsDate()
-  fecha_creacion?: Date;
-
-  @IsOptional()
-  @IsDate()
-  fecha_modificacion?: Date;
-
   @IsNotEmpty()
   @IsNumber()
+  @Type(() => Number)
   contrato_general_id: number;
 }

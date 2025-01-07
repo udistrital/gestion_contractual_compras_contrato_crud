@@ -12,7 +12,7 @@ export class OrdenadorContrato {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'tercero_id', type: 'integer' })
+  @Column({ name: 'tercero_id', type: 'integer', nullable: true })
   tercero_id: number;
 
   @Column({ name: 'ordenador_argo_id', type: 'integer' })
@@ -21,7 +21,7 @@ export class OrdenadorContrato {
   @Column({ name: 'ordenador_sikarca_id', type: 'integer' })
   ordenador_sikarca_id: number;
 
-  @Column({ name: 'resolucion', type: 'varchar' })
+  @Column({ name: 'resolucion', type: 'varchar', nullable: true })
   resolucion: string;
 
   @Column({ name: 'documento_identidad', type: 'varchar' })
