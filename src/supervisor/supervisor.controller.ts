@@ -258,7 +258,7 @@ export class SupervisorController {
     try {
       const supervisores =
         await this.supervisorService.findByContratoGeneralId(+contratoId);
-      const response: StandardResponse<SupervisorEntity> = {
+      const response: StandardResponse<SupervisorEntity[]> = {
         Success: true,
         Status: HttpStatus.OK,
         Message: 'Supervisores encontrados',
