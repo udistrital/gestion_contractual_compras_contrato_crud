@@ -103,8 +103,8 @@ export class SupervisorService {
 
   async findByContratoGeneralId(
     contratoGeneralId: number,
-  ): Promise<SupervisorEntity> {
-    const supervisor = await this.supervisorEntityRepository.findOne({
+  ): Promise<SupervisorEntity[]> {
+    const supervisor = await this.supervisorEntityRepository.find({
       where: { contrato_general: { id: contratoGeneralId } },
     });
 
