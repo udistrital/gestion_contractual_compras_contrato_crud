@@ -138,8 +138,8 @@ CREATE TABLE supervisor_contrato (
 COMMENT ON TABLE supervisor_contrato IS 'Registro de supervisores asignados a cada contrato';
 COMMENT ON COLUMN supervisor_contrato.supervisor_id IS 'Identificador del funcionario que ejerce como supervisor';
 
--- Tabla de CDP (Certificado de Disponibilidad Presupuestal)
-CREATE TABLE cdp (
+-- Tabla CDP (Certificado de Disponibilidad Presupuestal)
+CREATE TABLE disponibilidad_presupuestal (
     id SERIAL PRIMARY KEY,
     numero_cdp_id INTEGER NOT NULL,
     fecha_registro DATE NOT NULL,
@@ -150,9 +150,9 @@ CREATE TABLE cdp (
     fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
 );
 
-COMMENT ON TABLE cdp IS 'Certificados de Disponibilidad Presupuestal asociados a los contratos';
-COMMENT ON COLUMN cdp.numero_cdp_id IS 'Número único del CDP';
-COMMENT ON COLUMN cdp.vigencia_cdp IS 'Año de vigencia del CDP';
+COMMENT ON TABLE disponibilidad_presupuestal IS 'Certificados de Disponibilidad Presupuestal asociados a los contratos';
+COMMENT ON COLUMN disponibilidad_presupuestal.numero_cdp_id IS 'Número único del CDP';
+COMMENT ON COLUMN disponibilidad_presupuestal.vigencia_cdp IS 'Año de vigencia del CDP';
 
 -- Tabla de registros presupuestales
 CREATE TABLE registro_presupuestal (
@@ -277,7 +277,7 @@ COMMENT ON TABLE ordenador_contrato IS 'Información de los ordenadores de gasto
 COMMENT ON COLUMN ordenador_contrato.tercero_id IS 'Identificador del tercero que actúa como ordenador';
 COMMENT ON COLUMN ordenador_contrato.resolucion IS 'Número de resolución que autoriza al ordenador';
 
--- Crear índices para mejorar el rendimiento
+-- Índices
 CREATE INDEX idx_contrato_general_tipo_contrato ON contrato_general(tipo_contrato_id);
 CREATE INDEX idx_documento_contrato_contrato ON documento_contrato(contrato_general_id);
 CREATE INDEX idx_estado_contrato_contrato ON estado_contrato(contrato_general_id);
