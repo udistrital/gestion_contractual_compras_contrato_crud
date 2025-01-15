@@ -29,6 +29,7 @@ CREATE TABLE contrato_general (
     modo_pago VARCHAR,
     objeto VARCHAR,
     justificacion VARCHAR,
+    actividades VARCHAR,
     condiciones VARCHAR,
     observaciones VARCHAR(500),
     vigencia VARCHAR(4),
