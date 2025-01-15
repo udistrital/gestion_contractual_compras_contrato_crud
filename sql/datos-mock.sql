@@ -135,7 +135,7 @@ INSERT INTO contrato_arrendamiento (
       (5, 'Almacén equipos', 30, 'IPC + 2%', 365, 400000.00, 15, 2000000.00, 5, true, NOW(), NOW());
 
 
-INSERT INTO cdp (
+INSERT INTO disponibilidad_presupuestal (
     id,
     numero_cdp_id,
     fecha_registro,
