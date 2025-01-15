@@ -161,7 +161,7 @@ CREATE TABLE registro_presupuestal (
     numero_disponibilidad INTEGER,
     fecha_registro DATE,
     vigencia_cdp INTEGER,
-    cdp_id INTEGER NOT NULL UNIQUE REFERENCES cdp(id),
+    cdp_id INTEGER NOT NULL UNIQUE REFERENCES disponibilidad_presupuestal(id),
     activo BOOLEAN NOT NULL,
     fecha_creacion TIMESTAMP NOT NULL,
     fecha_modificacion TIMESTAMP NOT NULL
@@ -174,7 +174,7 @@ COMMENT ON COLUMN registro_presupuestal.vigencia_cdp IS 'Año de vigencia del re
 -- Tabla de contratos de arrendamiento
 CREATE TABLE contrato_arrendamiento (
     id SERIAL PRIMARY KEY,
-    destinacion VARCHAR(255),
+    destinacion VARCHAR,
     plazo_pago_mensual INTEGER,
     reajuste VARCHAR(255),
     plazo_administracion INTEGER,
