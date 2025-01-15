@@ -31,7 +31,7 @@ CREATE TABLE contrato_general (
     justificacion VARCHAR,
     actividades VARCHAR,
     condiciones VARCHAR,
-    observaciones VARCHAR(500),
+    observaciones VARCHAR(1000),
     vigencia VARCHAR(4),
     consecutivo_elaboracion VARCHAR(50),
     fecha_inicial DATE,
