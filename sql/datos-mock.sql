@@ -33,7 +33,7 @@ INSERT INTO contrato_general (
     valor_pesos,
     tipo_gasto_id,
     origen_recursos_id,
-    origen_presupuestos_id,
+    origen_presupuesto_id,
     tema_gasto_inversion_id,
     valor_contrato_me,
     valor_tasa_cambio,
