@@ -159,9 +159,9 @@ COMMENT ON COLUMN disponibilidad_presupuestal.vigencia_cdp IS 'Año de vigencia 
 -- Tabla de registros presupuestales
 CREATE TABLE registro_presupuestal (
     id SERIAL PRIMARY KEY,
-    numero_disponibilidad INTEGER,
+    registro_presupuestal INTEGER,
     fecha_registro DATE,
-    vigencia_cdp INTEGER,
+    vigencia_rp INTEGER,
     cdp_id INTEGER NOT NULL UNIQUE REFERENCES disponibilidad_presupuestal(id),
     activo BOOLEAN NOT NULL,
     fecha_creacion TIMESTAMP NOT NULL,
