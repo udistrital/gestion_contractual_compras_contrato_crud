@@ -159,9 +159,9 @@ INSERT INTO disponibilidad_presupuestal (
 
 INSERT INTO registro_presupuestal (
     id,
-    numero_disponibilidad,
+    registro_presupuestal,
     fecha_registro,
-    vigencia_cdp,
+    vigencia_rp,
     cdp_id,
     activo,
     fecha_creacion,
