@@ -16,7 +16,6 @@ CREATE TABLE contrato_general (
     procedimiento_id INTEGER,
     plazo_ejecucion INTEGER,
     unidad_ejecutora_id INTEGER,
-    clase_contratista_id INTEGER,
     tipo_moneda_id INTEGER,
     valor_pesos NUMERIC(16,2),
     tipo_gasto_id INTEGER,
@@ -198,6 +197,7 @@ CREATE TABLE contratista (
     numero_documento VARCHAR(20) NOT NULL,
     tipo_persona_id INTEGER NOT NULL,
     contrato_general_id INTEGER UNIQUE REFERENCES contrato_general(id),
+    clase_contratista_id INTEGER,
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
     fecha_modificacion TIMESTAMP
