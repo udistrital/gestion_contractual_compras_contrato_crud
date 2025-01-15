@@ -63,43 +63,43 @@
 | plazo_pago_mensual   | plazo_pago_mensual   |                                    |
 | reajuste             | reajuste             |                                    |
 | plazo_administracion | plazo_administracion |                                    |
-| valor_administracion | valor_administracion | Ajustar de integer a numeric(16,2) |
+| valor_administracion | valor_administracion |                                    |
 | plazo_entrega        | plazo_entrega        |                                    |
-| valor_arrendamiento  | valor_arrendamiento  | Ajustar de integer a numeric(16,2) |
+| valor_arrendamiento  | valor_arrendamiento  |                                    |
 
 
 # CDP - disponibilidad presupuestal (contrato disponibilidad)
 
 | **ARGO**       | **ARGO V2**    | **NOTAS**            |
 |----------------|----------------|----------------------|
-| numero_cdp     | numero_cdp_id  | Igual, mismos datos. |
-| estado         | activo         | Igual, mismos datos. |
+| numero_cdp     | numero_cdp_id  | Se mantiene sigla cdp|
+| estado         | activo         |                      |
 | fecha_registro | fecha_registro |                      |
-| vigencia_cdp   | vigencia_cdp   |                      |
+| vigencia_cdp   | vigencia_cdp   | Se mantiene sigla cdp|
 
 
 # Registro presupuestal
 
-| **ARGO**              | **ARGO V2**          | **NOTAS**            |
-|-----------------------|----------------------|----------------------|
-| estado                | activo               | Igual, mismos datos. |
-| fecha_registro        | fecha_registro       |                      |
-| registro_presupuestal | numero_disponiblidad | ¿? confirmar         |
-| vigencia_rp           | vigencia_cdp         | ¿? confirmar         |
+| **ARGO**              | **ARGO V2**           | **NOTAS**            |
+|-----------------------|-----------------------|----------------------|
+| estado                | activo                |                      |
+| fecha_registro        | fecha_registro        |                      |
+| registro_presupuestal | registro_presupuestal |                      |
+| vigencia_rp           | vigencia_rp           |                      |
 
 
-# Especificacion Tecnicas
+# Especificación Técnica
 
 | **ARGO**            | **ARGO V2** | **NOTAS**                    |
 |---------------------|-------------|------------------------------|
-| puc                 |             | Revisar                      |
-| catalogo            |             | Revisar                      |
-| solicitud_necesidad |             | Revisar                      |
+| puc                 |             | No se usa                    |
+| catalogo            |             | No se usa                    |
+| solicitud_necesidad |             | No se usa                    |
 | descripcion         | descripcion |                              |
 | cantidad            | cantidad    |                              |
-| unidad              |             | Revisar                      |
-| valor               |             | valor total? valor_unitario? |
-| iva                 |             | Revisar                      |
+| unidad              |             | No se usa                    |
+| valor               | valor_total |                              |
+| iva                 |             | No se usa                    |
 
 
 # Lugar Ejecucion
@@ -107,9 +107,9 @@
 | **ARGO**    | **ARGO V2**    | **NOTAS**            |
 |-------------|----------------|----------------------|
 | direccion   | direccion      |                      |
-| sede        | sede_id        | Igual, mismos datos. |
-| dependencia | dependencia_id | Igual, mismos datos. |
-| ciudad      | ciudad_id      | Igual, mismos datos. |
+| sede        | sede_id        |                      |
+| dependencia | dependencia_id |                      |
+| ciudad      | ciudad_id      |                      |
 
 
 
