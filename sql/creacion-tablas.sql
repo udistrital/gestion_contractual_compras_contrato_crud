@@ -264,7 +264,7 @@ CREATE TABLE ordenador_contrato (
     id SERIAL PRIMARY KEY,
     tercero_id INTEGER NOT NULL,
     ordenador_argo_id INTEGER NOT NULL,
-    ordenador_sikarca_id INTEGER NOT NULL,
+    ordenador_sicapital_id INTEGER NOT NULL,
     resolucion VARCHAR NOT NULL,
     documento_identidad VARCHAR NOT NULL,
     cargo_id INTEGER NOT NULL,
