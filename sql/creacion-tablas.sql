@@ -10,7 +10,7 @@ CREATE TABLE contrato_general (
     fecha_suscripcion_estudios DATE,
     aplica_poliza BOOLEAN,
     modalidad_seleccion_id INTEGER,
-    tipo_control INTEGER,
+    tipo_control_id INTEGER,
     tipologia_especifica_id INTEGER,
     regimen_contratacion_id INTEGER,
     procedimiento_id INTEGER,
@@ -47,6 +47,7 @@ CREATE TABLE contrato_general (
 COMMENT ON TABLE contrato_general IS 'Tabla principal que almacena la información básica de todos los contratos';
 COMMENT ON COLUMN contrato_general.tipo_compromiso_id IS 'Identificador del tipo de compromiso en Parámetros CRUD';
 COMMENT ON COLUMN contrato_general.tipo_contrato_id IS 'Identificador del tipo de compromiso en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.perfil_contratista_id IS 'Identificador del perfil del contratista en Parámetros CRUD';
 COMMENT ON COLUMN contrato_general.valor_pesos IS 'Valor del contrato en pesos colombianos';
 COMMENT ON COLUMN contrato_general.valor_contrato_me IS 'Valor del contrato en moneda extranjera';
 COMMENT ON COLUMN contrato_general.plazo_ejecucion IS 'Duración del contrato';
