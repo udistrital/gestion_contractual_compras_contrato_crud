@@ -75,7 +75,7 @@ CREATE TABLE estado_contrato (
     estado_parametro_id INTEGER,
     estado_interno_parametro_id INTEGER,
     actual BOOLEAN NO NULL,
-    usuario_rol VARCHAR(25),
+    usuario_rol VARCHAR(40),
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
     fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
