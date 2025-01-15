@@ -10,25 +10,28 @@ CREATE TABLE contrato_general (
     fecha_suscripcion_estudios DATE,
     aplica_poliza BOOLEAN,
     modalidad_seleccion_id INTEGER,
-    tipo_control INTEGER,
+    tipo_control_id INTEGER,
     tipologia_especifica_id INTEGER,
     regimen_contratacion_id INTEGER,
     procedimiento_id INTEGER,
     plazo_ejecucion INTEGER,
     unidad_ejecutora_id INTEGER,
-    clase_contratista_id INTEGER,
     tipo_moneda_id INTEGER,
     valor_pesos NUMERIC(16,2),
     tipo_gasto_id INTEGER,
     origen_recursos_id INTEGER,
-    origen_presupuestos_id INTEGER,
+    origen_presupuesto_id INTEGER,
     tema_gasto_inversion_id INTEGER,
     valor_contrato_me NUMERIC(16,3),
     valor_tasa_cambio NUMERIC(16,10),
     medio_pago_id INTEGER,
     clausula_registro_presupuestal BOOLEAN,
-    modo_pago VARCHAR(50),
-    observaciones VARCHAR(500),
+    modo_pago VARCHAR,
+    objeto VARCHAR,
+    justificacion VARCHAR,
+    actividades VARCHAR,
+    condiciones VARCHAR,
+    observaciones VARCHAR(1000),
     vigencia VARCHAR(4),
     consecutivo_elaboracion VARCHAR(50),
     fecha_inicial DATE,
@@ -44,9 +47,40 @@ CREATE TABLE contrato_general (
 COMMENT ON TABLE contrato_general IS 'Tabla principal que almacena la información básica de todos los contratos';
 COMMENT ON COLUMN contrato_general.tipo_compromiso_id IS 'Identificador del tipo de compromiso en Parámetros CRUD';
 COMMENT ON COLUMN contrato_general.tipo_contrato_id IS 'Identificador del tipo de compromiso en Parámetros CRUD';
-COMMENT ON COLUMN contrato_general.valor_pesos IS 'Valor del contrato en pesos colombianos';
-COMMENT ON COLUMN contrato_general.valor_contrato_me IS 'Valor del contrato en moneda extranjera';
-COMMENT ON COLUMN contrato_general.plazo_ejecucion IS 'Duración del contrato';
+COMMENT ON COLUMN contrato_general.perfil_contratista_id IS 'Identificador del perfil del contratista en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.fecha_suscripcion_estudios IS 'Fecha de suscripcion de estudio documento previo';
+COMMENT ON COLUMN contrato_general.aplica_poliza IS 'Campo que indica si Aplica Póliza para la orden de compra o contrato.';
+COMMENT ON COLUMN contrato_general.modalidad_seleccion_id IS 'Identificador de modalidad de selección en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.tipo_control_id IS 'Identificador de tipo de control en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.tipologia_especifica_id IS 'Identificador de tipología específica en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.regimen_contratacion_id IS 'Identificador de regimen de contratación en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.procedimiento_id IS 'Identificador de prodedimiento en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.plazo_ejecucion IS 'Numero relacionado con Unidad Ejecución Id para determinar duración del contrato (1,2,4 MES, DIA, AÑo)';
+COMMENT ON COLUMN contrato_general.unidad_ejecutora_id IS 'Id Unidad Ejecutora en Parámetros CRUD (Rectoría, IDEXUD)';
+COMMENT ON COLUMN contrato_general.tipo_moneda_id IS 'Identificador de tipo de moneda en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.valor_pesos IS 'Valor del contrato en Pesos';
+COMMENT ON COLUMN contrato_general.tipo_gasto_id IS 'Identificador de tipo de gasto en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.origen_recursos_id IS 'Identificador de origen de recursos en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.origen_presupuesto_id IS 'Identificador de origen de presupuesto en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.tema_gasto_inversion_id IS 'Identificador de tema gasto inversión en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.valor_contrato_me IS 'Valor del contrato en Moneda Extranjera';
+COMMENT ON COLUMN contrato_general.valor_tasa_cambio IS 'Valor de Tasa de Cambio asociado al contrato';
+COMMENT ON COLUMN contrato_general.medio_pago_id IS 'Identificador de medio de pago en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.clausula_registro_presupuestal IS 'Booleano que determina si el contrato requiere cláusula adicional de registro presupuestal';
+COMMENT ON COLUMN contrato_general.modo_pago IS 'Campo para especificar el modo de pago asociado al contrato';
+COMMENT ON COLUMN contrato_general.objeto IS 'Campo para especificar el objeto del contrato';
+COMMENT ON COLUMN contrato_general.justificacion IS 'Campo para especificar la justificacion del contrato';
+COMMENT ON COLUMN contrato_general.actividades IS 'Campo para especificar las actividades del contrato';
+COMMENT ON COLUMN contrato_general.condiciones IS 'Campo para especificar las condiciones del contrato';
+COMMENT ON COLUMN contrato_general.observaciones IS 'Campo para especificar las observaciones del contrato';
+COMMENT ON COLUMN contrato_general.vigencia IS 'Año vigencia del contato (2024, 2025, etc)';
+COMMENT ON COLUMN contrato_general.consecutivo_elaboracion IS 'Campo Legado, usado para compatibilidad con la migración de ARGO v1';
+COMMENT ON COLUMN contrato_general.fecha_inicial IS 'Fecha Inicio del Contrato';
+COMMENT ON COLUMN contrato_general.fecha_final IS 'Fecha Finalización del Contrato';
+COMMENT ON COLUMN contrato_general.usuario_legado IS 'Campo Legado, usado para compatibilidad con la migración de ARGO v1';
+COMMENT ON COLUMN contrato_general.numero_contrato IS 'Campo Legado, usado para compatibilidad con la migración de ARGO v1';
+COMMENT ON COLUMN contrato_general.unidad_ejecucion_id IS 'Identificador de unidad de ejecución (Dia, Mes, Año) en Parámetros CRUD';
+
 
 -- Tabla de documentos del contrato
 CREATE TABLE documento_contrato (
@@ -62,6 +96,7 @@ CREATE TABLE documento_contrato (
 
 COMMENT ON TABLE documento_contrato IS 'Almacena los documentos asociados a cada contrato';
 COMMENT ON COLUMN documento_contrato.tipo_documento_id IS 'Tipo de documento según Parámetros CRUD';
+COMMENT ON COLUMN documento_contrato.documento_enlace IS 'Enlace asociado al Gestor Documental';
 
 -- Tabla de estados del contrato
 CREATE TABLE estado_contrato (
@@ -72,7 +107,8 @@ CREATE TABLE estado_contrato (
     estado_parametro_id INTEGER,
     estado_interno_parametro_id INTEGER,
     actual BOOLEAN NO NULL,
-    usuario_rol VARCHAR(25),
+    usuario_rol VARCHAR(40),
+    fecha_evento DATE,
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
     fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
@@ -80,7 +116,11 @@ CREATE TABLE estado_contrato (
 
 COMMENT ON TABLE estado_contrato IS 'Registra el historial de estados por los que pasa un contrato';
 COMMENT ON COLUMN estado_contrato.motivo IS 'Razón del cambio de estado del contrato';
-
+COMMENT ON COLUMN estado_contrato.estado_parametro_id IS 'Tipo de cambio de estado según Parámetros CRUD';
+COMMENT ON COLUMN estado_contrato.estado_interno_parametro_id IS 'Tipo de cambio de estado interno (Estados propios de ARGO) según Parámetros CRUD';
+COMMENT ON COLUMN estado_contrato.usuario_rol IS 'Rol del Usuario que Efectua el cambio de estado';
+COMMENT ON COLUMN estado_contrato.fecha_evento IS 'Fecha del Cambio de Estado';
+    
 -- Tabla de solicitantes
 CREATE TABLE solicitante (
     id SERIAL PRIMARY KEY,
@@ -119,8 +159,8 @@ CREATE TABLE supervisor_contrato (
     id SERIAL PRIMARY KEY,
     contrato_general_id INTEGER NOT NULL REFERENCES contrato_general(id),
     supervisor_id INTEGER NOT NULL,
-    sede_legado VARCHAR,
-    dependencia_legado VARCHAR,
+    sede_legado VARCHAR(50),
+    dependencia_legado VARCHAR(50),
     cargo_legado VARCHAR,
     cargo_id INTEGER NOT NULL,
     documento INTEGER NOT NULL,
@@ -135,8 +175,8 @@ CREATE TABLE supervisor_contrato (
 COMMENT ON TABLE supervisor_contrato IS 'Registro de supervisores asignados a cada contrato';
 COMMENT ON COLUMN supervisor_contrato.supervisor_id IS 'Identificador del funcionario que ejerce como supervisor';
 
--- Tabla de CDP (Certificado de Disponibilidad Presupuestal)
-CREATE TABLE cdp (
+-- Tabla CDP (Certificado de Disponibilidad Presupuestal)
+CREATE TABLE disponibilidad_presupuestal (
     id SERIAL PRIMARY KEY,
     numero_cdp_id INTEGER NOT NULL,
     fecha_registro DATE NOT NULL,
@@ -147,17 +187,17 @@ CREATE TABLE cdp (
     fecha_modificacion TIMESTAMP DEFAULT NOW() NOT NULL
 );
 
-COMMENT ON TABLE cdp IS 'Certificados de Disponibilidad Presupuestal asociados a los contratos';
-COMMENT ON COLUMN cdp.numero_cdp_id IS 'Número único del CDP';
-COMMENT ON COLUMN cdp.vigencia_cdp IS 'Año de vigencia del CDP';
+COMMENT ON TABLE disponibilidad_presupuestal IS 'Certificados de Disponibilidad Presupuestal asociados a los contratos';
+COMMENT ON COLUMN disponibilidad_presupuestal.numero_cdp_id IS 'Número único del CDP';
+COMMENT ON COLUMN disponibilidad_presupuestal.vigencia_cdp IS 'Año de vigencia del CDP';
 
 -- Tabla de registros presupuestales
 CREATE TABLE registro_presupuestal (
     id SERIAL PRIMARY KEY,
-    numero_disponibilidad INTEGER,
+    registro_presupuestal INTEGER,
     fecha_registro DATE,
-    vigencia_cdp INTEGER,
-    cdp_id INTEGER NOT NULL UNIQUE REFERENCES cdp(id),
+    vigencia_rp INTEGER,
+    cdp_id INTEGER NOT NULL UNIQUE REFERENCES disponibilidad_presupuestal(id),
     activo BOOLEAN NOT NULL,
     fecha_creacion TIMESTAMP NOT NULL,
     fecha_modificacion TIMESTAMP NOT NULL
@@ -170,7 +210,7 @@ COMMENT ON COLUMN registro_presupuestal.vigencia_cdp IS 'Año de vigencia del re
 -- Tabla de contratos de arrendamiento
 CREATE TABLE contrato_arrendamiento (
     id SERIAL PRIMARY KEY,
-    destinacion VARCHAR(255),
+    destinacion VARCHAR,
     plazo_pago_mensual INTEGER,
     reajuste VARCHAR(255),
     plazo_administracion INTEGER,
@@ -194,6 +234,7 @@ CREATE TABLE contratista (
     numero_documento VARCHAR(20) NOT NULL,
     tipo_persona_id INTEGER NOT NULL,
     contrato_general_id INTEGER UNIQUE REFERENCES contrato_general(id),
+    clase_contratista_id INTEGER,
     activo BOOLEAN DEFAULT TRUE NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW() NOT NULL,
     fecha_modificacion TIMESTAMP
@@ -222,7 +263,7 @@ COMMENT ON COLUMN convenio.tipo_convenio_id IS 'Tipo de convenio (marco, especí
 -- Tabla de especificaciones técnicas
 CREATE TABLE especificacion_tecnica (
     id SERIAL PRIMARY KEY,
-    descripcion TEXT NOT NULL,
+    descripcion VARCHAR,
     cantidad INTEGER NOT NULL,
     valor_unitario NUMERIC(10,2) NOT NULL,
     valor_total NUMERIC(15,2) NOT NULL,
@@ -259,7 +300,7 @@ CREATE TABLE ordenador_contrato (
     id SERIAL PRIMARY KEY,
     tercero_id INTEGER NOT NULL,
     ordenador_argo_id INTEGER NOT NULL,
-    ordenador_sikarca_id INTEGER NOT NULL,
+    ordenador_sicapital_id INTEGER NOT NULL,
     resolucion VARCHAR NOT NULL,
     documento_identidad VARCHAR NOT NULL,
     cargo_id INTEGER NOT NULL,
@@ -273,7 +314,7 @@ COMMENT ON TABLE ordenador_contrato IS 'Información de los ordenadores de gasto
 COMMENT ON COLUMN ordenador_contrato.tercero_id IS 'Identificador del tercero que actúa como ordenador';
 COMMENT ON COLUMN ordenador_contrato.resolucion IS 'Número de resolución que autoriza al ordenador';
 
--- Crear índices para mejorar el rendimiento
+-- Índices
 CREATE INDEX idx_contrato_general_tipo_contrato ON contrato_general(tipo_contrato_id);
 CREATE INDEX idx_documento_contrato_contrato ON documento_contrato(contrato_general_id);
 CREATE INDEX idx_estado_contrato_contrato ON estado_contrato(contrato_general_id);
