@@ -227,7 +227,7 @@ COMMENT ON COLUMN convenio.tipo_convenio_id IS 'Tipo de convenio (marco, especí
 -- Tabla de especificaciones técnicas
 CREATE TABLE especificacion_tecnica (
     id SERIAL PRIMARY KEY,
-    descripcion TEXT NOT NULL,
+    descripcion VARCHAR,
     cantidad INTEGER NOT NULL,
     valor_unitario NUMERIC(10,2) NOT NULL,
     valor_total NUMERIC(15,2) NOT NULL,
