@@ -27,7 +27,7 @@ CREATE TABLE contrato_general (
     valor_tasa_cambio NUMERIC(16,10),
     medio_pago_id INTEGER,
     clausula_registro_presupuestal BOOLEAN,
-    modo_pago,
+    modo_pago VARCHAR,
     objeto VARCHAR,
     justificacion VARCHAR,
     condiciones VARCHAR,
