@@ -21,7 +21,7 @@ CREATE TABLE contrato_general (
     valor_pesos NUMERIC(16,2),
     tipo_gasto_id INTEGER,
     origen_recursos_id INTEGER,
-    origen_presupuestos_id INTEGER,
+    origen_presupuesto_id INTEGER,
     tema_gasto_inversion_id INTEGER,
     valor_contrato_me NUMERIC(16,3),
     valor_tasa_cambio NUMERIC(16,10),
