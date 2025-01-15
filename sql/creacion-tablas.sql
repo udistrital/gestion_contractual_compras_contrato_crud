@@ -56,9 +56,31 @@ COMMENT ON COLUMN contrato_general.tipologia_especifica_id IS 'Identificador de 
 COMMENT ON COLUMN contrato_general.regimen_contratacion_id IS 'Identificador de regimen de contratación en Parámetros CRUD';
 COMMENT ON COLUMN contrato_general.procedimiento_id IS 'Identificador de prodedimiento en Parámetros CRUD';
 COMMENT ON COLUMN contrato_general.plazo_ejecucion IS 'Numero relacionado con Unidad Ejecución Id para determinar duración del contrato (1,2,4 MES, DIA, AÑo)';
-COMMENT ON COLUMN contrato_general.valor_pesos IS 'Valor del contrato en pesos colombianos';
-COMMENT ON COLUMN contrato_general.valor_contrato_me IS 'Valor del contrato en moneda extranjera';
-COMMENT ON COLUMN contrato_general.plazo_ejecucion IS 'Duración del contrato';
+COMMENT ON COLUMN contrato_general.unidad_ejecutora_id IS 'Id Unidad Ejecutora en Parámetros CRUD (Rectoría, IDEXUD)';
+COMMENT ON COLUMN contrato_general.tipo_moneda_id IS 'Identificador de tipo de moneda en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.valor_pesos IS 'Valor del contrato en Pesos';
+COMMENT ON COLUMN contrato_general.tipo_gasto_id IS 'Identificador de tipo de gasto en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.origen_recursos_id IS 'Identificador de origen de recursos en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.origen_presupuesto_id IS 'Identificador de origen de presupuesto en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.tema_gasto_inversion_id IS 'Identificador de tema gasto inversión en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.valor_contrato_me IS 'Valor del contrato en Moneda Extranjera';
+COMMENT ON COLUMN contrato_general.valor_tasa_cambio IS 'Valor de Tasa de Cambio asociado al contrato';
+COMMENT ON COLUMN contrato_general.medio_pago_id IS 'Identificador de medio de pago en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.clausula_registro_presupuestal IS 'Booleano que determina si el contrato requiere cláusula adicional de registro presupuestal';
+COMMENT ON COLUMN contrato_general.modo_pago IS 'Campo para especificar el modo de pago asociado al contrato';
+COMMENT ON COLUMN contrato_general.objeto IS 'Campo para especificar el objeto del contrato';
+COMMENT ON COLUMN contrato_general.justificacion IS 'Campo para especificar la justificacion del contrato';
+COMMENT ON COLUMN contrato_general.actividades IS 'Campo para especificar las actividades del contrato';
+COMMENT ON COLUMN contrato_general.condiciones IS 'Campo para especificar las condiciones del contrato';
+COMMENT ON COLUMN contrato_general.observaciones IS 'Campo para especificar las observaciones del contrato';
+COMMENT ON COLUMN contrato_general.vigencia IS 'Año vigencia del contato (2024, 2025, etc)';
+COMMENT ON COLUMN contrato_general.consecutivo_elaboracion IS 'Campo Legado, usado para compatibilidad con la migración de ARGO v1';
+COMMENT ON COLUMN contrato_general.fecha_inicial IS 'Fecha Inicio del Contrato';
+COMMENT ON COLUMN contrato_general.fecha_final IS 'Fecha Finalización del Contrato';
+COMMENT ON COLUMN contrato_general.usuario_legado IS 'Campo Legado, usado para compatibilidad con la migración de ARGO v1';
+COMMENT ON COLUMN contrato_general.numero_contrato IS 'Campo Legado, usado para compatibilidad con la migración de ARGO v1';
+COMMENT ON COLUMN contrato_general.unidad_ejecucion_id IS 'Identificador de unidad de ejecución (Dia, Mes, Año) en Parámetros CRUD';
+
 
 -- Tabla de documentos del contrato
 CREATE TABLE documento_contrato (
