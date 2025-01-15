@@ -21,7 +21,7 @@ INSERT INTO contrato_general (
     aplica_poliza,
     ordenador_id,
     modalidad_seleccion_id,
-    tipo_control,
+    tipo_control_id,
     tipologia_especifica_id,
     regimen_contratacion_id,
     procedimiento_id,
