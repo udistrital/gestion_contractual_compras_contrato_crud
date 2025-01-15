@@ -96,6 +96,7 @@ CREATE TABLE documento_contrato (
 
 COMMENT ON TABLE documento_contrato IS 'Almacena los documentos asociados a cada contrato';
 COMMENT ON COLUMN documento_contrato.tipo_documento_id IS 'Tipo de documento según Parámetros CRUD';
+COMMENT ON COLUMN documento_contrato.documento_enlace IS 'Enlace asociado al Gestor Documental';
 
 -- Tabla de estados del contrato
 CREATE TABLE estado_contrato (
@@ -115,7 +116,11 @@ CREATE TABLE estado_contrato (
 
 COMMENT ON TABLE estado_contrato IS 'Registra el historial de estados por los que pasa un contrato';
 COMMENT ON COLUMN estado_contrato.motivo IS 'Razón del cambio de estado del contrato';
-
+COMMENT ON COLUMN estado_contrato.estado_parametro_id IS 'Tipo de cambio de estado según Parámetros CRUD';
+COMMENT ON COLUMN estado_contrato.estado_interno_parametro_id IS 'Tipo de cambio de estado interno (Estados propios de ARGO) según Parámetros CRUD';
+COMMENT ON COLUMN estado_contrato.usuario_rol IS 'Rol del Usuario que Efectua el cambio de estado';
+COMMENT ON COLUMN estado_contrato.fecha_evento IS 'Fecha del Cambio de Estado';
+    
 -- Tabla de solicitantes
 CREATE TABLE solicitante (
     id SERIAL PRIMARY KEY,
