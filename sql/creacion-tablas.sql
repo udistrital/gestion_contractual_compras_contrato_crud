@@ -48,6 +48,14 @@ COMMENT ON TABLE contrato_general IS 'Tabla principal que almacena la informaci�
 COMMENT ON COLUMN contrato_general.tipo_compromiso_id IS 'Identificador del tipo de compromiso en Parámetros CRUD';
 COMMENT ON COLUMN contrato_general.tipo_contrato_id IS 'Identificador del tipo de compromiso en Parámetros CRUD';
 COMMENT ON COLUMN contrato_general.perfil_contratista_id IS 'Identificador del perfil del contratista en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.fecha_suscripcion_estudios IS 'Fecha de suscripcion de estudio documento previo';
+COMMENT ON COLUMN contrato_general.aplica_poliza IS 'Campo que indica si Aplica Póliza para la orden de compra o contrato.';
+COMMENT ON COLUMN contrato_general.modalidad_seleccion_id IS 'Identificador de modalidad de selección en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.tipo_control_id IS 'Identificador de tipo de control en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.tipologia_especifica_id IS 'Identificador de tipología específica en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.regimen_contratacion_id IS 'Identificador de regimen de contratación en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.procedimiento_id IS 'Identificador de prodedimiento en Parámetros CRUD';
+COMMENT ON COLUMN contrato_general.plazo_ejecucion IS 'Numero relacionado con Unidad Ejecución Id para determinar duración del contrato (1,2,4 MES, DIA, AÑo)';
 COMMENT ON COLUMN contrato_general.valor_pesos IS 'Valor del contrato en pesos colombianos';
 COMMENT ON COLUMN contrato_general.valor_contrato_me IS 'Valor del contrato en moneda extranjera';
 COMMENT ON COLUMN contrato_general.plazo_ejecucion IS 'Duración del contrato';
