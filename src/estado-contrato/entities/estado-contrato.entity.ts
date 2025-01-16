@@ -18,7 +18,7 @@ export class EstadoContrato {
   @Column({ type: 'integer' })
   usuario_id: number;
 
-  @Column({ type: 'varchar', length: 25, nullable: true })
+  @Column({ type: 'varchar', length: 40, nullable: true })
   usuario_rol: string;
 
   @Column({ type: 'integer', nullable: true })
