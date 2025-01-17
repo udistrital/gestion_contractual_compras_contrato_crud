@@ -2,12 +2,12 @@
 
 API CRUD de gestión contractual core para el ARGO V2.
 
-## Especificaciones Técnicas
+## Tecnologías Implementadas y Versiones
 -  Node.js v20
--  NestJS
+-  NestJS 10
 -  PostgreSQL
 
-## Variables de entorno
+## Variables de Entorno
 ```
 - GESTION_CONTRACTUAL_CRUD_HOST // Host de la base de datos
 - GESTION_CONTRACTUAL_CRUD_PORT // Puerto de la base de datos
@@ -15,11 +15,18 @@ API CRUD de gestión contractual core para el ARGO V2.
 - GESTION_CONTRACTUAL_CRUD_PASS // Contraseña de la base de datos
 - GESTION_CONTRACTUAL_CRUD_DB // Nombre de la base de datos
 ```
-## Ejecución
+## Ejecución del Proyecto
 ```
 pnpm install
 pnpm run start:dev
 ```
+
+## Estado CI
+
+| Develop | Relese 0.0.1 | Master |
+| -- | -- | -- |
+| [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/gestion_contractual_crud/status.svg?ref=refs/heads/develop)](https://hubci.portaloas.udistrital.edu.co/udistrital/gestion_contractual_crud) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/gestion_contractual_crud/status.svg?ref=refs/heads/release/0.0.1)](https://hubci.portaloas.udistrital.edu.co/udistrital/gestion_contractual_crud) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/gestion_contractual_crud/status.svg)](https://hubci.portaloas.udistrital.edu.co/udistrital/gestion_contractual_crud) |
+
 
 # Modelo de Datos :card_file_box:
 
