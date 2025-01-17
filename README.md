@@ -15,7 +15,7 @@ API CRUD de gestión contractual core para el ARGO V2.
 - GESTION_CONTRACTUAL_CRUD_PASS // Contraseña de la base de datos
 - GESTION_CONTRACTUAL_CRUD_DB // Nombre de la base de datos
 ```
-## Ejecución
+## Ejecución del Proyecto
 ```
 pnpm install
 pnpm run start:dev
