@@ -43,6 +43,12 @@ export class DocumentoContrato {
   @Column({ default: true })
   activo: boolean;
 
+  @Column({ name: 'fecha_creacion', default: () => 'CURRENT_TIMESTAMP' })
+  fecha_creacion: Date;
+
+  @Column({ name: 'fecha_modificacion', default: () => 'CURRENT_TIMESTAMP' })
+  fecha_modificacion: Date;
+
   @Column({ name: 'contrato_general_id' })
   contrato_general_id: number;
 
