@@ -105,7 +105,7 @@ CREATE TABLE estado_contrato (
     contrato_general_id INTEGER NOT NULL REFERENCES contrato_general(id),
     estado_parametro_id INTEGER,
     estado_interno_parametro_id INTEGER,
-    actual BOOLEAN NO NULL,
+    actual BOOLEAN NOT NULL,
     usuario_rol VARCHAR(40),
     fecha_evento DATE,
     activo BOOLEAN DEFAULT TRUE NOT NULL,
@@ -121,7 +121,7 @@ COMMENT ON COLUMN estado_contrato.estado_interno_parametro_id IS 'Tipo de cambio
 COMMENT ON COLUMN estado_contrato.actual IS 'Campo que permite buscar el estado actual de un contrato';
 COMMENT ON COLUMN estado_contrato.usuario_rol IS 'Rol del Usuario que Efectua el cambio de estado';
 COMMENT ON COLUMN estado_contrato.fecha_evento IS 'Fecha en la que se asocia el cambio de estado';
-    
+
 -- Tabla de solicitantes
 CREATE TABLE solicitante (
     id SERIAL PRIMARY KEY,
