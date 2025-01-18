@@ -803,7 +803,7 @@ paths:
             especificado.
       summary: Obtiene el lugar de ejecución por id de contrato
       tags: *ref_4
-  /cdp:
+  /disponibilidad_presupuestal:
     post:
       operationId: CdpController_create
       parameters: []
@@ -824,7 +824,7 @@ paths:
           description: Solicitud incorrecta.
       summary: Crear un nuevo CDP
       tags: &ref_5
-        - cdp
+        - disponibilidad_presupuestal
     get:
       operationId: CdpController_findAll
       parameters: []
@@ -839,7 +839,7 @@ paths:
                   $ref: '#/components/schemas/Cdp'
       summary: Obtener todos los CDPs
       tags: *ref_5
-  /cdp/{id}:
+  /disponibilidad_presupuestal/{id}:
     get:
       operationId: CdpController_findOne
       parameters:
@@ -901,7 +901,7 @@ paths:
           description: CDP no encontrado.
       summary: Eliminar un CDP
       tags: *ref_5
-  /cdp/contrato/{contratoId}:
+  /disponibilidad_presupuestal/contrato/{contratoId}:
     get:
       operationId: CdpController_findByContrato
       parameters:

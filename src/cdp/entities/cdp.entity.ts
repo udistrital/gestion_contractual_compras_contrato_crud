@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { ContratoGeneral } from '../../contrato-general/entities/contrato-general.entity';
 
-@Entity()
+@Entity('disponibilidad_presupuestal')
 export class Cdp {
   @PrimaryGeneratedColumn()
   id: number;

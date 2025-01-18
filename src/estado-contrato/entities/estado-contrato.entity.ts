@@ -33,6 +33,13 @@ export class EstadoContrato {
   @Column({ type: 'boolean', nullable: true })
   actual: boolean;
 
+  @Column({
+    name: 'fecha__evento',
+    type: 'date',
+    default: () => 'CURRENT_DATE',
+  })
+  fecha_evento: Date;
+
   @Column({ type: 'boolean', default: true })
   activo: boolean;
 

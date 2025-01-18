@@ -1280,7 +1280,7 @@
         ]
       }
     },
-    "/cdp": {
+    "/disponibilidad_presupuestal": {
       "post": {
         "operationId": "CdpController_create",
         "parameters": [],
@@ -1311,7 +1311,7 @@
         },
         "summary": "Crear un nuevo CDP",
         "tags": [
-          "cdp"
+          "disponibilidad_presupuestal"
         ]
       },
       "get": {
@@ -1334,11 +1334,11 @@
         },
         "summary": "Obtener todos los CDPs",
         "tags": [
-          "cdp"
+          "disponibilidad_presupuestal"
         ]
       }
     },
-    "/cdp/{id}": {
+    "/disponibilidad_presupuestal/{id}": {
       "get": {
         "operationId": "CdpController_findOne",
         "parameters": [
@@ -1368,7 +1368,7 @@
         },
         "summary": "Obtener un CDP por ID",
         "tags": [
-          "cdp"
+          "disponibilidad_presupuestal"
         ]
       },
       "patch": {
@@ -1413,7 +1413,7 @@
         },
         "summary": "Actualizar un CDP",
         "tags": [
-          "cdp"
+          "disponibilidad_presupuestal"
         ]
       },
       "delete": {
@@ -1438,11 +1438,11 @@
         },
         "summary": "Eliminar un CDP",
         "tags": [
-          "cdp"
+          "disponibilidad_presupuestal"
         ]
       }
     },
-    "/cdp/contrato/{contratoId}": {
+    "/disponibilidad_presupuestal/contrato/{contratoId}": {
       "get": {
         "operationId": "CdpController_findByContrato",
         "parameters": [
@@ -1475,7 +1475,7 @@
         },
         "summary": "Obtener CDPs por ID de contrato",
         "tags": [
-          "cdp"
+          "disponibilidad_presupuestal"
         ]
       }
     },

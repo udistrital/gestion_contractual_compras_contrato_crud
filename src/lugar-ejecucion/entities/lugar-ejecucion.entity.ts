@@ -27,7 +27,7 @@ export class LugarEjecucion {
   @Column({ name: 'sede_id', type: 'integer' })
   sede_id: number;
 
-  @Column({ type: 'varchar', length: 120 })
+  @Column({ type: 'varchar', length: 150, nullable: true })
   direccion: string;
 
   @Column({ type: 'boolean', default: true })
