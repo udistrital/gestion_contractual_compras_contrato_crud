@@ -22,8 +22,8 @@ import {
 } from '@nestjs/swagger';
 import { StandardResponse } from '../utils/standardResponse.interface';
 
-@ApiTags('cdp')
-@Controller('cdp')
+@ApiTags('disponibilidad_presupuestal')
+@Controller('disponibilidad_presupuestal')
 export class CdpController {
   constructor(private readonly cdpService: CdpService) {}
 
