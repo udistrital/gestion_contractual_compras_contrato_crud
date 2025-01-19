@@ -51,7 +51,7 @@ export class OrdenadorContratoService {
     const newOrdenador = this.ordenadorRepository.create({
       tercero_id: createOrdenadorContratoDto.tercero_id,
       ordenador_argo_id: createOrdenadorContratoDto.ordenador_argo_id,
-      ordenador_sikarca_id: createOrdenadorContratoDto.ordenador_sikarca_id,
+      ordenador_sicapital_id: createOrdenadorContratoDto.ordenador_sicapital_id,
       resolucion: createOrdenadorContratoDto.resolucion,
       documento_identidad: createOrdenadorContratoDto.documento_identidad,
       cargo_id: createOrdenadorContratoDto.cargo_id,
@@ -84,8 +84,8 @@ export class OrdenadorContratoService {
 
     ordenador.tercero_id = updateOrdenadorContratoDto.tercero_id;
     ordenador.ordenador_argo_id = updateOrdenadorContratoDto.ordenador_argo_id;
-    ordenador.ordenador_sikarca_id =
-      updateOrdenadorContratoDto.ordenador_sikarca_id;
+    ordenador.ordenador_sicapital_id =
+      updateOrdenadorContratoDto.ordenador_sicapital_id;
     ordenador.resolucion = updateOrdenadorContratoDto.resolucion;
     ordenador.documento_identidad =
       updateOrdenadorContratoDto.documento_identidad;

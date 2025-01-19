@@ -18,6 +18,9 @@ export class Contratista {
   @Column()
   tipo_persona_id: number;
 
+  @Column({ type: 'integer', nullable: true })
+  clase_contratista_id: number;
+
   @Column({ type: 'boolean', default: true })
   activo: boolean;
 
