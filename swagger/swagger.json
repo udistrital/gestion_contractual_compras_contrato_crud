@@ -2968,7 +2968,7 @@
           "ordenador_argo_id": {
             "type": "number"
           },
-          "ordenador_sikarca_id": {
+          "ordenador_sicapital_id": {
             "type": "number"
           },
           "resolucion": {
@@ -2998,7 +2998,7 @@
         "required": [
           "tercero_id",
           "ordenador_argo_id",
-          "ordenador_sikarca_id",
+          "ordenador_sicapital_id",
           "resolucion",
           "documento_identidad",
           "cargo_id",
@@ -3017,7 +3017,7 @@
           "ordenador_argo_id": {
             "type": "number"
           },
-          "ordenador_sikarca_id": {
+          "ordenador_sicapital_id": {
             "type": "number"
           },
           "resolucion": {
