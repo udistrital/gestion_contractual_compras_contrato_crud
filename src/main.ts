@@ -42,6 +42,6 @@ async function bootstrap() {
   app.use(helmet()); // Seguridad
   app.use(compression()); // Compresión
 
-  await app.listen(parseInt(process.env.PORT) || 3117);
+  await app.listen(parseInt(process.env.PORT) || 8080);
 }
 bootstrap();
