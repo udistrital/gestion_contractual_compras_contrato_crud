@@ -18,8 +18,8 @@ export class OrdenadorContrato {
   @Column({ name: 'ordenador_argo_id', type: 'integer' })
   ordenador_argo_id: number;
 
-  @Column({ name: 'ordenador_sikarca_id', type: 'integer' })
-  ordenador_sikarca_id: number;
+  @Column({ name: 'ordenador_sicapital_id', type: 'integer' })
+  ordenador_sicapital_id: number;
 
   @Column({ name: 'resolucion', type: 'varchar', nullable: true })
   resolucion: string;

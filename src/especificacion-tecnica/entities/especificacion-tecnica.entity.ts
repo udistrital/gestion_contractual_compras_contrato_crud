@@ -5,7 +5,7 @@ export class EspecificacionTecnica {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'descripcion', type: 'text' })
+  @Column({ name: 'descripcion', type: 'varchar', nullable: true })
   descripcion: string;
 
   @Column({ name: 'cantidad', type: 'integer' })

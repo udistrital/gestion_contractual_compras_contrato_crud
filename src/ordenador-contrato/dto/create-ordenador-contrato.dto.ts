@@ -22,7 +22,7 @@ export class CreateOrdenadorContratoDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  ordenador_sikarca_id: number;
+  ordenador_sicapital_id: number;
 
   @ApiProperty()
   @IsOptional()

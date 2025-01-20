@@ -12,6 +12,7 @@ import { LugarEjecucion } from '../../lugar-ejecucion/entities/lugar-ejecucion.e
 import { Contratista } from '../../contratista/entities/contratista.entity';
 import { OrdenadorContrato } from 'src/ordenador-contrato/entities/ordenador-contrato.entity';
 import { SupervisorEntity } from '../../supervisor/entities/supervisor.entity';
+import { SolicitanteEntity } from '../../solicitante/entities/solicitante.entity';
 
 @Entity('contrato_general')
 export class ContratoGeneral {
@@ -33,11 +34,11 @@ export class ContratoGeneral {
   @Column({ name: 'aplica_poliza', nullable: true })
   aplica_poliza: boolean;
 
-  @Column({ name: 'ordenador_id', nullable: true })
-  ordenador_id: number;
-
   @Column({ name: 'modalidad_seleccion_id', nullable: true })
   modalidad_seleccion_id: number;
+
+  @Column({ name: 'tipo_control_id', nullable: true })
+  tipo_control_id: number;
 
   @Column({ name: 'tipologia_especifica_id', nullable: true })
   tipologia_especifica_id: number;
@@ -53,12 +54,6 @@ export class ContratoGeneral {
 
   @Column({ name: 'unidad_ejecucion_id', nullable: true })
   unidad_ejecucion_id: number;
-
-  @Column({ name: 'numero_constancia', nullable: true })
-  numero_constancia: number;
-
-  @Column({ name: 'clase_contratista_id', nullable: true })
-  clase_contratista_id: number;
 
   @Column({ name: 'tipo_moneda_id', nullable: true })
   tipo_moneda_id: number;
@@ -111,6 +106,18 @@ export class ContratoGeneral {
   @Column({ name: 'modo_pago', nullable: true })
   modo_pago: string;
 
+  @Column({ name: 'objeto', nullable: true })
+  objeto: string;
+
+  @Column({ name: 'justificacion', nullable: true })
+  justificacion: string;
+
+  @Column({ name: 'actividades', nullable: true })
+  actividades: string;
+
+  @Column({ name: 'condiciones', nullable: true })
+  condiciones: string;
+
   @Column({ length: 500, nullable: true })
   observaciones: string;
 
@@ -128,6 +135,12 @@ export class ContratoGeneral {
 
   @Column({ name: 'usuario_legado', length: 15, nullable: true })
   usuario_legado: string;
+
+  @Column({ name: 'numero_contrato', length: 50, nullable: true })
+  numero_contrato: string;
+
+  @Column({ name: 'unidad_ejecutora_id', nullable: true })
+  unidad_ejecutora_id: number;
 
   @Column({ default: true })
   activo: boolean;
@@ -159,16 +172,11 @@ export class ContratoGeneral {
   )
   supervisores: SupervisorEntity[];
 
-  /*
-  @OneToOne(() => Solicitante, solicitante => solicitante.contratoGeneral)
-  solicitante: Solicitante;
-
-  @OneToOne(() => ContratoArrendamiento, arrendamiento => arrendamiento.contratoGeneral)
-  contratoArrendamiento: ContratoArrendamiento;
-
-  @OneToOne(() => Convenio, (convenio) => convenio.contratoGeneral)
-  convenio: Convenio;
-   */
+  @OneToOne(
+    () => SolicitanteEntity,
+    (solicitante) => solicitante.contrato_general_id,
+  )
+  solicitante: SolicitanteEntity;
 
   @OneToOne(
     () => LugarEjecucion,
@@ -184,7 +192,4 @@ export class ContratoGeneral {
     (ordenador) => ordenador.contrato_general_id,
   )
   ordenador: OrdenadorContrato;
-
-  @Column({ name: 'unidad_ejecutora_id', nullable: true })
-  unidad_ejecutora_id: number;
 }
