@@ -56,6 +56,10 @@ export class CrearContratoGeneralDto {
   @IsNumber()
   modalidad_seleccion_id: number;
 
+  @IsOptional()
+  @IsNumber()
+  tipo_control_id: number;
+
   @ApiProperty({
     example: 30,
     description:
@@ -103,18 +107,6 @@ export class CrearContratoGeneralDto {
 
   @IsOptional()
   @IsNumber()
-  ordenador_id: number;
-
-  @IsOptional()
-  @IsNumber()
-  numero_constancia: number;
-
-  @IsOptional()
-  @IsNumber()
-  clase_contratista_id: number;
-
-  @IsOptional()
-  @IsNumber()
   tipo_moneda_id: number;
 
   @IsOptional()
@@ -159,6 +151,22 @@ export class CrearContratoGeneralDto {
 
   @IsOptional()
   @IsString()
+  objeto: string;
+
+  @IsOptional()
+  @IsString()
+  justificacion: string;
+
+  @IsOptional()
+  @IsString()
+  actividades: string;
+
+  @IsOptional()
+  @IsString()
+  condiciones: string;
+
+  @IsOptional()
+  @IsString()
   observaciones: string;
 
   @IsOptional()
@@ -180,6 +188,10 @@ export class CrearContratoGeneralDto {
   @IsOptional()
   @IsString()
   usuario_legado: string;
+
+  @IsOptional()
+  @IsString()
+  numero_contrato: string;
 
   @IsOptional()
   @IsNumber()

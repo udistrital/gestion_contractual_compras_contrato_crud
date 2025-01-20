@@ -1,4 +1,10 @@
-import { IsInt, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateContratistaDto {
@@ -17,6 +23,10 @@ export class CreateContratistaDto {
   @IsNotEmpty()
   @IsInt()
   tipo_persona_id: number;
+
+  @IsOptional()
+  @IsInt()
+  clase_contratista_id: number;
 
   @ApiProperty({
     description: 'Contrato asociado al contratista',
