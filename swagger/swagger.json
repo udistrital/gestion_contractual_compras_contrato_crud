@@ -556,11 +556,20 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "tipoDocumentoId",
+            "required": false,
+            "in": "query",
+            "description": "Filtrado por tipo de documento",
+            "schema": {
+              "type": "number"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Devuelve los documentos contratos para el contrato especificado.",
+            "description": "Documentos del contrato",
             "content": {
               "application/json": {
                 "schema": {
@@ -573,10 +582,56 @@
             }
           },
           "404": {
-            "description": "No se encontraron documentos contratos para el contrato especificado."
+            "description": "No se encontraron documentos para el contrato"
           }
         },
-        "summary": "Obtener documentos contratos por id de contrato",
+        "summary": "Obtener los documentos de un contrato por su id",
+        "tags": [
+          "documentos-contratos"
+        ]
+      }
+    },
+    "/documentos-contratos/contrato/{contratoId}/actual": {
+      "get": {
+        "operationId": "DocumentoContratoController_findCurrentDocumento",
+        "parameters": [
+          {
+            "name": "contratoId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tipoDocumentoId",
+            "required": false,
+            "in": "query",
+            "description": "Filtrado por tipo de documento",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documentos actuales del contrato",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentoContrato"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontraron documentos actuales para el contrato"
+          }
+        },
+        "summary": "Obtener los documentos actuales de un contrato por su id",
         "tags": [
           "documentos-contratos"
         ]
@@ -2525,30 +2580,63 @@
       "CreateDocumentoContratoDto": {
         "type": "object",
         "properties": {
-          "documento_id": {
-            "type": "number",
-            "example": 1,
-            "description": "Documento ID - Gestor Documental"
-          },
           "contrato_general_id": {
             "type": "number",
             "example": 1,
-            "description": "ID Contrato General Asociado"
-          },
-          "documento_enlace": {
-            "type": "string",
-            "example": "123e4567-e89b-12d3-a456-426614174000",
-            "description": "Enlace al documento"
+            "description": "ID del contrato general asociado"
           },
           "tipo_documento_id": {
             "type": "number",
             "example": 1,
-            "description": "ID Tipo Documento - Parámetros CRUD"
+            "description": "ID del tipo de documento (Parámetros CRUD)"
+          },
+          "usuario_id": {
+            "type": "number",
+            "example": 1,
+            "description": "ID del usuario quien registra el documento"
+          },
+          "usuario_rol": {
+            "type": "string",
+            "example": "ROL",
+            "description": "Rol del usuario quien registra el documento"
+          },
+          "documento_id": {
+            "type": "number",
+            "example": 1,
+            "description": "ID del documento en el gestor documental"
+          },
+          "documento_enlace": {
+            "type": "string",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "description": "Enlace único al documento"
+          },
+          "activo": {
+            "type": "boolean",
+            "example": true,
+            "description": "Estado del documento (activo o inactivo)",
+            "readOnly": true
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z",
+            "description": "Fecha de creación del documento",
+            "readOnly": true
+          },
+          "fecha_modificacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2023-01-02T00:00:00.000Z",
+            "description": "Fecha de última modificación del documento",
+            "readOnly": true
           }
         },
         "required": [
-          "documento_id",
           "contrato_general_id",
+          "tipo_documento_id",
+          "usuario_id",
+          "usuario_rol",
+          "documento_id",
           "documento_enlace"
         ]
       },
@@ -2560,49 +2648,124 @@
             "example": "123e4567-e89b-12d3-a456-426614174000",
             "description": "Identificador único del documento"
           },
+          "contrato_general_id": {
+            "type": "number",
+            "example": 1,
+            "description": "ID del contrato general asociado"
+          },
           "tipo_documento_id": {
             "type": "number",
             "example": 1,
-            "description": "ID Tipo Documento - Parámetros CRUD"
+            "description": "ID del tipo de documento (Parámetros CRUD)"
           },
-          "documento_enlace": {
+          "usuario_id": {
+            "type": "number",
+            "example": 1,
+            "description": "ID del usuario quien registra el documento"
+          },
+          "usuario_rol": {
             "type": "string",
-            "example": "123e4567-e89b-12d3-a456-426614174000",
-            "description": "Enlace al documento"
+            "example": "ROL",
+            "description": "Rol del usuario quien registra el documento"
           },
           "documento_id": {
             "type": "number",
             "example": 1,
-            "description": "Documento ID - Gestor Documental"
+            "description": "ID del documento en el gestor documental"
+          },
+          "documento_enlace": {
+            "type": "string",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "description": "Enlace único al documento"
+          },
+          "actual": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indicador documento actual"
+          },
+          "activo": {
+            "type": "boolean",
+            "example": true,
+            "description": "Estado del documento (activo o inactivo)"
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z",
+            "description": "Fecha de creación del documento"
+          },
+          "fecha_modificacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z",
+            "description": "Fecha de última modificación del documento"
           }
         },
         "required": [
           "id",
-          "documento_id"
+          "contrato_general_id",
+          "tipo_documento_id",
+          "usuario_id",
+          "usuario_rol",
+          "documento_id",
+          "actual",
+          "activo",
+          "fecha_creacion",
+          "fecha_modificacion"
         ]
       },
       "UpdateDocumentoContratoDto": {
         "type": "object",
         "properties": {
-          "documento_id": {
-            "type": "number",
-            "example": 1,
-            "description": "Documento ID - Gestor Documental"
-          },
           "contrato_general_id": {
             "type": "number",
             "example": 1,
-            "description": "ID Contrato General Asociado"
-          },
-          "documento_enlace": {
-            "type": "string",
-            "example": "123e4567-e89b-12d3-a456-426614174000",
-            "description": "Enlace al documento"
+            "description": "ID del contrato general asociado"
           },
           "tipo_documento_id": {
             "type": "number",
             "example": 1,
-            "description": "ID Tipo Documento - Parámetros CRUD"
+            "description": "ID del tipo de documento (Parámetros CRUD)"
+          },
+          "usuario_id": {
+            "type": "number",
+            "example": 1,
+            "description": "ID del usuario quien registra el documento"
+          },
+          "usuario_rol": {
+            "type": "string",
+            "example": "ROL",
+            "description": "Rol del usuario quien registra el documento"
+          },
+          "documento_id": {
+            "type": "number",
+            "example": 1,
+            "description": "ID del documento en el gestor documental"
+          },
+          "documento_enlace": {
+            "type": "string",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "description": "Enlace único al documento"
+          },
+          "activo": {
+            "type": "boolean",
+            "example": true,
+            "description": "Estado del documento (activo o inactivo)",
+            "readOnly": true
+          },
+          "fecha_creacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z",
+            "description": "Fecha de creación del documento",
+            "readOnly": true
+          },
+          "fecha_modificacion": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2023-01-02T00:00:00.000Z",
+            "description": "Fecha de última modificación del documento",
+            "readOnly": true
           }
         }
       },

@@ -23,29 +23,38 @@ export class DocumentoContratoService extends BaseCrudService<DocumentoContrato>
   async create(
     createDocumentoDto: CreateDocumentoContratoDto,
   ): Promise<DocumentoContrato> {
-    const found = await this.contratoGeneralRepository.findOne({
+    // Validar que existe el contrato general
+    const contratoGeneral = await this.contratoGeneralRepository.findOne({
       where: { id: createDocumentoDto.contrato_general_id },
     });
-
-    if (!found) {
+    if (!contratoGeneral) {
       throw new BadRequestException(
         `Error al crear el documento. El contrato general con ID ${createDocumentoDto.contrato_general_id} no existe`,
       );
     }
 
-    const documento =
-      this.documentoContratoRepository.create(createDocumentoDto);
-    try {
-      return await this.documentoContratoRepository.save(documento);
-    } catch (error) {
-      if (error.code === '23503') {
-        throw new BadRequestException(
-          `Error al crear el documento: El contrato general con ID ${createDocumentoDto.contrato_general_id} no existe`,
-        );
-      } else {
-        throw new Error(`Error al crear el documento: ${error.message}`);
-      }
+    // Buscar el documento actual por tipo de documento
+    const documentoActual = await this.documentoContratoRepository.findOne({
+      where: {
+        contrato_general: { id: createDocumentoDto.contrato_general_id },
+        tipo_documento_id: createDocumentoDto.tipo_documento_id,
+        actual: true,
+      },
+    });
+
+    // Crear el nuevo documento
+    const documento = this.documentoContratoRepository.create({
+      ...createDocumentoDto,
+      contrato_general: contratoGeneral,
+      actual: true,
+    });
+
+    if (documentoActual) {
+      documentoActual.actual = false;
+      await this.documentoContratoRepository.save(documentoActual);
     }
+    
+    return await this.documentoContratoRepository.save(documento);
   }
 
   async findAll(
@@ -70,9 +79,44 @@ export class DocumentoContratoService extends BaseCrudService<DocumentoContrato>
     await this.documentoContratoRepository.delete(id);
   }
 
-  async findByContratoId(contratoId: number): Promise<DocumentoContrato[]> {
+  async findByContratoId(
+    contratoId: number,
+    tipoDocumentoId?: number,
+  ): Promise<DocumentoContrato[]> {
+    const condicion: any = { contrato_general: { id: contratoId } };
+
+    if (tipoDocumentoId) {
+      condicion.tipo_documento_id = tipoDocumentoId;
+    }
+
     return await this.documentoContratoRepository.find({
-      where: { contrato_general: { id: contratoId } },
+      where: condicion,
+      order: { fecha_creacion: 'DESC' },
+    });
+  }
+
+  async findCurrentDocumento(
+    contratoGeneralId: number,
+    tipoDocumentoId?: number,
+  ): Promise<DocumentoContrato[] | DocumentoContrato> {
+    const condicion: any = {
+      contrato_general: { id: contratoGeneralId },
+      actual: true,
+      activo: true,
+    };
+
+    if (tipoDocumentoId) {
+      condicion.tipo_documento_id = tipoDocumentoId;
+
+      return await this.documentoContratoRepository.findOne({
+        where: condicion,
+        order: { fecha_creacion: 'DESC' },
+      });
+    }
+
+    return await this.documentoContratoRepository.find({
+      where: condicion,
+      order: { fecha_creacion: 'DESC' },
     });
   }
 }

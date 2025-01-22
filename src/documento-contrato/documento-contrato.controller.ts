@@ -20,6 +20,7 @@ import {
   ApiResponse,
   ApiParam,
   ApiBody,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { StandardResponse } from '../utils/standardResponse.interface';
 import { DocumentoContrato } from './entities/documento-contrato.entity';
@@ -41,9 +42,7 @@ export class DocumentoContratoController {
     type: DocumentoContrato,
   })
   @ApiResponse({ status: 400, description: 'Solicitud incorrecta.' })
-  async create(
-    @Body() createDocumentoDto: CreateDocumentoContratoDto,
-  ): Promise<DocumentoContrato> {
+  create(@Body() createDocumentoDto: CreateDocumentoContratoDto) {
     return this.documentoContratoService.create(createDocumentoDto);
   }
 
@@ -53,20 +52,21 @@ export class DocumentoContratoController {
     status: 200,
     description: 'Devuelve todos los documentos contratos.',
     type: [DocumentoContrato],
-  }) async findAll( 
-    @Query() queryParams: BaseQueryParamsDto, 
-    @Res() res: Response
+  })
+  async findAll(
+    @Query() queryParams: BaseQueryParamsDto,
+    @Res() res: Response,
   ): Promise<void> {
     try {
-      const [documentos, metadata] = 
+      const [documentos, metadata] =
         await this.documentoContratoService.findAll(queryParams);
-        
+
       const response: StandardResponse<DocumentoContrato[]> = {
         Success: true,
         Status: HttpStatus.OK,
         Message: 'Documentos de contrato encontrados',
         Data: documentos,
-        Metadata: metadata
+        Metadata: metadata,
       };
       res.status(HttpStatus.OK).json(response);
     } catch (error) {
@@ -133,20 +133,60 @@ export class DocumentoContratoController {
   }
 
   @Get('contrato/:contratoId')
-  @ApiOperation({ summary: 'Obtener documentos contratos por id de contrato' })
+  @ApiOperation({ summary: 'Obtener los documentos de un contrato por su id' })
   @ApiParam({ name: 'contratoId', type: 'string' })
+  @ApiQuery({
+    name: 'tipoDocumentoId',
+    required: false,
+    description: 'Filtrado por tipo de documento',
+    type: Number,
+  })
   @ApiResponse({
     status: 200,
-    description:
-      'Devuelve los documentos contratos para el contrato especificado.',
+    description: 'Documentos del contrato',
     type: [DocumentoContrato],
   })
   @ApiResponse({
     status: 404,
-    description:
-      'No se encontraron documentos contratos para el contrato especificado.',
+    description: 'No se encontraron documentos para el contrato',
   })
-  findByContratoId(@Param('contratoId') contratoId: string) {
-    return this.documentoContratoService.findByContratoId(+contratoId);
+  findByContratoId(
+    @Param('contratoId') contratoId: string,
+    @Query('tipoDocumentoId') tipoDocumentoId: number,
+  ) {
+    return this.documentoContratoService.findByContratoId(
+      +contratoId,
+      tipoDocumentoId,
+    );
+  }
+
+  @Get('contrato/:contratoId/actual')
+  @ApiOperation({
+    summary: 'Obtener los documentos actuales de un contrato por su id',
+  })
+  @ApiParam({ name: 'contratoId', type: 'string' })
+  @ApiQuery({
+    name: 'tipoDocumentoId',
+    required: false,
+    description: 'Filtrado por tipo de documento',
+    type: Number,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Documentos actuales del contrato',
+    type: [DocumentoContrato],
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'No se encontraron documentos actuales para el contrato',
+  })
+  findCurrentDocumento(
+    @Param('contratoId') contratoId: string,
+    @Query('tipoDocumentoId') tipoDocumentoId: number,
+  ) {
+    return this.documentoContratoService.findCurrentDocumento(
+      +contratoId,
+      tipoDocumentoId,
+    );
   }
 }
