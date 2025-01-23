@@ -41,6 +41,7 @@ import { SupervisorModule } from './supervisor/supervisor.module';
         username: configService.get('GESTION_CONTRACTUAL_CRUD_USERNAME'),
         password: configService.get('GESTION_CONTRACTUAL_CRUD_PASS'),
         database: configService.get('GESTION_CONTRACTUAL_CRUD_DB'),
+        schema: configService.get('GESTION_CONTRACTUAL_CRUD_DB_SCHEMA'),
         entities: [
           ContratoGeneral,
           DocumentoContrato,
