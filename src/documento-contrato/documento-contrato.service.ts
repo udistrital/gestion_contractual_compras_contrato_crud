@@ -53,7 +53,7 @@ export class DocumentoContratoService extends BaseCrudService<DocumentoContrato>
       documentoActual.actual = false;
       await this.documentoContratoRepository.save(documentoActual);
     }
-    
+
     return await this.documentoContratoRepository.save(documento);
   }
 
@@ -79,9 +79,10 @@ export class DocumentoContratoService extends BaseCrudService<DocumentoContrato>
     await this.documentoContratoRepository.delete(id);
   }
 
-  async findByContratoId(
+  async findDocumentos(
     contratoId: number,
     tipoDocumentoId?: number,
+    actual?: boolean,
   ): Promise<DocumentoContrato[]> {
     const condicion: any = { contrato_general: { id: contratoId } };
 
@@ -89,29 +90,9 @@ export class DocumentoContratoService extends BaseCrudService<DocumentoContrato>
       condicion.tipo_documento_id = tipoDocumentoId;
     }
 
-    return await this.documentoContratoRepository.find({
-      where: condicion,
-      order: { fecha_creacion: 'DESC' },
-    });
-  }
-
-  async findCurrentDocumento(
-    contratoGeneralId: number,
-    tipoDocumentoId?: number,
-  ): Promise<DocumentoContrato[] | DocumentoContrato> {
-    const condicion: any = {
-      contrato_general: { id: contratoGeneralId },
-      actual: true,
-      activo: true,
-    };
-
-    if (tipoDocumentoId) {
-      condicion.tipo_documento_id = tipoDocumentoId;
-
-      return await this.documentoContratoRepository.findOne({
-        where: condicion,
-        order: { fecha_creacion: 'DESC' },
-      });
+    if (actual !== undefined) {
+      condicion.actual = actual;
+      condicion.activo = true;
     }
 
     return await this.documentoContratoRepository.find({

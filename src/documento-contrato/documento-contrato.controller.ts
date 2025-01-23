@@ -26,8 +26,8 @@ import { StandardResponse } from '../utils/standardResponse.interface';
 import { DocumentoContrato } from './entities/documento-contrato.entity';
 import { BaseQueryParamsDto } from 'src/shared/dto/query-params.base.dto';
 
-@ApiTags('documentos-contratos')
-@Controller('documentos-contratos')
+@ApiTags('documentos-contrato')
+@Controller('documentos-contrato')
 export class DocumentoContratoController {
   constructor(
     private readonly documentoContratoService: DocumentoContratoService,
@@ -141,6 +141,12 @@ export class DocumentoContratoController {
     description: 'Filtrado por tipo de documento',
     type: Number,
   })
+  @ApiQuery({
+    name: 'actual',
+    required: false,
+    description: 'Filtrado por actual',
+    type: Boolean,
+  })
   @ApiResponse({
     status: 200,
     description: 'Documentos del contrato',
@@ -153,40 +159,12 @@ export class DocumentoContratoController {
   findByContratoId(
     @Param('contratoId') contratoId: string,
     @Query('tipoDocumentoId') tipoDocumentoId: number,
+    @Query('actual') actual?: boolean,
   ) {
-    return this.documentoContratoService.findByContratoId(
+    return this.documentoContratoService.findDocumentos(
       +contratoId,
       tipoDocumentoId,
-    );
-  }
-
-  @Get('contrato/:contratoId/actual')
-  @ApiOperation({
-    summary: 'Obtener los documentos actuales de un contrato por su id',
-  })
-  @ApiParam({ name: 'contratoId', type: 'string' })
-  @ApiQuery({
-    name: 'tipoDocumentoId',
-    required: false,
-    description: 'Filtrado por tipo de documento',
-    type: Number,
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Documentos actuales del contrato',
-    type: [DocumentoContrato],
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'No se encontraron documentos actuales para el contrato',
-  })
-  findCurrentDocumento(
-    @Param('contratoId') contratoId: string,
-    @Query('tipoDocumentoId') tipoDocumentoId: number,
-  ) {
-    return this.documentoContratoService.findCurrentDocumento(
-      +contratoId,
-      tipoDocumentoId,
+      actual,
     );
   }
 }

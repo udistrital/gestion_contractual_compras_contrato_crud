@@ -82,20 +82,24 @@ COMMENT ON COLUMN contrato_general.unidad_ejecucion_id IS 'Identificador de unid
 -- Tabla de documentos del contrato
 CREATE TABLE documento_contrato (
     id SERIAL PRIMARY KEY,
-    tipo_documento_id INTEGER,
     contrato_general_id INTEGER NOT NULL REFERENCES contrato_general(id),
-    documento_enlace VARCHAR(50),
+    tipo_documento_id INTEGER,
+    usuario_id INTEGER,
+    usuario_rol VARCHAR(40)
     documento_id INTEGER,
+    documento_enlace VARCHAR(50),
     activo BOOLEAN NOT NULL,
     fecha_creacion TIMESTAMP NOT NULL,
     fecha_modificacion TIMESTAMP NOT NULL
 );
 
 COMMENT ON TABLE documento_contrato IS 'Almacena los documentos asociados a cada contrato';
-COMMENT ON COLUMN documento_contrato.tipo_documento_id IS 'Tipo de documento (p.ej. minuta, otros) según Parámetros CRUD';
 COMMENT ON COLUMN documento_contrato.contrato_general_id IS 'Referencia del contrato general';
-COMMENT ON COLUMN documento_contrato.documento_enlace IS 'Enlace asociado al Gestor Documental';
+COMMENT ON COLUMN documento_contrato.tipo_documento_id IS 'Tipo de documento (p.ej. minuta, otros) según Parámetros CRUD';
+COMMENT ON COLUMN documento_contrato.usuario_id IS 'Referencia del usuario quien registra el documento';
+COMMENT ON COLUMN documento_contrato.usuario_rol IS 'Rol del usuario quien registra el documento';
 COMMENT ON COLUMN documento_contrato.documento_id IS 'Id asociado al Gestor Documental';
+COMMENT ON COLUMN documento_contrato.documento_enlace IS 'Enlace asociado al Gestor Documental';
 
 -- Tabla de estados del contrato
 CREATE TABLE estado_contrato (

@@ -207,7 +207,7 @@ paths:
           description: Contrato general no encontrado
       summary: Eliminar un contrato general
       tags: *ref_0
-  /documentos-contratos:
+  /documentos-contrato:
     post:
       operationId: DocumentoContratoController_create
       parameters: []
@@ -228,7 +228,7 @@ paths:
           description: Solicitud incorrecta.
       summary: Crear un nuevo documento contrato
       tags: &ref_1
-        - documentos-contratos
+        - documentos-contrato
     get:
       operationId: DocumentoContratoController_findAll
       parameters:
@@ -290,7 +290,7 @@ paths:
                   $ref: '#/components/schemas/DocumentoContrato'
       summary: Obtener todos los documentos contratos
       tags: *ref_1
-  /documentos-contratos/{id}:
+  /documentos-contrato/{id}:
     get:
       operationId: DocumentoContratoController_findOne
       parameters:
@@ -352,7 +352,7 @@ paths:
           description: Documento contrato no encontrado.
       summary: Eliminar un documento contrato
       tags: *ref_1
-  /documentos-contratos/contrato/{contratoId}:
+  /documentos-contrato/contrato/{contratoId}:
     get:
       operationId: DocumentoContratoController_findByContratoId
       parameters:
@@ -367,6 +367,12 @@ paths:
           description: Filtrado por tipo de documento
           schema:
             type: number
+        - name: actual
+          required: false
+          in: query
+          description: Filtrado por actual
+          schema:
+            type: boolean
       responses:
         '200':
           description: Documentos del contrato
@@ -379,34 +385,6 @@ paths:
         '404':
           description: No se encontraron documentos para el contrato
       summary: Obtener los documentos de un contrato por su id
-      tags: *ref_1
-  /documentos-contratos/contrato/{contratoId}/actual:
-    get:
-      operationId: DocumentoContratoController_findCurrentDocumento
-      parameters:
-        - name: contratoId
-          required: true
-          in: path
-          schema:
-            type: string
-        - name: tipoDocumentoId
-          required: false
-          in: query
-          description: Filtrado por tipo de documento
-          schema:
-            type: number
-      responses:
-        '200':
-          description: Documentos actuales del contrato
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DocumentoContrato'
-        '404':
-          description: No se encontraron documentos actuales para el contrato
-      summary: Obtener los documentos actuales de un contrato por su id
       tags: *ref_1
   /contratistas:
     post:

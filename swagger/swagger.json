@@ -313,7 +313,7 @@
         ]
       }
     },
-    "/documentos-contratos": {
+    "/documentos-contrato": {
       "post": {
         "operationId": "DocumentoContratoController_create",
         "parameters": [],
@@ -344,7 +344,7 @@
         },
         "summary": "Crear un nuevo documento contrato",
         "tags": [
-          "documentos-contratos"
+          "documentos-contrato"
         ]
       },
       "get": {
@@ -437,11 +437,11 @@
         },
         "summary": "Obtener todos los documentos contratos",
         "tags": [
-          "documentos-contratos"
+          "documentos-contrato"
         ]
       }
     },
-    "/documentos-contratos/{id}": {
+    "/documentos-contrato/{id}": {
       "get": {
         "operationId": "DocumentoContratoController_findOne",
         "parameters": [
@@ -471,7 +471,7 @@
         },
         "summary": "Obtener un documento contrato por id",
         "tags": [
-          "documentos-contratos"
+          "documentos-contrato"
         ]
       },
       "patch": {
@@ -516,7 +516,7 @@
         },
         "summary": "Actualizar un documento contrato",
         "tags": [
-          "documentos-contratos"
+          "documentos-contrato"
         ]
       },
       "delete": {
@@ -541,11 +541,11 @@
         },
         "summary": "Eliminar un documento contrato",
         "tags": [
-          "documentos-contratos"
+          "documentos-contrato"
         ]
       }
     },
-    "/documentos-contratos/contrato/{contratoId}": {
+    "/documentos-contrato/contrato/{contratoId}": {
       "get": {
         "operationId": "DocumentoContratoController_findByContratoId",
         "parameters": [
@@ -564,6 +564,15 @@
             "description": "Filtrado por tipo de documento",
             "schema": {
               "type": "number"
+            }
+          },
+          {
+            "name": "actual",
+            "required": false,
+            "in": "query",
+            "description": "Filtrado por actual",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -587,53 +596,7 @@
         },
         "summary": "Obtener los documentos de un contrato por su id",
         "tags": [
-          "documentos-contratos"
-        ]
-      }
-    },
-    "/documentos-contratos/contrato/{contratoId}/actual": {
-      "get": {
-        "operationId": "DocumentoContratoController_findCurrentDocumento",
-        "parameters": [
-          {
-            "name": "contratoId",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "tipoDocumentoId",
-            "required": false,
-            "in": "query",
-            "description": "Filtrado por tipo de documento",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Documentos actuales del contrato",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DocumentoContrato"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No se encontraron documentos actuales para el contrato"
-          }
-        },
-        "summary": "Obtener los documentos actuales de un contrato por su id",
-        "tags": [
-          "documentos-contratos"
+          "documentos-contrato"
         ]
       }
     },
