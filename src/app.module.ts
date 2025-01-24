@@ -55,7 +55,7 @@ import { SupervisorModule } from './supervisor/supervisor.module';
           OrdenadorContrato,
           SupervisorEntity,
         ],
-        synchronize: configService.get('DEVELOPER_MODE'), // Solo para desarrollo, en producción se debe desactivar
+        synchronize: true, // Solo para desarrollo, en producción se debe desactivar
         ssl: {
           rejectUnauthorized: false,
         },
