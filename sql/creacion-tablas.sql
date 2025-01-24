@@ -88,6 +88,7 @@ CREATE TABLE documento_contrato (
     usuario_rol VARCHAR(40)
     documento_id INTEGER,
     documento_enlace VARCHAR(50),
+    actual BOOLEAN,
     activo BOOLEAN NOT NULL,
     fecha_creacion TIMESTAMP NOT NULL,
     fecha_modificacion TIMESTAMP NOT NULL
@@ -100,6 +101,7 @@ COMMENT ON COLUMN documento_contrato.usuario_id IS 'Referencia del usuario quien
 COMMENT ON COLUMN documento_contrato.usuario_rol IS 'Rol del usuario quien registra el documento';
 COMMENT ON COLUMN documento_contrato.documento_id IS 'Id asociado al Gestor Documental';
 COMMENT ON COLUMN documento_contrato.documento_enlace IS 'Enlace asociado al Gestor Documental';
+COMMENT ON COLUMN documento_contrato.actual IS 'Indicador de documento actual';
 
 -- Tabla de estados del contrato
 CREATE TABLE estado_contrato (
