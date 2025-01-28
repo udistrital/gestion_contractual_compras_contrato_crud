@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CrearContratoGeneralDto } from './dto/crear-contrato-general.dto';
@@ -10,6 +10,8 @@ import { BaseQueryParamsDto } from '../shared/dto/query-params.base.dto';
 
 @Injectable()
 export class ContratoGeneralService extends BaseCrudService<ContratoGeneral> {
+  private readonly LOGGER = new Logger(ContratoGeneralService.name);
+
   constructor(
     @InjectRepository(ContratoGeneral)
     private contratoGeneralRepository: Repository<ContratoGeneral>,
@@ -51,6 +53,9 @@ export class ContratoGeneralService extends BaseCrudService<ContratoGeneral> {
       if (error instanceof NotFoundException) {
         throw error;
       }
+      this.LOGGER.error(
+        `Error al buscar el contrato general: ${error.message}`,
+      );
       throw new Error(`Error al buscar el contrato general: ${error.message}`);
     }
   }

@@ -36,6 +36,7 @@ import { SupervisorModule } from './supervisor/supervisor.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
+        logging: ['error'],
         host: configService.get('GESTION_CONTRACTUAL_CRUD_HOST'),
         port: parseInt(configService.get('GESTION_CONTRACTUAL_CRUD_PORT'), 10),
         username: configService.get('GESTION_CONTRACTUAL_CRUD_USERNAME'),

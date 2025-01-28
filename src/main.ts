@@ -9,7 +9,9 @@ import { join } from 'path';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'log', 'debug', 'verbose'],
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Gestion Contractual CRUD')
