@@ -28,7 +28,7 @@ export class ContratoGeneral {
   @Column({ name: 'perfil_contratista_id', nullable: true })
   perfil_contratista_id: number;
 
-  @Column({ name: 'fecha_suscripcion_estudios', type: 'date', nullable: true })
+  @Column({ name: 'fecha_suscripcion_estudio', type: 'date', nullable: true })
   fecha_suscripcion_estudios: Date;
 
   @Column({ name: 'aplica_poliza', nullable: true })
@@ -73,7 +73,7 @@ export class ContratoGeneral {
   @Column({ name: 'origen_recursos_id', nullable: true })
   origen_recursos_id: number;
 
-  @Column({ name: 'origen_presupuestos_id', nullable: true })
+  @Column({ name: 'origen_presupuesto_id', nullable: true })
   origen_presupuestos_id: number;
 
   @Column({ name: 'tema_gasto_inversion_id', nullable: true })
