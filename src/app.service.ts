@@ -10,7 +10,7 @@ export class AppService {
   healthCheck() {
     try {
       return {
-        Status: 'ok',
+        Status: 'ok test',
         checkCount: this.counter++,
       };
     } catch (error) {
