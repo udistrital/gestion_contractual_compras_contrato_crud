@@ -7,8 +7,16 @@ paths:
       responses:
         '200':
           description: ''
-      tags:
+      tags: &ref_0
         - App
+  /env:
+    get:
+      operationId: AppController_getEnvVariables
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: *ref_0
   /contratos-generales:
     get:
       operationId: ContratoGeneralController_findAll
@@ -75,7 +83,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ContratoGeneral'
       summary: Obtener todos los contratos generales
-      tags: &ref_0
+      tags: &ref_1
         - contratos-generales
     post:
       operationId: ContratoGeneralController_create
@@ -94,7 +102,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ContratoGeneral'
       summary: Crear un nuevo contrato general
-      tags: *ref_0
+      tags: *ref_1
   /contratos-generales/{id}:
     get:
       operationId: ContratoGeneralController_findOne
@@ -164,7 +172,7 @@ paths:
         '404':
           description: Contrato general no encontrado
       summary: Obtener un contrato general por ID
-      tags: *ref_0
+      tags: *ref_1
     put:
       operationId: ContratoGeneralController_update
       parameters:
@@ -190,7 +198,7 @@ paths:
         '404':
           description: Contrato general no encontrado
       summary: Actualizar un contrato general
-      tags: *ref_0
+      tags: *ref_1
     delete:
       operationId: ContratoGeneralController_remove
       parameters:
@@ -206,7 +214,7 @@ paths:
         '404':
           description: Contrato general no encontrado
       summary: Eliminar un contrato general
-      tags: *ref_0
+      tags: *ref_1
   /documentos-contratos:
     post:
       operationId: DocumentoContratoController_create
@@ -227,7 +235,7 @@ paths:
         '400':
           description: Solicitud incorrecta.
       summary: Crear un nuevo documento contrato
-      tags: &ref_1
+      tags: &ref_2
         - documentos-contratos
     get:
       operationId: DocumentoContratoController_findAll
@@ -289,7 +297,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/DocumentoContrato'
       summary: Obtener todos los documentos contratos
-      tags: *ref_1
+      tags: *ref_2
   /documentos-contratos/{id}:
     get:
       operationId: DocumentoContratoController_findOne
@@ -309,7 +317,7 @@ paths:
         '404':
           description: Documento contrato no encontrado.
       summary: Obtener un documento contrato por id
-      tags: *ref_1
+      tags: *ref_2
     patch:
       operationId: DocumentoContratoController_update
       parameters:
@@ -336,7 +344,7 @@ paths:
         '404':
           description: Documento contrato no encontrado.
       summary: Actualizar un documento contrato
-      tags: *ref_1
+      tags: *ref_2
     delete:
       operationId: DocumentoContratoController_remove
       parameters:
@@ -351,7 +359,7 @@ paths:
         '404':
           description: Documento contrato no encontrado.
       summary: Eliminar un documento contrato
-      tags: *ref_1
+      tags: *ref_2
   /documentos-contratos/contrato/{contratoId}:
     get:
       operationId: DocumentoContratoController_findByContratoId
@@ -375,7 +383,7 @@ paths:
             No se encontraron documentos contratos para el contrato
             especificado.
       summary: Obtener documentos contratos por id de contrato
-      tags: *ref_1
+      tags: *ref_2
   /contratistas:
     post:
       operationId: ContratistaController_create
@@ -396,7 +404,7 @@ paths:
         '400':
           description: Solicitud incorrecta.
       summary: Crear un nuevo contratista
-      tags: &ref_2
+      tags: &ref_3
         - contratistas
     get:
       operationId: ContratistaController_findAll
@@ -411,7 +419,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Contratista'
       summary: Obtener todos los contratistas
-      tags: *ref_2
+      tags: *ref_3
   /contratistas/{id}:
     get:
       operationId: ContratistaController_findOne
@@ -431,7 +439,7 @@ paths:
         '404':
           description: Contratista no encontrado.
       summary: Obtener un contratista por numero_identificacion
-      tags: *ref_2
+      tags: *ref_3
     patch:
       operationId: ContratistaController_update
       parameters:
@@ -458,7 +466,7 @@ paths:
         '404':
           description: Contratista no encontrado.
       summary: Actualizar un contratista
-      tags: *ref_2
+      tags: *ref_3
     delete:
       operationId: ContratistaController_remove
       parameters:
@@ -473,7 +481,7 @@ paths:
         '404':
           description: Contratista no encontrado.
       summary: Eliminar un contratista
-      tags: *ref_2
+      tags: *ref_3
   /contratistas/contrato/{contratoId}:
     get:
       operationId: ContratistaController_findByContrato
@@ -493,7 +501,7 @@ paths:
         '404':
           description: No se encontró contratista para el contrato especificado.
       summary: Obtener contratista por id de contrato
-      tags: *ref_2
+      tags: *ref_3
   /estados-contrato:
     post:
       operationId: EstadoContratoController_create
@@ -514,7 +522,7 @@ paths:
         '400':
           description: Solicitud incorrecta.
       summary: Crear un nuevo estado de contrato
-      tags: &ref_3
+      tags: &ref_4
         - estados-contrato
     get:
       operationId: EstadoContratoController_findAll
@@ -576,7 +584,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/EstadoContrato'
       summary: Obtener todos los estados de contrato
-      tags: *ref_3
+      tags: *ref_4
   /estados-contrato/{id}:
     get:
       operationId: EstadoContratoController_findOne
@@ -596,7 +604,7 @@ paths:
         '404':
           description: Estado de contrato no encontrado.
       summary: Obtener un estado de contrato por id
-      tags: *ref_3
+      tags: *ref_4
     patch:
       operationId: EstadoContratoController_update
       parameters:
@@ -623,7 +631,7 @@ paths:
         '404':
           description: Estado de contrato no encontrado.
       summary: Actualizar un estado de contrato
-      tags: *ref_3
+      tags: *ref_4
     delete:
       operationId: EstadoContratoController_remove
       parameters:
@@ -638,7 +646,7 @@ paths:
         '404':
           description: Estado de contrato no encontrado.
       summary: Eliminar un estado de contrato
-      tags: *ref_3
+      tags: *ref_4
   /estados-contrato/contrato/{contratoId}:
     get:
       operationId: EstadoContratoController_findByContratoGeneral
@@ -660,7 +668,7 @@ paths:
         '404':
           description: No se encontraron estados de contrato para el contrato especificado.
       summary: Obtener estados de contrato por id de contrato
-      tags: *ref_3
+      tags: *ref_4
   /estados-contrato/contrato/{contratoId}/actual:
     get:
       operationId: EstadoContratoController_findCurrentEstado
@@ -680,7 +688,7 @@ paths:
         '404':
           description: No se encontró estado actual para el contrato especificado.
       summary: Obtener el estado actual de un contrato
-      tags: *ref_3
+      tags: *ref_4
   /lugares-ejecucion:
     post:
       operationId: LugarEjecucionController_create
@@ -701,7 +709,7 @@ paths:
         '400':
           description: Solicitud incorrecta.
       summary: Crear un nuevo lugar de ejecución
-      tags: &ref_4
+      tags: &ref_5
         - lugares-ejecucion
     get:
       operationId: LugarEjecucionController_findAll
@@ -716,7 +724,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/LugarEjecucion'
       summary: Obtener todos los lugares de ejecución
-      tags: *ref_4
+      tags: *ref_5
   /lugares-ejecucion/{id}:
     get:
       operationId: LugarEjecucionController_findOne
@@ -736,7 +744,7 @@ paths:
         '404':
           description: Lugar de ejecución no encontrado.
       summary: Obtener un lugar de ejecución por id
-      tags: *ref_4
+      tags: *ref_5
     patch:
       operationId: LugarEjecucionController_update
       parameters:
@@ -763,7 +771,7 @@ paths:
         '404':
           description: Lugar de ejecución no encontrado.
       summary: Actualizar un lugar de ejecución
-      tags: *ref_4
+      tags: *ref_5
     delete:
       operationId: LugarEjecucionController_remove
       parameters:
@@ -778,7 +786,7 @@ paths:
         '404':
           description: Lugar de ejecución no encontrado.
       summary: Eliminar un lugar de ejecución
-      tags: *ref_4
+      tags: *ref_5
   /lugares-ejecucion/contrato/{contratoId}:
     get:
       operationId: LugarEjecucionController_findByContratoGeneralId
@@ -802,7 +810,7 @@ paths:
             No se encontraron lugares de ejecución para el contrato
             especificado.
       summary: Obtiene el lugar de ejecución por id de contrato
-      tags: *ref_4
+      tags: *ref_5
   /disponibilidad_presupuestal:
     post:
       operationId: CdpController_create
@@ -823,7 +831,7 @@ paths:
         '400':
           description: Solicitud incorrecta.
       summary: Crear un nuevo CDP
-      tags: &ref_5
+      tags: &ref_6
         - disponibilidad_presupuestal
     get:
       operationId: CdpController_findAll
@@ -838,7 +846,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Cdp'
       summary: Obtener todos los CDPs
-      tags: *ref_5
+      tags: *ref_6
   /disponibilidad_presupuestal/{id}:
     get:
       operationId: CdpController_findOne
@@ -858,7 +866,7 @@ paths:
         '404':
           description: CDP no encontrado.
       summary: Obtener un CDP por ID
-      tags: *ref_5
+      tags: *ref_6
     patch:
       operationId: CdpController_update
       parameters:
@@ -885,7 +893,7 @@ paths:
         '404':
           description: CDP no encontrado.
       summary: Actualizar un CDP
-      tags: *ref_5
+      tags: *ref_6
     delete:
       operationId: CdpController_remove
       parameters:
@@ -900,7 +908,7 @@ paths:
         '404':
           description: CDP no encontrado.
       summary: Eliminar un CDP
-      tags: *ref_5
+      tags: *ref_6
   /disponibilidad_presupuestal/contrato/{contratoId}:
     get:
       operationId: CdpController_findByContrato
@@ -922,7 +930,7 @@ paths:
         '404':
           description: No se encontraron CDPs para el contrato especificado.
       summary: Obtener CDPs por ID de contrato
-      tags: *ref_5
+      tags: *ref_6
   /especificaciones-tecnicas:
     get:
       operationId: EspecificacionTecnicaController_findAll
@@ -984,7 +992,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/EspecificacionTecnica'
       summary: Obtener todas las especificaciones técnicas
-      tags: &ref_6
+      tags: &ref_7
         - especificaciones-tecnicas
     post:
       operationId: EspecificacionTecnicaController_create
@@ -1003,7 +1011,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/EspecificacionTecnica'
       summary: Crear una nueva especificación técnica
-      tags: *ref_6
+      tags: *ref_7
   /especificaciones-tecnicas/{id}:
     get:
       operationId: EspecificacionTecnicaController_findOne
@@ -1024,7 +1032,7 @@ paths:
         '404':
           description: Especificación técnica no encontrada
       summary: Obtener una especificación técnica por ID
-      tags: *ref_6
+      tags: *ref_7
     put:
       operationId: EspecificacionTecnicaController_update
       parameters:
@@ -1050,7 +1058,7 @@ paths:
         '404':
           description: Especificación técnica no encontrada
       summary: Actualizar una especificación técnica
-      tags: *ref_6
+      tags: *ref_7
     delete:
       operationId: EspecificacionTecnicaController_remove
       parameters:
@@ -1063,7 +1071,7 @@ paths:
         '200':
           description: ''
       summary: Marcar una especificación técnica como inactiva
-      tags: *ref_6
+      tags: *ref_7
   /actas-inicio:
     get:
       operationId: ActaInicioController_findAll
@@ -1072,7 +1080,7 @@ paths:
         '200':
           description: ''
       summary: Obtener todas las actas de inicio
-      tags: &ref_7
+      tags: &ref_8
         - actas-inicio
     post:
       operationId: ActaInicioController_create
@@ -1087,7 +1095,7 @@ paths:
         '201':
           description: ''
       summary: Crear una nueva acta de inicio
-      tags: *ref_7
+      tags: *ref_8
   /actas-inicio/{id}:
     get:
       operationId: ActaInicioController_findOne
@@ -1101,7 +1109,7 @@ paths:
         '200':
           description: ''
       summary: Obtener una acta de inicio por ID
-      tags: *ref_7
+      tags: *ref_8
     put:
       operationId: ActaInicioController_update
       parameters:
@@ -1120,7 +1128,7 @@ paths:
         '200':
           description: ''
       summary: Actualizar una acta de inicio
-      tags: *ref_7
+      tags: *ref_8
     delete:
       operationId: ActaInicioController_remove
       parameters:
@@ -1133,7 +1141,7 @@ paths:
         '200':
           description: ''
       summary: Eliminar una acta de inicio
-      tags: *ref_7
+      tags: *ref_8
   /solicitantes:
     post:
       operationId: SolicitanteController_create
@@ -1154,7 +1162,7 @@ paths:
         '400':
           description: Solicitud incorrecta.
       summary: Crear un nuevo lugar de ejecución
-      tags: &ref_8
+      tags: &ref_9
         - solicitantes
     get:
       operationId: SolicitanteController_findAll
@@ -1169,7 +1177,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/SolicitanteEntity'
       summary: Obtener todos los lugares de ejecución
-      tags: *ref_8
+      tags: *ref_9
   /solicitantes/{id}:
     get:
       operationId: SolicitanteController_findOne
@@ -1189,7 +1197,7 @@ paths:
         '404':
           description: Lugar de ejecución no encontrado.
       summary: Obtener un lugar de ejecución por id
-      tags: *ref_8
+      tags: *ref_9
     patch:
       operationId: SolicitanteController_update
       parameters:
@@ -1216,7 +1224,7 @@ paths:
         '404':
           description: Solictante no encontrado.
       summary: Actualizar un lugar de ejecución
-      tags: *ref_8
+      tags: *ref_9
     delete:
       operationId: SolicitanteController_remove
       parameters:
@@ -1231,7 +1239,7 @@ paths:
         '404':
           description: Lugar de ejecución no encontrado.
       summary: Eliminar un lugar de ejecución
-      tags: *ref_8
+      tags: *ref_9
   /solicitantes/contrato/{contratoId}:
     get:
       operationId: SolicitanteController_findByContratoGeneralId
@@ -1255,7 +1263,7 @@ paths:
             No se encontraron lugares de ejecución para el contrato
             especificado.
       summary: Obtiene el lugar de ejecución por id de contrato
-      tags: *ref_8
+      tags: *ref_9
   /ordenador-contrato:
     get:
       operationId: OrdenadorContratoController_findAll
@@ -1264,7 +1272,7 @@ paths:
         '200':
           description: ''
       summary: Obtener todos los ordenadores
-      tags: &ref_9
+      tags: &ref_10
         - ordenadores-contrato
     post:
       operationId: OrdenadorContratoController_create
@@ -1279,7 +1287,7 @@ paths:
         '201':
           description: ''
       summary: Crear un nuevo ordenador
-      tags: *ref_9
+      tags: *ref_10
   /ordenador-contrato/{id}:
     get:
       operationId: OrdenadorContratoController_findOne
@@ -1293,7 +1301,7 @@ paths:
         '200':
           description: ''
       summary: Obtener un ordenador por ID
-      tags: *ref_9
+      tags: *ref_10
     put:
       operationId: OrdenadorContratoController_update
       parameters:
@@ -1312,7 +1320,7 @@ paths:
         '200':
           description: ''
       summary: Actualizar un ordenador
-      tags: *ref_9
+      tags: *ref_10
     delete:
       operationId: OrdenadorContratoController_remove
       parameters:
@@ -1325,7 +1333,7 @@ paths:
         '200':
           description: ''
       summary: Eliminar un ordenador
-      tags: *ref_9
+      tags: *ref_10
   /ordenador-contrato/contrato/{contratoId}:
     get:
       operationId: OrdenadorContratoController_findByContratoGeneralId
@@ -1348,7 +1356,7 @@ paths:
         '404':
           description: No se encontraron ordenadores
       summary: Obtener ordenador por ID de contrato
-      tags: *ref_9
+      tags: *ref_10
   /supervisores:
     get:
       operationId: SupervisorController_findAll
@@ -1402,7 +1410,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/SupervisorEntity'
       summary: Obtener todos los supervisores
-      tags: &ref_10
+      tags: &ref_11
         - supervisores
     post:
       operationId: SupervisorController_create
@@ -1421,7 +1429,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SupervisorEntity'
       summary: Crear un nuevo supervisor
-      tags: *ref_10
+      tags: *ref_11
   /supervisores/{id}:
     get:
       operationId: SupervisorController_findOne
@@ -1447,7 +1455,7 @@ paths:
         '404':
           description: Supervisor no encontrado
       summary: Obtener un supervisor por ID
-      tags: *ref_10
+      tags: *ref_11
     put:
       operationId: SupervisorController_update
       parameters:
@@ -1473,7 +1481,7 @@ paths:
         '404':
           description: Supervisor no encontrado
       summary: Actualizar un supervisor
-      tags: *ref_10
+      tags: *ref_11
     delete:
       operationId: SupervisorController_remove
       parameters:
@@ -1489,7 +1497,7 @@ paths:
         '404':
           description: Supervisor no encontrado
       summary: Eliminar un supervisor
-      tags: *ref_10
+      tags: *ref_11
   /supervisores/contrato/{contratoId}:
     get:
       operationId: SupervisorController_findByContratoGeneralId
@@ -1512,7 +1520,7 @@ paths:
         '404':
           description: No se encontraron supervisores
       summary: Obtener supervisores por ID de contrato
-      tags: *ref_10
+      tags: *ref_11
 info:
   title: Gestion Contractual CRUD
   description: API para la gestión contractual

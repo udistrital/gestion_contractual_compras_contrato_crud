@@ -15,6 +15,20 @@
         ]
       }
     },
+    "/env": {
+      "get": {
+        "operationId": "AppController_getEnvVariables",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
     "/contratos-generales": {
       "get": {
         "operationId": "ContratoGeneralController_findAll",
