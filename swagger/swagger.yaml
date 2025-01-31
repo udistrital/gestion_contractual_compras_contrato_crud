@@ -207,6 +207,21 @@ paths:
           description: Contrato general no encontrado
       summary: Eliminar un contrato general
       tags: *ref_0
+  /contratos-generales/vigencia/{year}:
+    get:
+      operationId: ContratoGeneralController_findIdsByVigencia
+      parameters:
+        - name: year
+          required: true
+          in: path
+          description: Año de vigencia (YYYY)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de IDs de contratos encontrados
+      summary: Obtener ids de contratos por vigencia
+      tags: *ref_0
   /documentos-contratos:
     post:
       operationId: DocumentoContratoController_create
